@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.percent.PercentFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_back">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_heightPercent="34%">
+
+        <com.example.mercer.bluecareer.CircleImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/default_image"/>
+
+    </RelativeLayout>
+
+    <android.support.percent.PercentFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_heightPercent="14.5%"
+        app:layout_marginTopPercent="34%"
+        app:layout_marginLeftPercent="5%"
+        app:layout_marginRightPercent="5%"
+        android:background="@drawable/login_edit_back">
+
+        <ImageView
+            android:id="@+id/username_image"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            app:layout_marginTopPercent="19.5%"
+            app:layout_marginLeftPercent="3.5%"
+            app:layout_marginRightPercent="92%"
+            app:layout_marginBottomPercent="65%"
+            android:background="@drawable/username_image"/>
+
+        <EditText
+            android:id="@+id/username_edit"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_heightPercent="50%"
+            android:hint="@string/username_hint"
+            android:textColorHint="#b2b2b2"
+            android:paddingLeft="30dp"
+            app:layout_marginRightPercent="5%"
+            app:layout_marginLeftPercent="5%"
+            app:layout_marginBottomPercent="65%"
+            android:textSize="15sp"
+            android:singleLine="true"
+            android:background="@null"/>
+
+        <View
+            app:layout_marginRightPercent="5%"
+            app:layout_marginLeftPercent="5%"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            app:layout_marginTopPercent="50%"
+            android:background="#b3b3b3"/>
+
+        <ImageView
+            android:id="@+id/key_image"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            app:layout_marginLeftPercent="3.5%"
+            app:layout_marginRightPercent="92%"
+            app:layout_marginTopPercent="65%"
+            app:layout_marginBottomPercent="19.5%"
+            android:background="@drawable/key_image"/>
+
+        <EditText
+            android:id="@+id/key_edit"
+            android:layout_toRightOf="@id/key_image"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:inputType="textPassword"
+            app:layout_heightPercent="50%"
+            android:hint="@string/key_hint"
+            android:textColorHint="#b2b2b2"
+            android:paddingLeft="30dp"
+            app:layout_marginRightPercent="5%"
+            app:layout_marginLeftPercent="5%"
+            app:layout_marginTopPercent="50%"
+            android:textSize="15sp"
+            android:singleLine="true"
+            android:background="@null"/>
+
+    </android.support.percent.PercentFrameLayout>
+
+    <Button
+        android:id="@+id/button_login"
+        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:background="@drawable/login_button"
+        android:text="登录"
+        app:layout_widthPercent="34.8%"
+        app:layout_marginLeftPercent="32.6%"
+        app:layout_marginTopPercent="54.7%"
+        app:layout_marginBottomPercent="38.2%"
+        android:textSize="15sp"
+        android:textColor="#38454f"/>
+
+    <Button
+        android:id="@+id/logo_qq"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_marginTopPercent="68%"
+        app:layout_heightPercent="4.5%"
+        app:layout_marginLeftPercent="24.3%"
+        app:layout_widthPercent="6.5%"
+        android:background="@drawable/qq"/>
+
+    <Button
+        android:id="@+id/logo_weibo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_marginTopPercent="68%"
+        app:layout_heightPercent="4.5%"
+        app:layout_marginLeftPercent="45.6%"
+        app:layout_widthPercent="8.6%"
+        android:background="@drawable/weibo"/>
+
+    <Button
+        android:id="@+id/logo_weixin"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_marginTopPercent="68%"
+        app:layout_heightPercent="4.5%"
+        app:layout_marginLeftPercent="66.7%"
+        app:layout_widthPercent="9.2%"
+        android:background="@drawable/weixin"/>
+
+    <Button
+        android:id="@+id/button_regist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_marginTopPercent="85%"
+        android:layout_gravity="center_horizontal"
+        android:text="注册"
+        android:textColor="#ffffff"
+        android:background="@null"/>
+
+    <Button
+        android:id="@+id/forgetKey"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_marginTopPercent="93%"
+        android:layout_gravity="center_horizontal"
+        android:text="忘记密码"
+        android:textColor="#ffffff"
+        android:background="@null"/>
+
+</android.support.percent.PercentFrameLayout>

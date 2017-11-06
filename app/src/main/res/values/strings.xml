@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BlueCareer</string>
+    <string name="username_hint">用户名</string>
+    <string name="key_hint">密码</string>
+</resources>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_main"
+            android:icon="@drawable/nav_main"
+            android:title="主页">
+        </item>
+
+        <item
+            android:actionLayout="@layout/navigation_header"
+            android:id="@+id/nav_brif"
+            android:icon="@drawable/nav_brif"
+            android:title="简介"/>
+
+        <item
+            android:id="@+id/nav_test"
+            android:icon="@drawable/nav_test"
+            android:title="测试"/>
+
+        <item
+            app:actionLayout="@layout/remind_important"
+            android:id="@+id/nav_study"
+            android:icon="@drawable/nav_study"
+            android:title="学习"/>
+
+        <item
+            app:actionLayout="@layout/remind_no_imaportant"
+            android:id="@+id/nav_comm"
+            android:icon="@drawable/nav_comm"
+            android:title="社区"/>
+    </group>
+</menu>
