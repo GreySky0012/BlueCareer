@@ -21,8 +21,8 @@ public class UserManager {
     private User user;
 
     public boolean login(String id,String key){
-        //测试用帐号密码
-        if(id.equals("530171981")&&key.equals("huhaoran0012")) {
+        //alextest
+        if(id.equals("GreySky0012")&&key.equals("huhaoran0012")) {
             return true;
         }
 

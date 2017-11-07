@@ -13,8 +13,6 @@ import com.example.mercer.bluecareer.DataStruct.User;
  */
 public class SystemManager {
 
-    public BActivity nowActivity;
-
     private static SystemManager _instance;
     private SystemManager(){}
     public static  SystemManager getInstance() {
@@ -25,9 +23,24 @@ public class SystemManager {
     }
 
     public void toActivity(BActivity activity,Class className){
-        final Intent intent = new Intent(activity,className.getClass());
+        final Intent intent = new Intent(activity,className);
         activity.startActivity(intent);
         activity.finish();
+    }
+
+    public void toActivityWithNoFinish(BActivity activity,Class className){
+        final Intent intent = new Intent(activity,className);
+        activity.startActivity(intent);
+    }
+
+    public void returnActivity(BActivity activity,Intent intent){
+        activity.setResult(Activity.RESULT_OK,intent);
+        activity.finish();
+    }
+
+    public void toActivityForResult(BActivity activity,Class className,int code){
+        final Intent intent = new Intent(activity,className);
+        activity.startActivityForResult(intent,code);
     }
 
     public void PrintLog(String message){
