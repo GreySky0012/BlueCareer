@@ -11,15 +11,17 @@
         <activity android:name=".Activities.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".Activities.LoginActivity" />
-        <activity android:name=".RegistActivity" />
+        <activity android:name=".Activities.RegistActivity" />
         <activity android:name=".InfoActivity" />
         <activity android:name=".Activities.MainActivity" />
         <activity android:name=".TestAnswerActivity" />
-        <activity android:name=".ClassActivtity"></activity>
+        <activity android:name=".ClassActivtity" />
+        <activity android:name=".Activities.ForgetKeyActivity"></activity>
     </application>
 
 </manifest>

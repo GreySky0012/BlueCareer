@@ -31,7 +31,7 @@ public class StartActivity extends BActivity {
     protected void setListener() {}
 
     private void start(){
-        final Activity activity = this;
+        final BActivity activity = this;
         Timer timer = new Timer();
         TimerTask timerTask = new TimerTask() {
             @Override
