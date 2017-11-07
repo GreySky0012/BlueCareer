@@ -83,8 +83,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:layout_marginRight="46dp"
-                android:text="昵称"/>
+                android:layout_marginRight="33dp"
+                android:text="用户名"/>
 
             <EditText
                 style="?android:attr/textViewStyle"
@@ -212,7 +212,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:layout_marginRight="60dp"
+                android:layout_marginRight="58dp"
                 android:text="qq"/>
 
             <EditText

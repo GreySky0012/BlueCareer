@@ -72,32 +72,6 @@ public class LoginActivity extends BActivity {
             _image.setImageBitmap(image);
     }
 
-    public void setUsername(String id){
-        _username.setText(id);
-    }
-
-    //检查输入用户名的合法性
-    private boolean checkId(String id){
-        if(id.length()<6||id.length()>16){
-            showToast("用户名长度不能小于6或者大于16");
-            return false;
-        }
-        if(!(id.charAt(0) <= 'z'&&id.charAt(0) >= 'a')&&!(id.charAt(0) <= 'Z'&&id.charAt(0) >= 'A')){
-            showToast("用户名必须以数字开头");
-            return false;
-        }
-        return true;
-    }
-
-    //检查输入密码的合法性
-    private boolean checkKey(String key){
-        if(key.length()<6||key.length()>16){
-            showToast("密码长度不能小于6或者大于16");
-            return false;
-        }
-        return true;
-    }
-
     @Override
     final protected void setListener(){
         final LoginActivity activity = this;
@@ -140,7 +114,9 @@ public class LoginActivity extends BActivity {
             public void onClick(View v) {
                 String id = _username.getText().toString();
                 String key = _key.getText().toString();
-                if((!checkId(id))||(!checkKey(key))){
+                String checkResult = UserManager.getInstance().localCheck(id,key);
+                if(!checkResult.equals("true")){
+                    showToast(checkResult);
                     return;
                 }
                 if(!UserManager.getInstance().login(id,key)){
