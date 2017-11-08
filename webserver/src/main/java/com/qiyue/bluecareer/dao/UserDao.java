@@ -8,7 +8,6 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -17,9 +16,9 @@ import java.util.List;
 @Repository
 public class UserDao {
     @Autowired
-    SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
-    Logger logger = Logger.getLogger(this.getClass());
+    private static Logger logger = Logger.getLogger(UserDao.class);
 
     public List<UserEntity> getUserList(){
         Session session = sessionFactory.openSession();
@@ -44,5 +43,15 @@ public class UserDao {
         } finally {
             session.close();
         }
+    }
+
+    public boolean haveUserName(UserEntity userEntity) {
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery(
+                "from UserEntity AS user where user.userName = :username");
+        query.setParameter("username", userEntity.getUserName());
+        List resList =  query.list();
+        session.close();
+        return !resList.isEmpty();
     }
 }
