@@ -3,6 +3,7 @@ package com.example.mercer.bluecareer.Activities;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,8 @@ import com.example.mercer.bluecareer.ImageLoadActivity;
 import com.example.mercer.bluecareer.Manager.SystemManager;
 import com.example.mercer.bluecareer.Manager.UserManager;
 import com.example.mercer.bluecareer.R;
+
+import java.io.IOException;
 
 /**
  * Created by 53017_000 on 2017/3/7.
@@ -35,6 +38,11 @@ public class RegistActivity extends ImageLoadActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_regist);
 
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
         getView();
 
         setListener();
@@ -51,16 +59,6 @@ public class RegistActivity extends ImageLoadActivity {
         _mail = (EditText)findViewById(R.id.mail);
         _qq = (EditText)findViewById(R.id.qq);
         _job = (Button)findViewById(R.id.job);
-    }
-
-    //邮箱验证
-    public boolean isEmail(String strEmail) {
-        String strPattern = "^[a-zA-Z0-9][\\w\\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\\w\\.-]*[a-zA-Z0-9]\\.[a-zA-Z][a-zA-Z\\.]*[a-zA-Z]$";
-        if (TextUtils.isEmpty(strPattern)) {
-            return false;
-        } else {
-            return strEmail.matches(strPattern);
-        }
     }
 
     @Override
@@ -102,38 +100,57 @@ public class RegistActivity extends ImageLoadActivity {
                     showToast("邮箱不能为空");
                     return;
                 }
-                if (!isEmail(email)){
-                    showToast("请输入正确的邮箱");
-                    return;
-                }
 
-                String checkResult = UserManager.getInstance().localCheck(id,key);
+                String checkResult = UserManager.getInstance().localCheck(email,key);
                 if (!checkResult.equals("true")){
                     showToast(checkResult);
                     return;
                 }
 
-                if (!UserManager.getInstance().tryRegist(id,email)){
-                    showToast("帐号或者邮箱已存在");
-                    return;
-                }
-
-                User user = new User(id);
+                User user = new User(email);
                 user._key = key;
-                user._email = email;
+                user._username = id;
                 user._imgae = image;
                 user._qq = qq;
                 user._name = name;
                 user._imgae = image;
 
-                UserManager.getInstance().regist(user);
+                try {
+                    if(!UserManager.getInstance().tryRegist(email)){
+                        showToast("该邮箱已被使用");
+                        return;
+                    }
+                    if (!UserManager.getInstance().regist(new RegistUserData(id,email,key,qq,name))){
+                        showToast("未知错误");
+                        return;
+                    }
+                } catch (IOException e) {
+                    SystemManager.getInstance().PrintLog(e.getMessage());
+                    showToast("网络异常");
+                    return;
+                }
 
-                SystemManager.getInstance().PrintLog(activity._id.getText().toString());
                 Intent intent = new Intent();
-                intent.putExtra("id",user._username);
+                intent.putExtra("email",user._email);
                 intent.putExtra("key",user._key);
                 SystemManager.getInstance().returnActivity(activity,intent);
             }
         });
+    }
+
+    public class RegistUserData{
+        public String userName;
+        public String realName;
+        public String password;
+        public String email;
+        public String qq;
+
+        public RegistUserData(String u,String e,String p,String q,String n){
+            userName = u;
+            email = e;
+            password = p;
+            qq = q;
+            realName = n;
+        }
     }
 }

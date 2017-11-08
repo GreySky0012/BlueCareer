@@ -14,6 +14,8 @@ import com.example.mercer.bluecareer.DataStruct.User;
 public class SystemManager {
 
     private static SystemManager _instance;
+    public String AccessKey;
+
     private SystemManager(){}
     public static  SystemManager getInstance() {
         if (_instance == null){

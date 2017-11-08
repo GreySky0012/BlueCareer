@@ -13,7 +13,7 @@ public class User {
     public Bitmap _imgae;
     public String _qq;
 
-    public User(String username){
-        _username = username;
+    public User(String email){
+        _email = email;
     }
 }

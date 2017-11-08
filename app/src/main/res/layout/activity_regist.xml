@@ -83,8 +83,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:layout_marginRight="33dp"
-                android:text="用户名"/>
+                android:layout_marginRight="47dp"
+                android:text="昵称"/>
 
             <EditText
                 style="?android:attr/textViewStyle"
@@ -92,7 +92,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:textSize="15sp"/>
+                android:textSize="15sp"
+                android:text="GreySky0012" />
 
         </LinearLayout>
 
@@ -124,7 +125,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:textSize="15sp"/>
+                android:textSize="15sp"
+                android:text="胡皓然" />
 
         </LinearLayout>
 
@@ -157,7 +159,8 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:inputType="textPassword"
-                android:textSize="15sp"/>
+                android:textSize="15sp"
+                android:text="huhaoran0012" />
 
         </LinearLayout>
 
@@ -189,7 +192,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:textSize="15sp"/>
+                android:textSize="15sp"
+                android:text="530171981@qq.com" />
 
         </LinearLayout>
 
@@ -221,7 +225,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:textSize="15sp"/>
+                android:textSize="15sp"
+                android:text="530171981" />
 
         </LinearLayout>
 
@@ -247,7 +252,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:layout_marginRight="20dp"
-                android:text="职业选择"/>
+                android:text="行业选择"/>
 
         </LinearLayout>
 
