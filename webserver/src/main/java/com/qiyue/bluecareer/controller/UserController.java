@@ -10,10 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -53,6 +50,15 @@ public class UserController {
             logger.error(e.getMessage());
             return ErrorEnum.HIBERNATE_ERROR.getResponse(e.getMessage());
         }
+    }
+
+    @RequestMapping(value = "/email_exit", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse verifyEmail(@RequestParam(value = "email") String email) {
+        logger.debug("email verify. " + email);
+        UserEntity userEntity = new UserEntity();
+        userEntity.setEmail(email);
+        boolean res = userService.haveEmail(userEntity);
+        return new CommonResponse<>(res);
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)

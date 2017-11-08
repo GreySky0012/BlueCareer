@@ -33,6 +33,10 @@ public class UserService {
         userDao.addUser(user);
     }
 
+    public boolean haveEmail(UserEntity userEntity) {
+        return userDao.haveEmail(userEntity);
+    }
+
     public String userLogin(UserEntity user) throws HibernateException, BlueCareerException {
         if (!userDao.verifyPassword(user)){
             logger.debug("email or password error. " + user.getEmail());
