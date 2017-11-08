@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.example.mercer.bluecareer.Activities.BActivity;
-import com.example.mercer.bluecareer.Activities.LoginActivity;
-import com.example.mercer.bluecareer.DataStruct.User;
 
 /**
  * Created by GreySky on 2017/9/9.

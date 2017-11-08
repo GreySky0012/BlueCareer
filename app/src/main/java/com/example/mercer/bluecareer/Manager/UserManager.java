@@ -1,20 +1,16 @@
 package com.example.mercer.bluecareer.Manager;
 
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.text.TextUtils;
 
 import com.example.mercer.bluecareer.Activities.LoginActivity;
 import com.example.mercer.bluecareer.Activities.RegistActivity;
 import com.example.mercer.bluecareer.DataStruct.RetureCode;
-import com.example.mercer.bluecareer.DataStruct.Url.Url;
 import com.example.mercer.bluecareer.DataStruct.Url.UserUrl;
-import com.example.mercer.bluecareer.DataStruct.User;
+import com.example.mercer.bluecareer.DataStruct.AppUser;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-
-import okhttp3.Response;
 
 /**
  * Created by GreySky on 2017/10/21.
@@ -29,7 +25,7 @@ public class UserManager {
         return  _instance;
     }
 
-    private User user;
+    private AppUser user;
 
 
     //邮箱验证
