@@ -54,4 +54,23 @@ public class UserController {
             return ErrorEnum.HIBERNATE_ERROR.getResponse(e.getMessage());
         }
     }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse verifyLogin(@RequestBody UserEntity userEntity) {
+        if (userEntity.getPassword() == null || userEntity.getEmail() == null) {
+            return ErrorEnum.REQUEST_PARAMETER_ERROR.getResponse(userEntity.toString());
+        }
+
+        try {
+            logger.debug("user login. " + userEntity.toString());
+            String accessKey = userService.userLogin(userEntity);
+            return new CommonResponse<>(accessKey);
+        } catch (BlueCareerException e) {
+            logger.error(e.getMessage());
+            return ErrorEnum.SERVER_ERROR.getResponse(e.getMessage() + userEntity.getEmail());
+        } catch (HibernateException e) {
+            logger.error(e.getMessage());
+            return ErrorEnum.HIBERNATE_ERROR.getResponse(e.getMessage());
+        }
+    }
 }
