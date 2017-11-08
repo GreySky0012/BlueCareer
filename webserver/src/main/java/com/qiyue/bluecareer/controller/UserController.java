@@ -43,13 +43,14 @@ public class UserController {
         }
 
         try {
+            logger.debug("add user. " + userEntity.toString());
             userService.addUser(userEntity);
             return new CommonResponse();
         } catch (BlueCareerException e) {
-            logger.debug(e.getMessage());
+            logger.error(e.getMessage());
             return ErrorEnum.SERVER_ERROR.getResponse(userEntity.getUserName());
         } catch (HibernateException e) {
-            logger.debug(e.getMessage());
+            logger.error(e.getMessage());
             return ErrorEnum.HIBERNATE_ERROR.getResponse(e.getMessage());
         }
     }

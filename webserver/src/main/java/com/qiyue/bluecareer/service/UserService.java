@@ -26,6 +26,7 @@ public class UserService {
 
     public void addUser(UserEntity user) throws HibernateException, BlueCareerException {
         if (userDao.haveUserName(user)){
+            logger.debug("already have user " + user.getUserName());
             throw new BlueCareerException("already have user ");
         }
         userDao.addUser(user);
