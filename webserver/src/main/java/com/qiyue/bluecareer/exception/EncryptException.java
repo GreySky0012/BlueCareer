@@ -1,4 +1,4 @@
-package com.qiyue.bluecareer.Exception;
+package com.qiyue.bluecareer.exception;
 
 /**
  * Created by Qiyue on 2017/11/7

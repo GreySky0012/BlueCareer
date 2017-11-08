@@ -1,6 +1,6 @@
 package com.qiyue.bluecareer.service;
 
-import com.qiyue.bluecareer.Exception.BlueCareerException;
+import com.qiyue.bluecareer.exception.BlueCareerException;
 import com.qiyue.bluecareer.dao.UserDao;
 import com.qiyue.bluecareer.model.view.UserEntity;
 import org.apache.log4j.Logger;

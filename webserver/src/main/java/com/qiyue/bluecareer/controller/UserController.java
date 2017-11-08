@@ -1,6 +1,6 @@
 package com.qiyue.bluecareer.controller;
 
-import com.qiyue.bluecareer.Exception.BlueCareerException;
+import com.qiyue.bluecareer.exception.BlueCareerException;
 import com.qiyue.bluecareer.model.CommonResponse;
 import com.qiyue.bluecareer.model.ErrorResponse;
 import com.qiyue.bluecareer.model.view.UserEntity;

@@ -1,4 +1,4 @@
-package com.qiyue.bluecareer.Exception;
+package com.qiyue.bluecareer.exception;
 
 public class BlueCareerException extends Exception{
     public BlueCareerException(String message) {
