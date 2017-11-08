@@ -8,7 +8,9 @@
     <artifactId>BlueCareer</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+
     <build>
+        <finalName>BlueCareer</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
