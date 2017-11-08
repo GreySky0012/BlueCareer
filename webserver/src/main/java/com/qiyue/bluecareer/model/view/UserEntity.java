@@ -1,13 +1,14 @@
 package com.qiyue.bluecareer.model.view;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by qiyue on 2017/11/7
  */
 @Entity
 @Table(name = "user", schema = "bluecareer", catalog = "")
-public class UserEntity {
+public class UserEntity implements Serializable {
     private int id;
     private String userName;
     private String realName;

@@ -1,6 +1,6 @@
 package com.qiyue.bluecareer.utils;
 
-import com.qiyue.bluecareer.Exception.EncryptException;
+import com.qiyue.bluecareer.exception.EncryptException;
 import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.BadPaddingException;
