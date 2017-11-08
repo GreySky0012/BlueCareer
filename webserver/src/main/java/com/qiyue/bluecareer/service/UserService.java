@@ -18,4 +18,8 @@ public class UserService {
     public List<UserEntity> getUserList(){
         return userDao.getUserList();
     }
+
+    public boolean addUser(UserEntity user) {
+        return userDao.addUser(user);
+    }
 }
