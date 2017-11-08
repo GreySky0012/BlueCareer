@@ -116,4 +116,17 @@ public class UserEntity implements Serializable {
         result = 31 * result + (accessKey != null ? accessKey.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("id : " + this.getUserName());
+        sb.append(", userName : " + this.getUserName());
+        sb.append(", realName : " + this.getRealName());
+        sb.append(", password : " + this.getPassword());
+        sb.append(", email : " + this.getEmail()) ;
+        sb.append(", QQ : " + this.getQQ());
+        sb.append(", accessKey : " + this.getAccessKey());
+        return sb.toString();
+    }
 }

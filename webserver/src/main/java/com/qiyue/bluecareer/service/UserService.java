@@ -23,10 +23,10 @@ public class UserService {
         return userDao.getUserList();
     }
 
-    public boolean addUser(UserEntity user) throws BlueCareerException {
+    public void addUser(UserEntity user) throws BlueCareerException {
         if (userDao.haveUserName(user)){
-            throw  new BlueCareerException("already have user " + user.getUserName());
+            throw new BlueCareerException("already have user " + user.getUserName());
         }
-        return userDao.addUser(user);
+        userDao.addUser(user);
     }
 }
