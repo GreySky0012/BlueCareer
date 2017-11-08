@@ -46,11 +46,11 @@ public class UserDao {
         }
     }
 
-    public boolean haveUserName(UserEntity userEntity) {
+    public boolean haveEmail(UserEntity userEntity) {
         Session session = sessionFactory.openSession();
         Query query = session.createQuery(
-                "from UserEntity AS user where user.userName = :username");
-        query.setParameter("username", userEntity.getUserName());
+                "from UserEntity AS user where user.email = :email");
+        query.setParameter("email", userEntity.getEmail());
         List resList =  query.list();
         session.close();
         return !resList.isEmpty();

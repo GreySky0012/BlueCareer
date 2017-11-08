@@ -48,7 +48,7 @@ public class UserController {
             return new CommonResponse();
         } catch (BlueCareerException e) {
             logger.error(e.getMessage());
-            return ErrorEnum.SERVER_ERROR.getResponse(userEntity.getUserName());
+            return ErrorEnum.SERVER_ERROR.getResponse(e.getMessage() + userEntity.getEmail());
         } catch (HibernateException e) {
             logger.error(e.getMessage());
             return ErrorEnum.HIBERNATE_ERROR.getResponse(e.getMessage());
