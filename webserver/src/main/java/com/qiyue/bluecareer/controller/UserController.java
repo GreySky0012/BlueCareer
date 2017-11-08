@@ -1,6 +1,7 @@
 package com.qiyue.bluecareer.controller;
 
 import com.qiyue.bluecareer.exception.BlueCareerException;
+import com.qiyue.bluecareer.exception.HibernateException;
 import com.qiyue.bluecareer.model.CommonResponse;
 import com.qiyue.bluecareer.model.enums.ErrorEnum;
 import com.qiyue.bluecareer.model.view.UserEntity;
@@ -36,7 +37,7 @@ public class UserController {
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse addUser(@RequestBody UserEntity userEntity) {
         if (userEntity.getUserName() == null
-                || userEntity.getPassword() ==null
+                || userEntity.getPassword() == null
                 || userEntity.getEmail() == null) {
             return ErrorEnum.REQUEST_PARAMETER_ERROR.getResponse(userEntity.toString());
         }
@@ -46,7 +47,10 @@ public class UserController {
             return new CommonResponse();
         } catch (BlueCareerException e) {
             logger.debug(e.getMessage());
-            return ErrorEnum.ALREADY_HAVE_USER.getResponse(userEntity.getUserName());
+            return ErrorEnum.SERVER_ERROR.getResponse(userEntity.getUserName());
+        } catch (HibernateException e) {
+            logger.debug(e.getMessage());
+            return ErrorEnum.HIBERNATE_ERROR.getResponse(e.getMessage());
         }
     }
 }
