@@ -1,5 +1,6 @@
 package com.qiyue.bluecareer.dao;
 
+import com.qiyue.bluecareer.exception.HibernateException;
 import com.qiyue.bluecareer.model.view.UserEntity;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -28,7 +29,7 @@ public class UserDao {
         return userList;
     }
 
-    public boolean addUser(UserEntity user) {
+    public boolean addUser(UserEntity user) throws HibernateException {
         Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
@@ -39,7 +40,7 @@ public class UserDao {
         } catch (Exception e) {
             logger.debug(e.getMessage());
             session.getTransaction().rollback();
-            return false;
+            throw new HibernateException(e);
         } finally {
             session.close();
         }

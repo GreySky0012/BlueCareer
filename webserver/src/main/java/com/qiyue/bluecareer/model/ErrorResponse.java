@@ -15,4 +15,9 @@ public class ErrorResponse extends CommonResponse{
         this.setCode(-1);
         this.setMessage(message);
     }
+
+    public ErrorResponse(int code, String message) {
+        this.setCode(code);
+        this.setMessage(message);
+    }
 }
