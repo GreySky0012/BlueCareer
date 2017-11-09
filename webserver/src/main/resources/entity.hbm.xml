@@ -11,5 +11,6 @@
         <property name="email" column="email"/>
         <property name="QQ" column="qq"/>
         <property name="accessKey" column="access_key"/>
+        <property name="imagePath" column="image_path"/>
     </class>
 </hibernate-mapping>

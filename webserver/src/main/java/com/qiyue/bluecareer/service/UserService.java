@@ -49,4 +49,21 @@ public class UserService {
         userDao.updateAccessKey(user);
         return user.getAccessKey();
     }
+
+    public UserEntity getUserImagePath(UserEntity user) throws BlueCareerException, HibernateException {
+        if (!userDao.verifyAccessKey(user)) {
+            logger.debug("email or key error. " + user.getEmail() + user.getAccessKey());
+            throw new BlueCareerException("email or key error. ");
+        }
+        String userImagePath = userDao.getUserImagePath(user);
+        user.setImagePath(userImagePath);
+
+        String newKey = KeyUtil.getNewKey();
+        logger.debug("create a new key. " + newKey);
+        user.setAccessKey(newKey);
+        logger.debug("update for user " + user.getEmail());
+        userDao.updateAccessKey(user);
+
+        return user;
+    }
 }

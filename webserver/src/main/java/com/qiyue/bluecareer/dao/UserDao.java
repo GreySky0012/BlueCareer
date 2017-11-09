@@ -69,14 +69,29 @@ public class UserDao {
     }
 
     /**
+     * 获取用户头像图片地址
+     * @param userEntity 带有用户邮箱的Entity
+     * @return
+     */
+    public String getUserImagePath(UserEntity userEntity) {
+        Session session = sessionFactory.openSession();
+        Query<String> query = session.createQuery(
+                "SELECT user.imagePath from UserEntity AS user where user.email = :email", String.class);
+        query.setParameter("email", userEntity.getEmail());
+        List<String> resList =  query.list();
+        session.close();
+        return resList.get(0);
+    }
+
+    /**
      * 验证请求key是否正确
      * @param userEntity  带有邮箱和key信息的Entity
      * @return
      */
-    public boolean verifyAccesssKey(UserEntity userEntity) {
+    public boolean verifyAccessKey(UserEntity userEntity) {
         Session session = sessionFactory.openSession();
         Query query = session.createQuery(
-                "from UserEntity AS user where user.id = : AND user.accessKey = :accessKey");
+                "from UserEntity AS user where user.email = :email AND user.accessKey = :accessKey");
         query.setParameter("email", userEntity.getEmail());
         query.setParameter("accessKey", userEntity.getAccessKey());
         List resList =  query.list();

@@ -52,7 +52,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/email_exit", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/email_exit", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse verifyEmail(@RequestParam(value = "email") String email) {
         logger.debug("email verify. " + email);
         UserEntity userEntity = new UserEntity();
@@ -74,6 +74,24 @@ public class UserController {
         } catch (BlueCareerException e) {
             logger.error(e.getMessage());
             return ErrorEnum.SERVER_ERROR.getResponse(e.getMessage() + userEntity.getEmail());
+        } catch (HibernateException e) {
+            logger.error(e.getMessage());
+            return ErrorEnum.HIBERNATE_ERROR.getResponse(e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "/image_path", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getUserImagePath(@RequestParam(value = "email") String email,
+                                           @RequestParam(value = "accessKey") String accessKey) {
+        try {
+            UserEntity userEntity = new UserEntity();
+            userEntity.setEmail(email);
+            userEntity.setAccessKey(accessKey);
+            UserEntity response = userService.getUserImagePath(userEntity);
+            return new CommonResponse<>(response);
+        } catch (BlueCareerException e) {
+            logger.error(e.getMessage());
+            return ErrorEnum.KEY_ERROR.getResponse(e.getMessage() + email);
         } catch (HibernateException e) {
             logger.error(e.getMessage());
             return ErrorEnum.HIBERNATE_ERROR.getResponse(e.getMessage());

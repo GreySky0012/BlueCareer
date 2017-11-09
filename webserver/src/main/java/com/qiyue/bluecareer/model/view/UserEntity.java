@@ -16,6 +16,7 @@ public class UserEntity implements Serializable {
     private String email;
     private String QQ;
     private String accessKey;
+    private String imagePath;
 
     @Id
     @Column(name = "id")
@@ -87,6 +88,16 @@ public class UserEntity implements Serializable {
         this.accessKey = accessKey;
     }
 
+    @Basic
+    @Column(name = "image_path")
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -101,7 +112,8 @@ public class UserEntity implements Serializable {
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
         if (QQ != null ? !QQ.equals(that.QQ) : that.QQ != null) return false;
         if (accessKey != null ? !accessKey.equals(that.accessKey) : that.accessKey != null) return false;
-
+        if (accessKey != null ? !accessKey.equals(that.accessKey) : that.accessKey != null) return false;
+        if (imagePath != null ? !imagePath.equals(that.imagePath) : that.imagePath != null) return false;
         return true;
     }
 
@@ -114,6 +126,7 @@ public class UserEntity implements Serializable {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (QQ != null ? QQ.hashCode() : 0);
         result = 31 * result + (accessKey != null ? accessKey.hashCode() : 0);
+        result = 31 * result + (imagePath != null ? imagePath.hashCode() : 0);
         return result;
     }
 
@@ -127,6 +140,7 @@ public class UserEntity implements Serializable {
         sb.append(", email : " + this.getEmail()) ;
         sb.append(", QQ : " + this.getQQ());
         sb.append(", accessKey : " + this.getAccessKey());
+        sb.append(", imagePath : " + this.getImagePath());
         return sb.toString();
     }
 }
