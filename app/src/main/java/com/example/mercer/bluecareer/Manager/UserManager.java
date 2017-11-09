@@ -1,15 +1,18 @@
 package com.example.mercer.bluecareer.Manager;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 
+import com.example.mercer.bluecareer.Activities.BActivity;
 import com.example.mercer.bluecareer.Activities.LoginActivity;
 import com.example.mercer.bluecareer.Activities.RegistActivity;
 import com.example.mercer.bluecareer.DataStruct.RetureCode;
 import com.example.mercer.bluecareer.DataStruct.Url.UserUrl;
-import com.example.mercer.bluecareer.DataStruct.AppUser;
+import com.example.mercer.bluecareer.DataStruct.User;
 import com.google.gson.Gson;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -25,7 +28,7 @@ public class UserManager {
         return  _instance;
     }
 
-    private AppUser user;
+    private User user;
 
 
     //邮箱验证
@@ -86,8 +89,19 @@ public class UserManager {
         return false;
     }
 
-    public Bitmap getImage(String id){
-        //从本地数据库中获取头像
-        return null;
+    public String GetImagePath(BActivity context,String email){
+        return SystemManager.getInstance().SystemPath(context)+"/Image/"+email+".jpg";
+    }
+
+    public Bitmap GetImage(BActivity context,String email){
+        //获取头像
+        String path = GetImagePath(context,email);
+
+        File file = new File(path);
+        if (!file.exists())
+            return null;
+
+        Bitmap image = BitmapFactory.decodeFile(path);
+        return image;
     }
 }

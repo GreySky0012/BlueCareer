@@ -94,13 +94,7 @@ public class LoginActivity extends BActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //alextest
-                if (s.toString().equals("GreySky0012")) {
-                    setImage(BitmapFactory.decodeResource(activity.getResources(), R.drawable.test_image));
-                    return;
-                }
-
-                Bitmap image = UserManager.getInstance().getImage(s.toString());
+                Bitmap image = UserManager.getInstance().GetImage(activity,s.toString());
                 setImage(image);
             }
 

@@ -1,14 +1,16 @@
 package com.example.mercer.bluecareer.Activities;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.mercer.bluecareer.DataStruct.AppUser;
+import com.example.mercer.bluecareer.DataStruct.User;
 import com.example.mercer.bluecareer.ImageChooser;
 import com.example.mercer.bluecareer.ImageLoadActivity;
 import com.example.mercer.bluecareer.Manager.SystemManager;
@@ -78,6 +80,9 @@ public class RegistActivity extends ImageLoadActivity {
                 circle_image.setDrawingCacheEnabled(true);
                 Bitmap image = activity.circle_image.getDrawingCache();
                 circle_image.setDrawingCacheEnabled(false);
+                if (image == null){
+                    image = BitmapFactory.decodeResource(getResources(),R.drawable.default_image);
+                }
                 String qq = activity._qq.getText().toString();
                 String name = activity._name.getText().toString();
 
@@ -104,13 +109,10 @@ public class RegistActivity extends ImageLoadActivity {
                     return;
                 }
 
-                AppUser user = new AppUser(email);
+                User user = new User(email,id,image);
                 user._key = key;
-                user._username = id;
-                user._imgae = image;
                 user._qq = qq;
                 user._name = name;
-                user._imgae = image;
 
                 try {
                     if(!UserManager.getInstance().tryRegist(email)){
@@ -125,6 +127,12 @@ public class RegistActivity extends ImageLoadActivity {
                     SystemManager.getInstance().PrintLog(e.getMessage());
                     showToast("网络异常");
                     return;
+                }
+
+                try {
+                    user.SaveImage(activity);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
 
                 Intent intent = new Intent();

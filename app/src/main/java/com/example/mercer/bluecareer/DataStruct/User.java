@@ -1,51 +1,44 @@
 package com.example.mercer.bluecareer.DataStruct;
 
-import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.Generated;
+import android.graphics.Bitmap;
+import android.os.Environment;
+
+import com.example.mercer.bluecareer.Activities.BActivity;
+import com.example.mercer.bluecareer.Manager.SystemManager;
+import com.example.mercer.bluecareer.Manager.UserManager;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
- * Created by GreySky on 2017/11/9.
+ * Created by GreySky on 2017/9/9.
  */
-@Entity
 public class User {
-    @Id(autoincrement = true)
-    private Long id;
-    private String name;
-    private int age;
-    private boolean isBoy;
-    public boolean getIsBoy() {
-        return this.isBoy;
+    public String _username;
+    public String _key;
+    public String _email;
+    public String _name;
+    public Bitmap _image;
+    public String _qq;
+
+    public User(String email,String username,Bitmap image){
+        _email = email;
+        _username = username;
+        _image = image;
     }
-    public void setIsBoy(boolean isBoy) {
-        this.isBoy = isBoy;
-    }
-    public int getAge() {
-        return this.age;
-    }
-    public void setAge(int age) {
-        this.age = age;
-    }
-    public String getName() {
-        return this.name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public Long getId() {
-        return this.id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    @Generated(hash = 1724489812)
-    public User(Long id, String name, int age, boolean isBoy) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.isBoy = isBoy;
-    }
-    @Generated(hash = 586692638)
-    public User() {
+
+    public String SaveImage(BActivity context) throws IOException {
+        if (_image == null){
+            return null;
+        }
+        String dir = UserManager.getInstance().GetImagePath(context,_email);
+        File file = new File(dir);
+        FileOutputStream out = new FileOutputStream(file);
+        _image.compress(Bitmap.CompressFormat.JPEG,100,out);
+        out.flush();
+        out.close();
+        return dir;
     }
 }

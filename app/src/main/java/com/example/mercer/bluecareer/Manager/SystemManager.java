@@ -43,6 +43,10 @@ public class SystemManager {
         activity.startActivityForResult(intent,code);
     }
 
+    public String SystemPath(BActivity context){
+        return context.getCacheDir().getPath();
+    }
+
     public void PrintLog(String message){
         Log.d("BlueCareer",message);
     }
