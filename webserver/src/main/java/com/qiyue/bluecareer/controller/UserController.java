@@ -67,7 +67,7 @@ public class UserController {
      * @param email 邮箱
      * @return CommonResponse data 字段为 结果  true 存在
      */
-    @RequestMapping(value = "/email_exit", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/email_exist", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse verifyEmail(@RequestParam(value = "email") String email) {
         logger.debug("email verify. " + email);
         boolean res = userService.haveEmail(email);
