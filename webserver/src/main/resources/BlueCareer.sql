@@ -13,5 +13,7 @@ CREATE TABLE user
     password VARCHAR(64) NOT NULL,
     email VARCHAR(64) NOT NULL,
     qq VARCHAR(64),
-    access_key VARCHAR(64) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+    access_key VARCHAR(64)
+) ENGINE=InnoDB  auto_increment=1001  DEFAULT CHARSET=utf8;
+
+INSERT INTO user (username, realname, password, email, qq, access_key) VALUES ('testUser', 'Hu Hao Ran', '123456', 'mail@example.com', '123456789', 'abcdefg');

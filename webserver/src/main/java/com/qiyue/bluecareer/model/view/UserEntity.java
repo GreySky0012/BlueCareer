@@ -1,13 +1,14 @@
 package com.qiyue.bluecareer.model.view;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by qiyue on 2017/11/7
  */
 @Entity
 @Table(name = "user", schema = "bluecareer", catalog = "")
-public class UserEntity {
+public class UserEntity implements Serializable {
     private int id;
     private String userName;
     private String realName;
@@ -114,5 +115,18 @@ public class UserEntity {
         result = 31 * result + (QQ != null ? QQ.hashCode() : 0);
         result = 31 * result + (accessKey != null ? accessKey.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("id : " + this.getUserName());
+        sb.append(", userName : " + this.getUserName());
+        sb.append(", realName : " + this.getRealName());
+        sb.append(", password : " + this.getPassword());
+        sb.append(", email : " + this.getEmail()) ;
+        sb.append(", QQ : " + this.getQQ());
+        sb.append(", accessKey : " + this.getAccessKey());
+        return sb.toString();
     }
 }
