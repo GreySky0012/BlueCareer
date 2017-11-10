@@ -89,6 +89,9 @@ public class UserDao {
         query.setParameter(EMAIL_STR, email);
         List<String> resList =  query.list();
         session.close();
+        if (resList.isEmpty()) {
+            return null;
+        }
         return resList.get(0);
     }
 

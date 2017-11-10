@@ -2,6 +2,9 @@ package com.qiyue.bluecareer.model.enums;
 
 import com.qiyue.bluecareer.model.ErrorResponse;
 
+/**
+ * Created by Qiyue on 2017/11/7
+ */
 public enum ErrorEnum {
     SERVER_ERROR(499, "Server error. "),
     REQUEST_PARAMETER_ERROR(501, "Request parameter error. "),

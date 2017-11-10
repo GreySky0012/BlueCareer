@@ -3,7 +3,7 @@ package com.qiyue.bluecareer.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Created by qiyue on 2017/8/21
+ * Created by Qiyue on 2017/8/21
  */
 public class CommonResponse<T> {
 

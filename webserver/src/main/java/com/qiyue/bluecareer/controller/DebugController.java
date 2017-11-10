@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * Created by qiyue on 2017/11/7
+ * Created by Qiyue on 2017/11/7
  */
 @Controller
 @ResponseBody
