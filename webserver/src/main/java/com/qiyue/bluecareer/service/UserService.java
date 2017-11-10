@@ -26,44 +26,23 @@ public class UserService {
     }
 
     public void addUser(UserEntity user) throws HibernateException, BlueCareerException {
-        if (userDao.haveEmail(user)){
+        if (userDao.haveEmail(user.getEmail())){
             logger.debug("email already registered " + user.getEmail());
             throw new BlueCareerException("email already registered ");
         }
         userDao.addUser(user);
     }
 
-    public boolean haveEmail(UserEntity userEntity) {
-        return userDao.haveEmail(userEntity);
+    public boolean haveEmail(String email) {
+        return userDao.haveEmail(email);
     }
 
-    public String userLogin(UserEntity user) throws HibernateException, BlueCareerException {
-        if (!userDao.verifyPassword(user)){
-            logger.debug("email or password error. " + user.getEmail());
-            throw new BlueCareerException("email or password error. ");
-        }
-        String newKey = KeyUtil.getNewKey();
-        logger.debug("create a new key. " + newKey);
-        user.setAccessKey(newKey);
-        logger.debug("update for user " + user.getEmail());
-        userDao.updateAccessKey(user);
-        return user.getAccessKey();
+    public String userLogin(String mail, String password) {
+        return userDao.verifyPassword(mail, password);
     }
 
-    public UserEntity getUserImagePath(UserEntity user) throws BlueCareerException, HibernateException {
-        if (!userDao.verifyAccessKey(user)) {
-            logger.debug("email or key error. " + user.getEmail() + user.getAccessKey());
-            throw new BlueCareerException("email or key error. ");
-        }
-        String userImagePath = userDao.getUserImagePath(user);
-        user.setImagePath(userImagePath);
+    public String getUserImagePath(String mail) throws  HibernateException {
+        return userDao.getUserImagePath(mail);
 
-        String newKey = KeyUtil.getNewKey();
-        logger.debug("create a new key. " + newKey);
-        user.setAccessKey(newKey);
-        logger.debug("update for user " + user.getEmail());
-        userDao.updateAccessKey(user);
-
-        return user;
     }
 }

@@ -55,9 +55,7 @@ public class UserController {
     @RequestMapping(value = "/email_exit", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse verifyEmail(@RequestParam(value = "email") String email) {
         logger.debug("email verify. " + email);
-        UserEntity userEntity = new UserEntity();
-        userEntity.setEmail(email);
-        boolean res = userService.haveEmail(userEntity);
+        boolean res = userService.haveEmail(email);
         return new CommonResponse<>(res);
     }
 
@@ -67,34 +65,28 @@ public class UserController {
             return ErrorEnum.REQUEST_PARAMETER_ERROR.getResponse(userEntity.toString());
         }
 
-        try {
+        String accessKey = userService.userLogin(userEntity.getEmail(), userEntity.getPassword());
+        if (accessKey != null) {
             logger.debug("user login. " + userEntity.toString());
-            String accessKey = userService.userLogin(userEntity);
             return new CommonResponse<>(accessKey);
-        } catch (BlueCareerException e) {
-            logger.error(e.getMessage());
-            return ErrorEnum.SERVER_ERROR.getResponse(e.getMessage() + userEntity.getEmail());
+        } else {
+            return ErrorEnum.LOGIN_ERROR.getResponse();
+        }
+    }
+
+    @RequestMapping(value = "/image_path", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getUserImagePath(@RequestParam(value = "email") String email) {
+        try {
+            String imagePath = userService.getUserImagePath(email);
+            return new CommonResponse<>(imagePath);
         } catch (HibernateException e) {
             logger.error(e.getMessage());
             return ErrorEnum.HIBERNATE_ERROR.getResponse(e.getMessage());
         }
     }
 
-    @RequestMapping(value = "/image_path", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public CommonResponse getUserImagePath(@RequestParam(value = "email") String email,
-                                           @RequestParam(value = "accessKey") String accessKey) {
-        try {
-            UserEntity userEntity = new UserEntity();
-            userEntity.setEmail(email);
-            userEntity.setAccessKey(accessKey);
-            UserEntity response = userService.getUserImagePath(userEntity);
-            return new CommonResponse<>(response);
-        } catch (BlueCareerException e) {
-            logger.error(e.getMessage());
-            return ErrorEnum.KEY_ERROR.getResponse(e.getMessage() + email);
-        } catch (HibernateException e) {
-            logger.error(e.getMessage());
-            return ErrorEnum.HIBERNATE_ERROR.getResponse(e.getMessage());
-        }
+    @RequestMapping(value = "image_upload", method = RequestMethod.POST, produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public CommonResponse uploadUserImage() {
+        return null;
     }
 }

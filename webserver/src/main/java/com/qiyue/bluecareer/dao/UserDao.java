@@ -54,46 +54,52 @@ public class UserDao {
 
     /**
      * 验证登陆邮箱与密码
-     * @param userEntity  带有邮箱和密码信息的Entity
-     * @return 正确返回true
+     * @param mail  邮箱
+     * @param encryptPassword 加密后的密码
+     * @return 返回accessKey
      */
-    public boolean verifyPassword(UserEntity userEntity) {
+    public String verifyPassword(String mail, String encryptPassword) {
         Session session = sessionFactory.openSession();
-        Query query = session.createQuery(
-                "from UserEntity AS user where user.email = :email AND user.password = :password");
-        query.setParameter("email", userEntity.getEmail());
-        query.setParameter("password", userEntity.getPassword());
-        List resList =  query.list();
+        Query<String> query = session.createQuery(
+                "SELECT user.accessKey from UserEntity AS user where user.email = :email AND user.password = :password", String.class);
+        query.setParameter("email", mail);
+        query.setParameter("password", encryptPassword);
+        List<String> resList =  query.list();
         session.close();
-        return !resList.isEmpty();
+        if (resList.isEmpty()) {
+            return null;
+        } else {
+            return resList.get(0);
+        }
     }
 
     /**
      * 获取用户头像图片地址
-     * @param userEntity 带有用户邮箱的Entity
+     * @param email 用户邮箱
      * @return
      */
-    public String getUserImagePath(UserEntity userEntity) {
+    public String getUserImagePath(String email) {
         Session session = sessionFactory.openSession();
         Query<String> query = session.createQuery(
                 "SELECT user.imagePath from UserEntity AS user where user.email = :email", String.class);
-        query.setParameter("email", userEntity.getEmail());
+        query.setParameter("email", email);
         List<String> resList =  query.list();
         session.close();
         return resList.get(0);
     }
 
     /**
-     * 验证请求key是否正确
-     * @param userEntity  带有邮箱和key信息的Entity
-     * @return
+     * 验证用户Key是否正缺
+     * @param email 用户邮箱
+     * @param accessKey Key
+     * @return 符合返回true
      */
-    public boolean verifyAccessKey(UserEntity userEntity) {
+    public boolean verifyAccessKey(String email, String accessKey) {
         Session session = sessionFactory.openSession();
         Query query = session.createQuery(
                 "from UserEntity AS user where user.email = :email AND user.accessKey = :accessKey");
-        query.setParameter("email", userEntity.getEmail());
-        query.setParameter("accessKey", userEntity.getAccessKey());
+        query.setParameter("email", email);
+        query.setParameter("accessKey", accessKey);
         List resList =  query.list();
         session.close();
         return !resList.isEmpty();
@@ -101,21 +107,22 @@ public class UserDao {
 
     /**
      * 更新用户的key
-     * @param userEntity 带有邮箱和新key信息的Entity
+     * @param email  需要更新的用户
+     * @param newAccessKey 新key
      * @return
      * @throws HibernateException
      */
-    public boolean updateAccessKey(UserEntity userEntity) throws HibernateException {
+    public boolean updateAccessKey(String email, String newAccessKey) throws HibernateException {
         Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
             Query query = session.createQuery(
                     "UPDATE UserEntity SET accessKey = :accessKey WHERE email = :email");
-            query.setParameter("accessKey", userEntity.getAccessKey());
-            query.setParameter("email", userEntity.getEmail());
+            query.setParameter("accessKey", newAccessKey);
+            query.setParameter("email", email);
             query.executeUpdate();
             session.getTransaction().commit();
-            logger.debug("update user key . " + userEntity.getAccessKey());
+            logger.debug("update user key . " + newAccessKey);
             return true;
         } catch (Exception e) {
             logger.debug(e.getMessage());
@@ -129,14 +136,14 @@ public class UserDao {
 
     /**
      * 验证邮箱是否已经存在
-     * @param userEntity 带有邮箱信息的Entity
+     * @param email 邮箱信息
      * @return
      */
-    public boolean haveEmail(UserEntity userEntity) {
+    public boolean haveEmail(String email) {
         Session session = sessionFactory.openSession();
         Query query = session.createQuery(
                 "from UserEntity AS user where user.email = :email");
-        query.setParameter("email", userEntity.getEmail());
+        query.setParameter("email", email);
         List resList =  query.list();
         session.close();
         return !resList.isEmpty();
