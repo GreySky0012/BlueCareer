@@ -21,6 +21,10 @@ public class UserDao {
 
     private static Logger logger = Logger.getLogger(UserDao.class);
 
+    private static final String EMAIL_STR = "email";
+    private static final String ACCESS_KEY_STR = "accessKey";
+    private static final String PASSWORD_STR = "password";
+
     public List<UserEntity> getUserList(){
         Session session = sessionFactory.openSession();
         Query<UserEntity> query = session.createQuery("from UserEntity ", UserEntity.class);
@@ -62,8 +66,8 @@ public class UserDao {
         Session session = sessionFactory.openSession();
         Query<String> query = session.createQuery(
                 "SELECT user.accessKey from UserEntity AS user where user.email = :email AND user.password = :password", String.class);
-        query.setParameter("email", mail);
-        query.setParameter("password", encryptPassword);
+        query.setParameter(EMAIL_STR, mail);
+        query.setParameter(PASSWORD_STR, encryptPassword);
         List<String> resList =  query.list();
         session.close();
         if (resList.isEmpty()) {
@@ -82,7 +86,7 @@ public class UserDao {
         Session session = sessionFactory.openSession();
         Query<String> query = session.createQuery(
                 "SELECT user.imagePath from UserEntity AS user where user.email = :email", String.class);
-        query.setParameter("email", email);
+        query.setParameter(EMAIL_STR, email);
         List<String> resList =  query.list();
         session.close();
         return resList.get(0);
@@ -98,8 +102,8 @@ public class UserDao {
         Session session = sessionFactory.openSession();
         Query query = session.createQuery(
                 "from UserEntity AS user where user.email = :email AND user.accessKey = :accessKey");
-        query.setParameter("email", email);
-        query.setParameter("accessKey", accessKey);
+        query.setParameter(EMAIL_STR, email);
+        query.setParameter(ACCESS_KEY_STR, accessKey);
         List resList =  query.list();
         session.close();
         return !resList.isEmpty();
@@ -118,8 +122,8 @@ public class UserDao {
             session.beginTransaction();
             Query query = session.createQuery(
                     "UPDATE UserEntity SET accessKey = :accessKey WHERE email = :email");
-            query.setParameter("accessKey", newAccessKey);
-            query.setParameter("email", email);
+            query.setParameter(ACCESS_KEY_STR, newAccessKey);
+            query.setParameter(EMAIL_STR, email);
             query.executeUpdate();
             session.getTransaction().commit();
             logger.debug("update user key . " + newAccessKey);
@@ -143,7 +147,7 @@ public class UserDao {
         Session session = sessionFactory.openSession();
         Query query = session.createQuery(
                 "from UserEntity AS user where user.email = :email");
-        query.setParameter("email", email);
+        query.setParameter(EMAIL_STR, email);
         List resList =  query.list();
         session.close();
         return !resList.isEmpty();

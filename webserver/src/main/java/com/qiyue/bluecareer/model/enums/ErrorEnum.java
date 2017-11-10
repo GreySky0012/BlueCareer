@@ -31,6 +31,8 @@ public enum ErrorEnum {
             case 502: return new ErrorResponse(502, HIBERNATE_ERROR.getMessage() + msg);
             case 503: return new ErrorResponse(503, KEY_ERROR.getMessage() + msg);
             case 504: return new ErrorResponse(504, LOGIN_ERROR.getMessage() + msg);
+            default:
+                break;
         }
         return null;
     }

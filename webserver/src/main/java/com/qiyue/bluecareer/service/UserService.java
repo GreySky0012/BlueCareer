@@ -1,10 +1,9 @@
 package com.qiyue.bluecareer.service;
 
-import com.qiyue.bluecareer.exception.BlueCareerException;
 import com.qiyue.bluecareer.dao.UserDao;
+import com.qiyue.bluecareer.exception.BlueCareerException;
 import com.qiyue.bluecareer.exception.HibernateException;
 import com.qiyue.bluecareer.model.view.UserEntity;
-import com.qiyue.bluecareer.utils.KeyUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
