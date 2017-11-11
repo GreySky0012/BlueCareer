@@ -1,18 +1,11 @@
 package com.example.mercer.bluecareer;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.net.Uri;
 
-import java.io.File;
+import com.example.mercer.bluecareer.Activities.ImageLoadActivity;
 
 /**
  * Created by 53017_000 on 2017/3/18.

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -14,6 +15,8 @@ import com.example.mercer.bluecareer.CircleImageView;
 import com.example.mercer.bluecareer.Manager.SystemManager;
 import com.example.mercer.bluecareer.Manager.UserManager;
 import com.example.mercer.bluecareer.R;
+
+import java.io.IOException;
 
 public class LoginActivity extends BActivity {
 
@@ -33,6 +36,11 @@ public class LoginActivity extends BActivity {
         //设置XML布局文件
         setContentView(R.layout.activity_login);
 
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
         getView();
 
         setListener();
@@ -40,12 +48,13 @@ public class LoginActivity extends BActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        SystemManager.getInstance().PrintLog("back");
         switch (requestCode){
             case 1:
                 if (resultCode == RESULT_OK){
-                    _username.setText(data.getStringExtra("id"));
-                    _key.setText(data.getStringExtra("key"));
+                    if (data!=null){
+                        _username.setText(data.getStringExtra("email"));
+                        _key.setText(data.getStringExtra("key"));
+                    }
                 }
                 break;
             default:
@@ -85,13 +94,7 @@ public class LoginActivity extends BActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //alextest
-                if (s.toString().equals("GreySky0012")) {
-                    setImage(BitmapFactory.decodeResource(activity.getResources(), R.drawable.test_image));
-                    return;
-                }
-
-                Bitmap image = UserManager.getInstance().getImage(s.toString());
+                Bitmap image = UserManager.getInstance().GetImage(activity,s.toString());
                 setImage(image);
             }
 
@@ -112,17 +115,23 @@ public class LoginActivity extends BActivity {
         _login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String id = _username.getText().toString();
+                String email = _username.getText().toString();
                 String key = _key.getText().toString();
-                String checkResult = UserManager.getInstance().localCheck(id,key);
+                String checkResult = UserManager.getInstance().localCheck(email,key);
                 if(!checkResult.equals("true")){
                     showToast(checkResult);
                     return;
                 }
-                if(!UserManager.getInstance().login(id,key)){
-                    showToast("用户名或密码错误");
-                    return;
+                try {
+                    if(!UserManager.getInstance().login(new LoginData(email,key))){
+                        showToast("邮箱或密码错误");
+                        return;
+                    }
                 }
+                catch (IOException e){
+                    showToast("没有网络");
+                }
+                showToast("登录成功");
                 SystemManager.getInstance().toActivity(activity, MainActivity.class);
             }
         });
@@ -154,5 +163,14 @@ public class LoginActivity extends BActivity {
 
             }
         });
+    }
+
+    public class LoginData{
+        public String email;
+        public String password;
+        public LoginData(String e,String p){
+            email = e;
+            password = p;
+        }
     }
 }

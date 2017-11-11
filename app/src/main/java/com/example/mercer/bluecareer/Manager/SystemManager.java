@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.example.mercer.bluecareer.Activities.BActivity;
-import com.example.mercer.bluecareer.Activities.LoginActivity;
-import com.example.mercer.bluecareer.DataStruct.User;
 
 /**
  * Created by GreySky on 2017/9/9.
@@ -14,6 +12,8 @@ import com.example.mercer.bluecareer.DataStruct.User;
 public class SystemManager {
 
     private static SystemManager _instance;
+    public String AccessKey;
+
     private SystemManager(){}
     public static  SystemManager getInstance() {
         if (_instance == null){
@@ -41,6 +41,10 @@ public class SystemManager {
     public void toActivityForResult(BActivity activity,Class className,int code){
         final Intent intent = new Intent(activity,className);
         activity.startActivityForResult(intent,code);
+    }
+
+    public String SystemPath(BActivity context){
+        return context.getCacheDir().getPath();
     }
 
     public void PrintLog(String message){
