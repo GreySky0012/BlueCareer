@@ -1,7 +1,6 @@
 package com.example.mercer.bluecareer.Activities;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.widget.EditText;
 
 import com.example.mercer.bluecareer.DataStruct.User;
 import com.example.mercer.bluecareer.ImageChooser;
-import com.example.mercer.bluecareer.ImageLoadActivity;
 import com.example.mercer.bluecareer.Manager.SystemManager;
 import com.example.mercer.bluecareer.Manager.UserManager;
 import com.example.mercer.bluecareer.R;

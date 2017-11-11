@@ -1,4 +1,4 @@
-package com.example.mercer.bluecareer;
+package com.example.mercer.bluecareer.Activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -13,6 +13,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.example.mercer.bluecareer.Activities.BActivity;
+import com.example.mercer.bluecareer.Utils;
 
 import java.io.File;
 
