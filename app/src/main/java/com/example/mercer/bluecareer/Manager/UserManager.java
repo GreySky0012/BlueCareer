@@ -63,7 +63,7 @@ public class UserManager {
         //连接数据库查询用户名和密码是否正确
         UserUrl url = new UserUrl("login");
         String json = new Gson().toJson(data);
-        RetureCode result = ServerManager.GetInstance().PostSync(url,json);
+        RetureCode result = ServerManager.GetInstance().RequestSync(ServerManager.Method.post,url,json);
         if (result.code!=0)
             return false;
         SystemManager.getInstance().AccessKey = (String)result.data;
@@ -73,7 +73,7 @@ public class UserManager {
     public boolean tryRegist(String email) throws IOException {
         //check username and email in database
         UserUrl url = new UserUrl("email_exit?email="+email);
-        RetureCode result = ServerManager.GetInstance().GetSync(url);
+        RetureCode result = ServerManager.GetInstance().RequestSync(ServerManager.Method.get,url);
 
         if ((boolean)result.data)
             return false;
@@ -83,7 +83,7 @@ public class UserManager {
     public boolean regist(RegistActivity.RegistUserData user) throws IOException {
         UserUrl url = new UserUrl("add");
         String json = new Gson().toJson(user);
-        RetureCode result = ServerManager.GetInstance().PostSync(url,json);
+        RetureCode result = ServerManager.GetInstance().RequestSync(ServerManager.Method.get,url,json);
         if (result.code == 0)
             return true;
         return false;
