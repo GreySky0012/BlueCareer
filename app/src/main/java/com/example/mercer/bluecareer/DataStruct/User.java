@@ -16,14 +16,19 @@ import java.io.IOException;
  * Created by GreySky on 2017/9/9.
  */
 public class User {
-    public String _username;
+    public int _id;//id、账号
+    public String _username;//昵称
+    public String _name;//真实姓名
+    public String _password;
     public String _key;
     public String _email;
-    public String _name;
+    public String _major;
     public Bitmap _image;
     public String _qq;
 
-    public User(String email,String username,Bitmap image){
+    public User(){};
+
+    public User(String email, String username, Bitmap image){
         _email = email;
         _username = username;
         _image = image;
