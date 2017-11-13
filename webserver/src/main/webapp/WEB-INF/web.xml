@@ -62,8 +62,7 @@
 		<filter-class>com.qiyue.bluecareer.filters.AccessKeyFilter</filter-class>
 		<init-param>
 			<param-name>excludedPages</param-name>
-			<param-value>/BlueCareer/api/v1/debug,/BlueCareer/api/v1/user/add,/BlueCareer/api/v1/user/login,
-				/BlueCareer/api/v1/user/list,/BlueCareer/api/v1/user/email_exist</param-value>
+			<param-value>/BlueCareer/api/v1/debug,/BlueCareer/api/v1/user/add,/BlueCareer/api/v1/user/login,/BlueCareer/api/v1/user/list,/BlueCareer/api/v1/user/email_exist</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
