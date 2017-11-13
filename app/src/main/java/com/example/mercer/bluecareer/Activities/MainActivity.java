@@ -1,6 +1,7 @@
 package com.example.mercer.bluecareer.Activities;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -29,6 +30,8 @@ public class MainActivity extends BActivity {
     private CircleImageView _image;
     private TextView _userName;
 
+    private Fragment[] fragments;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +40,12 @@ public class MainActivity extends BActivity {
         getView();
 
         setListener();
+
+        InitFragment();
+    }
+
+    private void InitFragment(){
+        fragments = new Fragment[4];
     }
 
     @Override
