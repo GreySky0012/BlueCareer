@@ -7,13 +7,15 @@ import android.text.TextUtils;
 import com.example.mercer.bluecareer.Activities.BActivity;
 import com.example.mercer.bluecareer.Activities.LoginActivity;
 import com.example.mercer.bluecareer.Activities.RegistActivity;
-import com.example.mercer.bluecareer.DataStruct.RetureCode;
+import com.example.mercer.bluecareer.DataStruct.ReturnCode;
 import com.example.mercer.bluecareer.DataStruct.Url.UserUrl;
 import com.example.mercer.bluecareer.DataStruct.User;
 import com.google.gson.Gson;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * Created by GreySky on 2017/10/21.
@@ -28,7 +30,7 @@ public class UserManager {
         return  _instance;
     }
 
-    private User user;
+    public User _currentUser;
 
 
     //邮箱验证
@@ -63,7 +65,7 @@ public class UserManager {
         //连接数据库查询用户名和密码是否正确
         UserUrl url = new UserUrl("login");
         String json = new Gson().toJson(data);
-        RetureCode result = ServerManager.GetInstance().RequestSync(ServerManager.Method.post,url,json);
+        ReturnCode result = ServerManager.GetInstance().RequestSync(ServerManager.Method.post,url,json);
         if (result.code!=0)
             return false;
         SystemManager.getInstance().AccessKey = (String)result.data;
@@ -72,8 +74,8 @@ public class UserManager {
 
     public boolean tryRegist(String email) throws IOException {
         //check username and email in database
-        UserUrl url = new UserUrl("email_exit?email="+email);
-        RetureCode result = ServerManager.GetInstance().RequestSync(ServerManager.Method.get,url);
+        UserUrl url = new UserUrl("email_exist?email="+email);
+        ReturnCode result = ServerManager.GetInstance().RequestSync(ServerManager.Method.get,url);
 
         if ((boolean)result.data)
             return false;
@@ -83,13 +85,35 @@ public class UserManager {
     public boolean regist(RegistActivity.RegistUserData user) throws IOException {
         UserUrl url = new UserUrl("add");
         String json = new Gson().toJson(user);
-        RetureCode result = ServerManager.GetInstance().RequestSync(ServerManager.Method.get,url,json);
-        if (result.code == 0)
+        //ReturnCode result = ServerManager.GetInstance().RequestSync(ServerManager.Method.post,url,json);
+        //if (result.code == 0){
+            _currentUser = new User(user.email,user.userName,null);
             return true;
-        return false;
+        //}
+        //return false;
+    }
+
+    public Bitmap GetOnlineImage() throws IOException {
+        UserUrl url = new UserUrl("image_path?email="+_currentUser._email);
+        ReturnCode result = ServerManager.GetInstance().RequestSync(ServerManager.Method.get,url,_currentUser.GetKeyHeader());
+        return null;
+    }
+
+    public void SetImage(BActivity activity,User user) throws IOException {
+        //UserUrl url = new UserUrl("");
+        //ReturnCode result = ServerManager.GetInstance().RequestSync(ServerManager.Method);
+
+        user.SaveImage(activity);
     }
 
     public String GetImagePath(BActivity context,String email){
+        File file = new File(SystemManager.getInstance().SystemPath(context)+"/Image");
+        if (!file.exists()){
+            file.mkdir();
+        }else if (!file.isDirectory()){
+            file.delete();
+            file.mkdir();
+        }
         return SystemManager.getInstance().SystemPath(context)+"/Image/"+email+".jpg";
     }
 

@@ -27,6 +27,7 @@ public abstract class ImageLoadActivity extends BActivity {
     private static final int CROP_SMALL_PICTURE = 2;
     protected static Uri tempUri;
     protected ImageView circle_image;
+    protected boolean selected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +82,7 @@ public abstract class ImageLoadActivity extends BActivity {
                 case CROP_SMALL_PICTURE:
                     if (data != null) {
                         setImageToView(data); // 让刚才选择裁剪得到的图片显示在界面上
+                        selected = true;
                     }
                     break;
             }
