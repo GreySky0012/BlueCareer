@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,21 +21,23 @@
             android:layout_height="0dp"
             android:layout_weight="65">
 
+            <!-- 返回按钮 -->
             <ImageButton
                 android:id="@+id/back"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="center_vertical"
-                android:background="@drawable/class_back"
-                android:layout_marginLeft="15dp"/>
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/class_back" />
 
+            <!-- 头部信息 -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="我的信息"
-                android:textSize="25sp"
-                android:textColor="#ffffff"/>
+                android:textColor="#ffffff"
+                android:textSize="25sp" />
 
         </FrameLayout>
 
@@ -43,31 +46,32 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="80"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:layout_weight="80"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="15"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="80"
                 android:layout_height="wrap_content"
+                android:layout_weight="80"
                 android:text="头像"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
-            <com.example.mercer.bluecareer.ImageChooser
-                android:id="@+id/image"
+            <!-- 头像 -->
+            <ImageView
+                android:id="@+id/imageChoose"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_gravity="right|center_vertical"
-                android:background="@drawable/regist_image"/>
+                android:background="@drawable/regist_image" />/>
 
         </LinearLayout>
 
@@ -82,52 +86,24 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="10"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="80"
                 android:layout_height="wrap_content"
+                android:layout_weight="80"
                 android:text="帐号"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
-            <EditText
-                android:id="@+id/account"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:background="@null"
-                android:textColor="#6e6e6e"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#dfdfdf"></LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="10"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
+            <!-- 账号 -->
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="80"
-                android:layout_height="wrap_content"
-                android:text="昵称"
-                android:textSize="20sp"/>
-
-            <EditText
                 android:id="@+id/id"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:gravity="right"
                 android:background="@null"
-                android:textColor="#6e6e6e"/>
+                android:gravity="right"
+                android:textColor="#6e6e6e" />
 
         </LinearLayout>
 
@@ -140,23 +116,54 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="10"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="80"
                 android:layout_height="wrap_content"
+                android:layout_weight="80"
+                android:text="昵称"
+                android:textSize="20sp" />
+
+            <!-- 昵称 -->
+            <EditText
+                android:id="@+id/userName"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:gravity="right"
+                android:textColor="#6e6e6e" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#dfdfdf"></LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="80"
                 android:text="真实姓名"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
+            <!-- 真实姓名 -->
             <EditText
-                android:id="@+id/name"
-                android:layout_width="wrap_content"
+                android:id="@+id/realName"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:gravity="right"
                 android:background="@null"
-                android:textColor="#6e6e6e"/>
+                android:gravity="right"
+                android:textColor="#6e6e6e" />
 
         </LinearLayout>
 
@@ -169,23 +176,24 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="10"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="80"
                 android:layout_height="wrap_content"
+                android:layout_weight="80"
                 android:text="邮箱"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
-            <EditText
-                android:id="@+id/mail"
-                android:layout_width="wrap_content"
+            <!-- 邮箱 -->
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:gravity="right"
                 android:background="@null"
-                android:textColor="#6e6e6e"/>
+                android:gravity="right"
+                android:textColor="#6e6e6e" />
 
         </LinearLayout>
 
@@ -198,24 +206,25 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="10"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="80"
                 android:layout_height="wrap_content"
+                android:layout_weight="80"
                 android:text="qq"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
+            <!-- qq -->
             <EditText
                 android:id="@+id/qq"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
+                android:background="@null"
                 android:gravity="right"
                 android:text="111"
-                android:background="@null"
-                android:textColor="#6e6e6e"/>
+                android:textColor="#6e6e6e" />
 
         </LinearLayout>
 
@@ -228,26 +237,26 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="10"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="80"
-                android:layout_height="wrap_content"
                 android:text="职业选择"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
-            <TextView
+            <!-- 职业选择 -->
+            <EditText
                 android:id="@+id/major"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
+                android:background="@null"
                 android:gravity="right"
                 android:text="111"
-                android:textSize="17sp"
-                android:background="@null"
-                android:textColor="#6e6e6e"/>
-
+                android:textColor="#6e6e6e"
+                android:textSize="17sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -258,7 +267,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="15"></LinearLayout>
+            android:layout_weight="10"
+            android:gravity="right"
+            android:layout_marginTop="20sp"
+            android:orientation="horizontal">
+
+            <!-- 提交更新按钮 -->
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="提交更新" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_weight="15"></LinearLayout>
+
 </LinearLayout>
