@@ -145,7 +145,7 @@ public class UserManager {
         UserUrl url = new UserUrl("list");
 
         //请求远程数据
-        RetureCode resultJson = ServerManager.GetInstance().RequestSync(ServerManager.Method.get, url);
+        ReturnCode resultJson = ServerManager.GetInstance().RequestSync(ServerManager.Method.get, url);
         //校验结果
         if (resultJson.code != 0) {
             return _user;
