@@ -2,6 +2,7 @@ package com.qiyue.bluecareer.dao;
 
 import com.qiyue.bluecareer.exception.HibernateException;
 import com.qiyue.bluecareer.model.view.UserEntity;
+import com.qiyue.bluecareer.utils.KeyUtil;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -115,11 +116,11 @@ public class UserDao {
     /**
      * 更新用户的key
      * @param email  需要更新的用户
-     * @param newAccessKey 新key
-     * @return
+     * @return 更新后的key
      * @throws HibernateException
      */
-    public boolean updateAccessKey(String email, String newAccessKey) throws HibernateException {
+    public String updateAccessKey(String email) throws HibernateException {
+        String newAccessKey = KeyUtil.getNewKey();
         Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
@@ -130,7 +131,7 @@ public class UserDao {
             query.executeUpdate();
             session.getTransaction().commit();
             logger.debug("update user key . " + newAccessKey);
-            return true;
+            return newAccessKey;
         } catch (Exception e) {
             logger.debug(e.getMessage());
             session.getTransaction().rollback();

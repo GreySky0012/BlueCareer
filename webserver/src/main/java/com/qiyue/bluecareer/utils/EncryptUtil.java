@@ -63,7 +63,6 @@ public class EncryptUtil {
         }
         // 此处使用BASE64做转码。
         return result;
-
     }
 
     //AES解密

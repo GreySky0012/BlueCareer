@@ -110,7 +110,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "image_upload", method = RequestMethod.POST, produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @RequestMapping(value = "image_upload", method = RequestMethod.PUT, produces = MediaType.MULTIPART_FORM_DATA_VALUE)
     public CommonResponse uploadUserImage() {
         return null;
     }

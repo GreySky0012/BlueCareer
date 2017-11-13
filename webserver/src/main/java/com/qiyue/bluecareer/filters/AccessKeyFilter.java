@@ -1,11 +1,13 @@
 package com.qiyue.bluecareer.filters;
 
 import com.qiyue.bluecareer.dao.UserDao;
+import com.qiyue.bluecareer.exception.HibernateException;
 import org.apache.log4j.Logger;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -33,17 +35,24 @@ public class AccessKeyFilter implements Filter{
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws ServletException, IOException {
         HttpServletRequest httpReq = (HttpServletRequest) request;
+        HttpServletResponse httpRes = (HttpServletResponse) response;
         logger.info("Request URL: " + httpReq.getRequestURL());
         if (isExcludePath(httpReq)) {
             chain.doFilter(request, response);
+            return;
         } else if (verifyAccessKey(httpReq)){
-            chain.doFilter(request, response);
-            //todo return a new access_key
+            try {
+                String newKey = updateAccessKey(httpReq);
+                httpRes.setHeader("accessKey" , newKey);
+                chain.doFilter(request, response);
+                return;
+            } catch (HibernateException e) {
+                throw new ServletException(e);
+            }
         } else {
             logger.info("access_key  wrong.");
             throw new ServletException("access_key  wrong.");
         }
-
     }
 
     public void destroy() {
@@ -59,6 +68,11 @@ public class AccessKeyFilter implements Filter{
         String accessKey = httpReq.getHeader("accessKey");
         String email = httpReq.getHeader("email");
         return accessKey != null && !accessKey.isEmpty() && email != null && !email.isEmpty() && userDao.verifyAccessKey(email, accessKey);
+    }
+
+    private String updateAccessKey(HttpServletRequest httpReq) throws HibernateException {
+        String email = httpReq.getHeader("email");
+        return userDao.updateAccessKey(email);
     }
 
 }
