@@ -26,7 +26,7 @@ public class AccessKeyFilter implements Filter{
     public void init(FilterConfig filterConfig) {
         String excludePages = filterConfig.getInitParameter("excludedPages");
         excludePageList = Arrays.asList(excludePages.split(","));
-        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("./sspanel-context.xml");
+        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("bluecareer-context.xml");
         userDao =(UserDao) ctx.getBean("userDao");
     }
 
