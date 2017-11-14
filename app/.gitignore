@@ -78,3 +78,14 @@ freeline.py
 freeline/
 freeline_project_description.json
 
+#others
+.idea/
+build.gradle
+gradle.properties
+gradlew
+gradlew.bat
+proguard-rules.pro
+settings.gradle
+/gradle/
+## self
+.gitignore
