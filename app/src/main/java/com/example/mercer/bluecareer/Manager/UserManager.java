@@ -27,10 +27,10 @@ import java.util.ArrayList;
  */
 public class UserManager {
     private static UserManager _instance;
-    private User _user;
+    public User _currentUser;
 
     private UserManager() {
-        _user = new User();
+        _currentUser = new User();
     }
 
     public static UserManager getInstance() {
@@ -40,7 +40,9 @@ public class UserManager {
         return _instance;
     }
 
-    public User _currentUser;
+    public User getUserInsatance(){
+        return _currentUser;
+    }
 
 
     //邮箱验证
@@ -150,7 +152,7 @@ public class UserManager {
         ReturnCode resultJson = ServerManager.GetInstance().RequestSync(ServerManager.Method.get, url);
         //校验结果
         if (resultJson.code != 0) {
-            return _user;
+            return _currentUser;
         }
         ArrayList list = (ArrayList<String>) resultJson.data;
         JSONObject jsonObject = new JSONObject((LinkedTreeMap) list.get(0));
@@ -158,7 +160,7 @@ public class UserManager {
         //更新用户信息
         updateUserInstance(jsonObject);
 
-        return _user;
+        return _currentUser;
     }
 
     /**
@@ -169,16 +171,16 @@ public class UserManager {
     public void updateUserInstance(JSONObject jsonObject) {
         Object object;
 
-        _user._id = jsonObject.optInt("id") == 0 ? _user._id : jsonObject.optInt("id");
-        _user._username = (object = jsonObject.optString("userName")) == "" ? _user._username : (String) object;
-        _user._name = (object = jsonObject.optString("realName")) == "" ? _user._name : (String) object;
-        _user._password = (object = jsonObject.optString("password")) == "" ? _user._password : (String) object;
-        _user._email = (object = jsonObject.optString("email")) == "" ? _user._email : (String) object;
-        _user._key = (object = jsonObject.optString("accessKey")) == "" ? _user._key : (String) object;
+        _currentUser._id = jsonObject.optInt("id") == 0 ? _currentUser._id : jsonObject.optInt("id");
+        _currentUser._username = (object = jsonObject.optString("userName")) == "" ? _currentUser._username : (String) object;
+        _currentUser._name = (object = jsonObject.optString("realName")) == "" ? _currentUser._name : (String) object;
+        _currentUser._password = (object = jsonObject.optString("password")) == "" ? _currentUser._password : (String) object;
+        _currentUser._email = (object = jsonObject.optString("email")) == "" ? _currentUser._email : (String) object;
+        _currentUser._key = (object = jsonObject.optString("accessKey")) == "" ? _currentUser._key : (String) object;
         //处理头像
         //jsonObject.optString("imagePath"));
-        _user._qq = (object = jsonObject.optString("qq")) == "" ? _user._qq : (String) object;
-        _user._major = (object = jsonObject.optString("major")) == "" ? _user._major : (String) object;
+        _currentUser._qq = (object = jsonObject.optString("qq")) == "" ? _currentUser._qq : (String) object;
+        _currentUser._major = (object = jsonObject.optString("major")) == "" ? _currentUser._major : (String) object;
     }
 
     /**
