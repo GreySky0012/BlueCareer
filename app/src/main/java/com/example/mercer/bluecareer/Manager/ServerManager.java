@@ -1,6 +1,6 @@
 package com.example.mercer.bluecareer.Manager;
 
-import com.example.mercer.bluecareer.DataStruct.RetureCode;
+import com.example.mercer.bluecareer.DataStruct.ReturnCode;
 import com.example.mercer.bluecareer.DataStruct.Url.Url;
 import com.google.gson.Gson;
 
@@ -35,28 +35,28 @@ public class ServerManager {
             _instance = new ServerManager();
         return _instance;
     }
-    public RetureCode RequestSync(Method method,Url url) throws IOException {
+    public ReturnCode RequestSync(Method method,Url url) throws IOException {
         Request.Builder builder = AddMethod(new Request.Builder(),method).url(url.Get());
         Response response = RequestSyne(builder);
-        return new Gson().fromJson(response.body().string(),RetureCode.class);
+        return new Gson().fromJson(response.body().string(),ReturnCode.class);
     }
 
-    public RetureCode RequestSync(Method method,Url url, String json) throws IOException {
+    public ReturnCode RequestSync(Method method,Url url, String json) throws IOException {
         Request.Builder builder = AddMethod(new Request.Builder(),method,RequestBody.create(JSON,json)).url(url.Get());
         Response response = RequestSyne(builder);
-        return new Gson().fromJson(response.body().string(),RetureCode.class);
+        return new Gson().fromJson(response.body().string(),ReturnCode.class);
     }
 
-    public RetureCode RequestSync(Method method, Url url, HashMap<String,String> headers) throws IOException {
+    public ReturnCode RequestSync(Method method, Url url, HashMap<String,String> headers) throws IOException {
         Request.Builder builder = AddHeader(AddMethod(new Request.Builder(),method),headers).url(url.Get());
         Response response = RequestSyne(builder);
-        return new Gson().fromJson(response.body().string(),RetureCode.class);
+        return new Gson().fromJson(response.body().string(),ReturnCode.class);
     }
 
-    public RetureCode RequestSync(Method method,Url url, String json,HashMap<String,String> headers) throws IOException {
+    public ReturnCode RequestSync(Method method,Url url, String json,HashMap<String,String> headers) throws IOException {
         Request.Builder builder = AddHeader(AddMethod(new Request.Builder(),method,RequestBody.create(JSON,json)),headers).url(url.Get());
         Response response = RequestSyne(builder);
-        return new Gson().fromJson(response.body().string(),RetureCode.class);
+        return new Gson().fromJson(response.body().string(),ReturnCode.class);
     }
 
     private Response RequestSyne(Request.Builder builder) throws IOException {

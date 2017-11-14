@@ -54,6 +54,12 @@ public class LoginActivity extends BActivity {
                     if (data!=null){
                         _username.setText(data.getStringExtra("email"));
                         _key.setText(data.getStringExtra("key"));
+                        Bitmap image = UserManager.getInstance().GetImage(this,_username.getText().toString());
+                        if (image!=null){
+                            _image.setImageBitmap(image);
+                        }
+                    }else {
+                        SystemManager.getInstance().PrintLog("data is null");
                     }
                 }
                 break;

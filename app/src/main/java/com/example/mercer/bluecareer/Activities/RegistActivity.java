@@ -75,11 +75,10 @@ public class RegistActivity extends ImageLoadActivity {
                 String id = activity._id.getText().toString();
                 String key = activity._key.getText().toString();
                 String email = activity._mail.getText().toString();
-                circle_image.setDrawingCacheEnabled(true);
-                Bitmap image = activity.circle_image.getDrawingCache();
-                circle_image.setDrawingCacheEnabled(false);
-                if (image == null){
-                    image = BitmapFactory.decodeResource(getResources(),R.drawable.default_image);
+                Bitmap image = null;
+                if (selected){
+                    circle_image.setDrawingCacheEnabled(true);
+                    image = activity.circle_image.getDrawingCache();
                 }
                 String qq = activity._qq.getText().toString();
                 String name = activity._name.getText().toString();
@@ -111,13 +110,16 @@ public class RegistActivity extends ImageLoadActivity {
                 user._key = key;
                 user._qq = qq;
                 user._name = name;
+                user._image = image;
 
                 try {
                     if(!UserManager.getInstance().tryRegist(email)){
                         showToast("该邮箱已被使用");
                         return;
                     }
-                    if (!UserManager.getInstance().regist(new RegistUserData(id,email,key,qq,name))){
+                    if (UserManager.getInstance().regist(new RegistUserData(id,email,key,qq,name))) {
+                        UserManager.getInstance().SetImage(activity,user);
+                    }else{
                         showToast("未知错误");
                         return;
                     }
@@ -127,16 +129,17 @@ public class RegistActivity extends ImageLoadActivity {
                     return;
                 }
 
-                try {
-                    user.SaveImage(activity);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
                 Intent intent = new Intent();
                 intent.putExtra("email",user._email);
                 intent.putExtra("key",user._key);
                 SystemManager.getInstance().returnActivity(activity,intent);
+            }
+        });
+
+        _job.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
     }
