@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mercer.bluecareer">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,20 +12,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Activities.InfoActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity android:name=".Activities.LoginActivity" />
         <activity android:name=".Activities.RegistActivity" />
-        <!--<activity android:name=".Activities.InfoActivity" />-->
-        <activity android:name=".Activities.MainActivity" />
+        <!-- <activity android:name=".Activities.InfoActivity" /> -->
+        <activity android:name=".Activities.MainActivity" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <activity android:name=".TestAnswerActivity" />
         <activity android:name=".ClassActivtity" />
-        <activity android:name=".Activities.ForgetKeyActivity"></activity>
-
+        <activity android:name=".Activities.ForgetKeyActivity" />
     </application>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
 </manifest>
