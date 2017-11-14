@@ -1,5 +1,7 @@
 package com.example.mercer.bluecareer.Activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
@@ -7,12 +9,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mercer.bluecareer.DataStruct.User;
 import com.example.mercer.bluecareer.Manager.UserManager;
 import com.example.mercer.bluecareer.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 
 /**
@@ -27,11 +35,11 @@ public class InfoActivity extends ImageLoadActivity {
     private EditText realName;
     private TextView email;
     private EditText qq;
-    private EditText major;
+    private TextView major;
     //更新按钮
     Button btnSubmit;
-
-    private String FOR_LOG = "InfoActivity";
+    // 多选提示框
+    private AlertDialog _majorChooseDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +72,7 @@ public class InfoActivity extends ImageLoadActivity {
         realName = (EditText) findViewById(R.id.realName);
         email = (TextView) findViewById(R.id.email);
         qq = (EditText) findViewById(R.id.qq);
-        major = (EditText) findViewById(R.id.major);
+        major = (TextView) findViewById(R.id.major);
 
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
     }
@@ -86,12 +94,13 @@ public class InfoActivity extends ImageLoadActivity {
         realName.setText(user._name);
         email.setText(user._email);
         qq.setText(user._qq);
-        major.setText(user._major);
+        //设置职业选择
+        major.setText(user._major == null ? "算法工程师" : user._major);
         //circle_image.setImageBitmap();
     }
 
     /**
-     * 设置图片点击事件
+     * 设置点击事件
      */
     @Override
     protected void setListener() {
@@ -110,6 +119,14 @@ public class InfoActivity extends ImageLoadActivity {
                 updateUserInfo();
             }
         });
+
+        /** 选择职业点击 */
+        major.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMutilAlertDialog();
+            }
+        });
     }
 
     /**
@@ -117,9 +134,106 @@ public class InfoActivity extends ImageLoadActivity {
      *
      * @return
      */
-    public int updateUserInfo() {
+    public void updateUserInfo() {
         int result = -1;
+        JSONObject userinfoJSON = new JSONObject();
+        try {
+            userinfoJSON.put("userName", userName.getText());
+            userinfoJSON.put("realName", realName.getText());
+            userinfoJSON.put("qq", qq.getText());
+            userinfoJSON.put("major", major.getText());
 
-        return result;
+            result = UserManager.getInstance().updateUserinfo2Server(userinfoJSON);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(result == 0){
+            Toast.makeText(InfoActivity.this, "更新用户信息成功", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 职业选择多选框
+     */
+    public void showMutilAlertDialog() {
+        //获取当前已选职业
+        String currMajor = (String) major.getText();
+        //所有职业
+        final String majorArray[] = getResources().getStringArray(R.array.major_array);
+        //当前已选职业bool数组，根据Strings.xml的顺序严格排列
+        final boolean currChoosed[] = new boolean[majorArray.length];
+        Arrays.fill(currChoosed, false);
+        //按照逗号截取
+        if (currMajor != null && currMajor.trim() != "") {
+            String[] currMajorArray = currMajor.split(",|，");
+
+            for (int i = 0, j = 0; i < currMajorArray.length; i++, j++) {
+                if (currMajorArray[i].trim().equals(majorArray[j])) {
+                    currChoosed[j] = true;
+                } else {
+                    i--;
+                }
+            }
+        }
+
+        // 创建一个AlertDialog建造者
+        AlertDialog.Builder majorChooseDialogBuilder = new AlertDialog.Builder(this);
+        // 设置标题
+        majorChooseDialogBuilder.setTitle("请选择您的职业（多选）");
+        /* 参数介绍
+         * 第一个参数：弹出框的信息集合，一般为字符串集合
+         * 第二个参数：被默认选中的，一个布尔类型的数组
+         * 第三个参数：勾选事件监听
+         */
+        majorChooseDialogBuilder.setMultiChoiceItems(majorArray, currChoosed, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                // dialog：不常使用，弹出框接口
+                // which：勾选或取消的是第几个
+                // isChecked：是否勾选
+                if (isChecked) {
+                    // 选中
+                    currChoosed[which] = true;
+                    //Toast.makeText(InfoActivity.this, "选中" + majorArray[which], Toast.LENGTH_SHORT).show();
+                } else {
+                    // 取消选中
+                    currChoosed[which] = false;
+                    //Toast.makeText(InfoActivity.this, "取消选中" + majorArray[which], Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        //确定按钮点击事件
+        majorChooseDialogBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                String newMajor = "";
+                for (int i = 0; i < majorArray.length; i++) {
+                    if (currChoosed[i]) {
+                        newMajor += majorArray[i] + ",";
+                    }
+                }
+                //清除最后的逗号
+                newMajor = newMajor.substring(0, newMajor.length() - 1);
+                //将选择填充到界面
+                major.setText(newMajor);
+
+                // 关闭提示框
+                _majorChooseDialog.dismiss();
+            }
+        });
+        //关闭按钮点击事件
+        majorChooseDialogBuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                // TODO 业务逻辑代码
+                // 关闭提示框
+                _majorChooseDialog.dismiss();
+            }
+        });
+        _majorChooseDialog = majorChooseDialogBuilder.create();
+        _majorChooseDialog.show();
     }
 }

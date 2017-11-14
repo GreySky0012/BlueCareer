@@ -3,6 +3,7 @@ package com.example.mercer.bluecareer.Manager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.example.mercer.bluecareer.Activities.BActivity;
 import com.example.mercer.bluecareer.Activities.LoginActivity;
@@ -11,6 +12,7 @@ import com.example.mercer.bluecareer.DataStruct.RetureCode;
 import com.example.mercer.bluecareer.DataStruct.Url.UserUrl;
 import com.example.mercer.bluecareer.DataStruct.User;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.internal.LinkedTreeMap;
 
 import org.json.JSONObject;
@@ -155,5 +157,18 @@ public class UserManager {
         //jsonObject.optString("imagePath"));
         _user._qq = (object = jsonObject.optString("qq")) == "" ? _user._qq : (String) object;
         _user._major = (object = jsonObject.optString("major")) == "" ? _user._major : (String) object;
+    }
+
+    /**
+     * 更新用户信息到服务器
+     */
+    public int updateUserinfo2Server(JSONObject jsonObject) throws IOException {
+        //请求url，测试使用，后期改为按照主键查询
+        UserUrl url = new UserUrl("待更新");
+        Log.e("更新用户信息",  jsonObject.toString());
+        return 0;
+        //RetureCode resultJson = ServerManager.GetInstance().RequestSync(ServerManager.Method.get, url, jsonObject.toString());
+
+        //return resultJson.code;
     }
 }
