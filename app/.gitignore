@@ -89,3 +89,4 @@ settings.gradle
 /gradle/
 ## self
 .gitignore
+/.gitignore
