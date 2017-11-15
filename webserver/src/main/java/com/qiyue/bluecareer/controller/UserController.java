@@ -64,7 +64,7 @@ public class UserController {
 
     @RequestMapping(value = "/modify", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse modify(@RequestBody UserEntity userEntity) {
-        if (userEntity.getId() == 0) {
+        if (userEntity.getEmail() == null) {
             return ErrorEnum.REQUEST_PARAMETER_ERROR.getResponse(userEntity.toString());
         }
         try {

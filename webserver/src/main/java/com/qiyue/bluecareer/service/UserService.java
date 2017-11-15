@@ -49,7 +49,6 @@ public class UserService {
      * @throws HibernateException
      */
     public void modifyUser(UserEntity userEntity) throws HibernateException {
-        userEntity.setEmail(null);
         userEntity.setPassword(null);
         userEntity.setAccessKey(null);
         userEntity.setImagePath(null);
