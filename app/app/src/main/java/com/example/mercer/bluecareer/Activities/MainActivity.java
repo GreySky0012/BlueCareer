@@ -73,6 +73,8 @@ public class MainActivity extends BActivity {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         _fragments[0] = new MainFragment();
+        _fragments[1] = new IntroduceFragment();
+        _fragments[2] = new LearnFragment();
         transaction.replace(R.id.fragment_content, _fragments[0]);
         transaction.commit();
     }
@@ -106,27 +108,7 @@ public class MainActivity extends BActivity {
         // 开启Fragment事务
         FragmentTransaction transaction = fm.beginTransaction();
 
-        switch (index) {
-            case 0:
-                if (_fragments[0] == null) {
-                    _fragments[0] = new MainFragment();
-                }
-                // 使用当前Fragment的布局替代id_content的控件
-                transaction.replace(R.id.fragment_content, _fragments[0]);
-                break;
-            case 1:
-                if (_fragments[1] == null) {
-                    _fragments[1] = new IntroduceFragment();
-                }
-                transaction.replace(R.id.fragment_content, _fragments[1]);
-                break;
-            case 2:
-                if (_fragments[2] == null) {
-                    _fragments[2] = new LearnFragment();
-                }
-                transaction.replace(R.id.fragment_content, _fragments[2]);
-                break;
-        }
+        transaction.replace(R.id.fragment_content, _fragments[index]);
         // transaction.addToBackStack();
         // 事务提交
         transaction.commit();
