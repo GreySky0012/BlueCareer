@@ -21,12 +21,11 @@
             android:layout_weight="1"
             android:id="@+id/title_layout"/>
 
-        <fragment
+        <FrameLayout
+            android:id="@+id/fragment_content"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="9"
-            android:id="@+id/fragment"
-            android:name="com.example.mercer.bluecareer.Fragment.MainFragment"/>
+            android:layout_weight="9" />
 
     </LinearLayout>
 

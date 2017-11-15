@@ -18,11 +18,11 @@
         android:orientation="horizontal">
 
         <ImageButton
+            android:id="@+id/navigation_button"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:src="@drawable/navigation_button"
-            android:id="@+id/navigation_button"
             android:background="@drawable/main_title_background"
             android:gravity="left"
             android:layout_marginTop="5dp"
