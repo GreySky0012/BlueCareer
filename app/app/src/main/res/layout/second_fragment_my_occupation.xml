@@ -2,15 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/my_occu_layout">
 
-    <!--横线-->
+   <!-- &lt;!&ndash;横线&ndash;&gt;
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:background="#dfdfdf"></LinearLayout>
 
-    <!--第一个职业-->
+    &lt;!&ndash;第一个职业&ndash;&gt;
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
@@ -84,13 +85,13 @@
 
     </LinearLayout>
 
-    <!--横线-->
+    &lt;!&ndash;横线&ndash;&gt;
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:background="#dfdfdf"></LinearLayout>
 
-    <!--第二个职业-->
+    &lt;!&ndash;第二个职业&ndash;&gt;
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
@@ -163,9 +164,9 @@
 
     </LinearLayout>
 
-    <!--横线-->
+    &lt;!&ndash;横线&ndash;&gt;
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:background="#dfdfdf"></LinearLayout>
+        android:background="#dfdfdf"></LinearLayout>-->
 </LinearLayout>
