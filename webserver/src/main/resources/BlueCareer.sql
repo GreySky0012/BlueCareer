@@ -14,7 +14,8 @@ CREATE TABLE user
     email VARCHAR(64) NOT NULL,
     qq VARCHAR(64),
     access_key VARCHAR(64),
-    image_path VARCHAR(64)
+    image_path VARCHAR(64),
+    career_message VARCHAR(1024)
 ) ENGINE=InnoDB  auto_increment=1001  DEFAULT CHARSET=utf8;
 
-INSERT INTO user (username, realname, password, email, qq, access_key, image_path) VALUES ('testUser', 'Hu Hao Ran', '123456', 'mail@example.com', '123456789', 'abcdefg', '/image/mail@example.com.jpg');
+INSERT INTO user (username, realname, password, email, qq, access_key, image_path, career_message) VALUES ('testUser', 'Hu Hao Ran', '123456', 'mail@example.com', '123456789', 'abcdefg', '/image/mail@example.com.jpg', 'Software Engineer');

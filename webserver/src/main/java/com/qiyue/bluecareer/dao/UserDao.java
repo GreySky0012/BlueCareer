@@ -58,18 +58,39 @@ public class UserDao {
     }
 
     /**
+     * 修改用户数据  目前仅可修改  用户名 真实姓名 qq  职业
+     * @param userEntity  用户新数据  不包括邮箱 密码  id  accesskey  image_path
+     * @throws HibernateException
+     */
+    public void modifyUserInfo(UserEntity userEntity) throws HibernateException {
+        Session session = sessionFactory.openSession();
+        try {
+            session.beginTransaction();
+            session.update(userEntity);
+            session.getTransaction().commit();
+            logger.debug("update user info . " + userEntity.toString());
+        } catch (Exception e) {
+            logger.debug(e.getMessage());
+            session.getTransaction().rollback();
+            throw new HibernateException(e);
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
      * 验证登陆邮箱与密码
      * @param mail  邮箱
      * @param encryptPassword 加密后的密码
      * @return 返回accessKey
      */
-    public String verifyPassword(String mail, String encryptPassword) {
+    public UserEntity verifyPassword(String mail, String encryptPassword) {
         Session session = sessionFactory.openSession();
-        Query<String> query = session.createQuery(
-                "SELECT user.accessKey from UserEntity AS user where user.email = :email AND user.password = :password", String.class);
+        Query<UserEntity> query = session.createQuery(
+                "from UserEntity AS user where user.email = :email AND user.password = :password", UserEntity.class);
         query.setParameter(EMAIL_STR, mail);
         query.setParameter(PASSWORD_STR, encryptPassword);
-        List<String> resList =  query.list();
+        List<UserEntity> resList =  query.list();
         session.close();
         if (resList.isEmpty()) {
             return null;

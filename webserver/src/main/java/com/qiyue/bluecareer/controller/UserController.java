@@ -62,6 +62,20 @@ public class UserController {
         }
     }
 
+    @RequestMapping(value = "/modify", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse modify(@RequestBody UserEntity userEntity) {
+        if (userEntity.getId() == 0) {
+            return ErrorEnum.REQUEST_PARAMETER_ERROR.getResponse(userEntity.toString());
+        }
+        try {
+            userService.modifyUser(userEntity);
+            return new CommonResponse();
+        } catch (HibernateException e) {
+            logger.error(e.getMessage());
+            return ErrorEnum.HIBERNATE_ERROR.getResponse(e.getMessage());
+        }
+    }
+
     /**
      * 查询邮箱是否存在接口
      * @param email 邮箱
@@ -85,10 +99,10 @@ public class UserController {
             return ErrorEnum.REQUEST_PARAMETER_ERROR.getResponse(userEntity.toString());
         }
 
-        String accessKey = userService.userLogin(userEntity.getEmail(), userEntity.getPassword());
-        if (accessKey != null) {
+        UserEntity user = userService.userLogin(userEntity.getEmail(), userEntity.getPassword());
+        if (user != null) {
             logger.debug("user login. " + userEntity.toString());
-            return new CommonResponse<>(accessKey);
+            return new CommonResponse<>(user);
         } else {
             return ErrorEnum.LOGIN_ERROR.getResponse();
         }
@@ -101,13 +115,8 @@ public class UserController {
      */
     @RequestMapping(value = "/image_path", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public CommonResponse getUserImagePath(@RequestParam(value = "email") String email) {
-        try {
-            String imagePath = userService.getUserImagePath(email);
-            return new CommonResponse<>(imagePath);
-        } catch (HibernateException e) {
-            logger.error(e.getMessage());
-            return ErrorEnum.HIBERNATE_ERROR.getResponse(e.getMessage());
-        }
+        String imagePath = userService.getUserImagePath(email);
+        return new CommonResponse<>(imagePath);
     }
 
     @RequestMapping(value = "image_upload", method = RequestMethod.PUT, produces = MediaType.MULTIPART_FORM_DATA_VALUE)

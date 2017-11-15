@@ -44,6 +44,19 @@ public class UserService {
     }
 
     /**
+     * 更新用户信息
+     * @param userEntity 带有用户信息的entity  id为必须
+     * @throws HibernateException
+     */
+    public void modifyUser(UserEntity userEntity) throws HibernateException {
+        userEntity.setEmail(null);
+        userEntity.setPassword(null);
+        userEntity.setAccessKey(null);
+        userEntity.setImagePath(null);
+        userDao.modifyUserInfo(userEntity);
+    }
+
+    /**
      * 查询邮箱是否存在
      * @param email 邮箱
      * @return true 存在
@@ -58,18 +71,20 @@ public class UserService {
      * @param password 用户密码
      * @return access_key
      */
-    public String userLogin(String mail, String password) {
+    public UserEntity userLogin(String mail, String password) {
         //todo 用户密码加密
-        return userDao.verifyPassword(mail, password);
+        UserEntity userEntity = userDao.verifyPassword(mail, password);
+        userEntity.setEmail(null);
+        userEntity.setPassword(null);
+        return userEntity;
     }
 
     /**
      * 返回对应用户的头像图片地址
      * @param mail 用户邮箱
      * @return 地址
-     * @throws HibernateException SQL查询异常
      */
-    public String getUserImagePath(String mail) throws  HibernateException {
+    public String getUserImagePath(String mail) {
         return userDao.getUserImagePath(mail);
     }
 }
