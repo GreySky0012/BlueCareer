@@ -20,4 +20,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <!--我要了解-->
+    <string name="my_occuption">我的职业</string>
+    <string name="other_occuption">其余职业</string>
 </resources>

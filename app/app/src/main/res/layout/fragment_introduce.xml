@@ -1,13 +1,58 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.mercer.bluecareer.Fragments.IntroduceFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!--我要了解导航按钮-->
+        <RadioGroup
+            android:id="@+id/introduce_nav"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/intro_my_occu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingLeft="0dp"
+                android:text="@string/my_occuption"
+                android:textSize="20sp"
+                android:background="@drawable/bar_background"/>
+
+            <RadioButton
+                android:id="@+id/intro_other_occu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingLeft="0dp"
+                android:text="@string/other_occuption"
+                android:textSize="20sp"
+                android:background="@drawable/bar_background"/>
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="简介" />
+        android:orientation="vertical">
 
-</FrameLayout>
+        <!--碎片展示内容-->
+        <FrameLayout
+            android:id="@+id/intro_fragment_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="9" />
+    </LinearLayout>
+</LinearLayout>

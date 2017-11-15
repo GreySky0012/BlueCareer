@@ -5,11 +5,13 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -48,6 +50,12 @@ public class MainActivity extends BActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /** 不启用多线程，网络请求设置 */
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
         getView();
 
         setListener();
@@ -72,6 +80,12 @@ public class MainActivity extends BActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        /** 从服务器获取用户信息， */
+        try {
+            UserManager.getInstance().getUserInfo();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Bitmap image = UserManager.getInstance().GetImage(this, UserManager.getInstance()._currentUser._email);
         if (image == null) {
             image = BitmapFactory.decodeResource(this.getResources(), R.drawable.image_defult_navigation);
