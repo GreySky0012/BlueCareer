@@ -1,14 +1,10 @@
 package com.qiyue.bluecareer.model.view;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
-/**
- * Created by qiyue on 2017/11/7
- */
 @Entity
 @Table(name = "user", schema = "bluecareer", catalog = "")
-public class UserEntity implements Serializable {
+public class UserEntity {
     private int id;
     private String userName;
     private String realName;
@@ -16,9 +12,11 @@ public class UserEntity implements Serializable {
     private String email;
     private String QQ;
     private String accessKey;
+    private String imagePath;
+    private String careerMessage;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, updatable = false)
     public int getId() {
         return id;
     }
@@ -28,7 +26,7 @@ public class UserEntity implements Serializable {
     }
 
     @Basic
-    @Column(name = "username")
+    @Column(name = "username", nullable = false, length = 64)
     public String getUserName() {
         return userName;
     }
@@ -38,7 +36,7 @@ public class UserEntity implements Serializable {
     }
 
     @Basic
-    @Column(name = "realname")
+    @Column(name = "realname", nullable = true, length = 64)
     public String getRealName() {
         return realName;
     }
@@ -48,7 +46,7 @@ public class UserEntity implements Serializable {
     }
 
     @Basic
-    @Column(name = "password")
+    @Column(name = "password", nullable = false, length = 64, updatable = false)
     public String getPassword() {
         return password;
     }
@@ -58,7 +56,7 @@ public class UserEntity implements Serializable {
     }
 
     @Basic
-    @Column(name = "email")
+    @Column(name = "email", nullable = false, length = 64, updatable = false)
     public String getEmail() {
         return email;
     }
@@ -68,7 +66,7 @@ public class UserEntity implements Serializable {
     }
 
     @Basic
-    @Column(name = "qq")
+    @Column(name = "qq", nullable = true, length = 64)
     public String getQQ() {
         return QQ;
     }
@@ -78,13 +76,33 @@ public class UserEntity implements Serializable {
     }
 
     @Basic
-    @Column(name = "access_key")
+    @Column(name = "access_key", nullable = true, length = 64, updatable = false)
     public String getAccessKey() {
         return accessKey;
     }
 
     public void setAccessKey(String accessKey) {
         this.accessKey = accessKey;
+    }
+
+    @Basic
+    @Column(name = "image_path", nullable = true, length = 64, updatable = false)
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    @Basic
+    @Column(name = "career_message", nullable = true, length = 1024)
+    public String getCareerMessage() {
+        return careerMessage;
+    }
+
+    public void setCareerMessage(String careerMessage) {
+        this.careerMessage = careerMessage;
     }
 
     @Override
@@ -101,6 +119,9 @@ public class UserEntity implements Serializable {
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
         if (QQ != null ? !QQ.equals(that.QQ) : that.QQ != null) return false;
         if (accessKey != null ? !accessKey.equals(that.accessKey) : that.accessKey != null) return false;
+        if (imagePath != null ? !imagePath.equals(that.imagePath) : that.imagePath != null) return false;
+        if (careerMessage != null ? !careerMessage.equals(that.careerMessage) : that.careerMessage != null)
+            return false;
 
         return true;
     }
@@ -114,19 +135,8 @@ public class UserEntity implements Serializable {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (QQ != null ? QQ.hashCode() : 0);
         result = 31 * result + (accessKey != null ? accessKey.hashCode() : 0);
+        result = 31 * result + (imagePath != null ? imagePath.hashCode() : 0);
+        result = 31 * result + (careerMessage != null ? careerMessage.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("id : " + this.getUserName());
-        sb.append(", userName : " + this.getUserName());
-        sb.append(", realName : " + this.getRealName());
-        sb.append(", password : " + this.getPassword());
-        sb.append(", email : " + this.getEmail()) ;
-        sb.append(", QQ : " + this.getQQ());
-        sb.append(", accessKey : " + this.getAccessKey());
-        return sb.toString();
     }
 }

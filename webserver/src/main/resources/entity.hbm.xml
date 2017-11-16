@@ -3,13 +3,34 @@
     "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
+
     <class name="com.qiyue.bluecareer.model.view.UserEntity" table="user" schema="bluecareer">
-        <id name="id" column="id"/>
-        <property name="userName" column="username"/>
-        <property name="realName" column="realname"/>
-        <property name="password" column="password"/>
-        <property name="email" column="email"/>
-        <property name="QQ" column="qq"/>
-        <property name="accessKey" column="access_key"/>
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="userName">
+            <column name="username" sql-type="varchar(64)" length="64"/>
+        </property>
+        <property name="realName">
+            <column name="realname" sql-type="varchar(64)" length="64" not-null="true"/>
+        </property>
+        <property name="password" update="false">
+            <column name="password" sql-type="varchar(64)" length="64"/>
+        </property>
+        <property name="email" update="false">
+            <column name="email" sql-type="varchar(64)" length="64"/>
+        </property>
+        <property name="QQ">
+            <column name="qq" sql-type="varchar(64)" length="64" not-null="true"/>
+        </property>
+        <property name="accessKey" update="false">
+            <column name="access_key" sql-type="varchar(64)" length="64" not-null="true"/>
+        </property>
+        <property name="imagePath" update="false">
+            <column name="image_path" sql-type="varchar(64)" length="64" not-null="true"/>
+        </property>
+        <property name="careerMessage">
+            <column name="career_message" sql-type="varchar(1024)" length="1024" not-null="true"/>
+        </property>
     </class>
 </hibernate-mapping>
