@@ -14,19 +14,19 @@
         <property name="realName">
             <column name="realname" sql-type="varchar(64)" length="64" not-null="true"/>
         </property>
-        <property name="password">
+        <property name="password" update="false">
             <column name="password" sql-type="varchar(64)" length="64"/>
         </property>
-        <property name="email">
+        <property name="email" update="false">
             <column name="email" sql-type="varchar(64)" length="64"/>
         </property>
         <property name="QQ">
             <column name="qq" sql-type="varchar(64)" length="64" not-null="true"/>
         </property>
-        <property name="accessKey">
+        <property name="accessKey" update="false">
             <column name="access_key" sql-type="varchar(64)" length="64" not-null="true"/>
         </property>
-        <property name="imagePath">
+        <property name="imagePath" update="false">
             <column name="image_path" sql-type="varchar(64)" length="64" not-null="true"/>
         </property>
         <property name="careerMessage">

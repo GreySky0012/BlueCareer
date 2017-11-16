@@ -64,53 +64,11 @@ public class UserDao {
      * @throws HibernateException
      */
     public void modifyUserInfo(UserEntity userEntity) throws HibernateException {
-        String userName = userEntity.getUserName();
-        String realName = userEntity.getRealName();
-        String QQ = userEntity.getQQ();
-        String careerMessage = userEntity.getCareerMessage();
 
-        boolean noUpdate = true;
-        StringBuilder sb = new StringBuilder();
-        sb.append("UPDATE UserEntity SET ");
-
-        if (userName != null && !userName.isEmpty()) {
-            sb.append("userName = :userName, ");
-            noUpdate = false;
-        }
-        if (realName != null && !realName.isEmpty()) {
-            sb.append("realName = :realName, ");
-            noUpdate = false;
-        }
-        if (QQ != null && !QQ.isEmpty()) {
-            sb.append("QQ = :QQ, ");
-            noUpdate = false;
-        }
-        if (careerMessage != null && !careerMessage.isEmpty()) {
-            sb.append("careerMessage = :careerMessage, ");
-            noUpdate = false;
-        }
-        if (noUpdate) return;
-        sb.deleteCharAt(sb.length() -2);
-        sb.append("WHERE email = :email");
         Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
-            Query query = session.createQuery(
-                    sb.toString());
-            if (userName != null && !userName.isEmpty()) {
-                query.setParameter("userName", userName);
-            }
-            if (realName != null && !realName.isEmpty()) {
-                query.setParameter("realName", realName);
-            }
-            if (QQ != null && !QQ.isEmpty()) {
-                query.setParameter("QQ", QQ);
-            }
-            if (careerMessage != null && !careerMessage.isEmpty()) {
-                query.setParameter("careerMessage", careerMessage);
-            }
-            query.setParameter("email", userEntity.getEmail());
-            query.executeUpdate();
+            session.update(userEntity);
             session.getTransaction().commit();
             logger.debug("update user info . " + userEntity.toString());
         } catch (Exception e) {
