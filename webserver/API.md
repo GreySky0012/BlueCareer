@@ -65,6 +65,9 @@ method：`POST`
 
 url：`/BlueCareer/api/v1/user/add`
 
+
+数据格式： `application/json`
+
 body：
 
 * userName：昵称(必需)
@@ -88,6 +91,8 @@ description：登录，验证邮箱和密码是否正确，返回UserEntity用�
 method：`POST`
 
 url：`/BlueCareer/api/v1/user/login`
+
+数据格式： `application/json`
 
 body：
 
@@ -116,6 +121,21 @@ body：
 
 description：更新指定邮箱账户的头像
 
+method : POST
+
+url: /BlueCareer/api/v1/user/image_upload
+
+数据格式： `form-data`
+
+返回示例：
+
+	{
+	    "code": 0,
+	    "message": "OK",
+	    "data": "/BlueCareer/image/1001.jpg"
+	}
+
+
 ### 获取头像
 
 description：获取用户的头像地址，需要验证key
@@ -139,6 +159,8 @@ description：更用户信息，需要验证key
 method： `PUT`
 
 url: `/BlueCareer/api/v1/user/modify`
+
+数据格式： `application/json`
 
 body:
 
