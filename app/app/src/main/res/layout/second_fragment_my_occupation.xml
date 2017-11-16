@@ -5,14 +5,14 @@
     android:orientation="vertical"
     android:id="@+id/my_occu_layout">
 
-   <!-- &lt;!&ndash;横线&ndash;&gt;
-    <LinearLayout
+    <!--横线-->
+   <!-- <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:background="#dfdfdf"></LinearLayout>
+        android:background="#dfdfdf"></LinearLayout>-->
 
-    &lt;!&ndash;第一个职业&ndash;&gt;
-    <LinearLayout
+    <!--第一个职业-->
+   <!-- <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="@drawable/my_occuption_background"
@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="8dp"
-                android:text="职业一"
+                android:text="职业XML"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -83,89 +83,10 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
-    </LinearLayout>
+    </LinearLayout>-->
 
-    &lt;!&ndash;横线&ndash;&gt;
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="#dfdfdf"></LinearLayout>
-
-    &lt;!&ndash;第二个职业&ndash;&gt;
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@drawable/my_occuption_background"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="8dp"
-                android:text="职业一"
-                android:textSize="20sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="35dp"
-                android:layout_weight="4"
-                android:text="幼儿教育"
-                android:textSize="25sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="7"
-                android:text="白丁"
-                android:textSize="20sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="9"
-                android:text="1"
-                android:textSize="25sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="8"
-                android:text="/5"
-                android:textSize="20sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="70dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="6dp"
-                android:text="教育"
-                android:textSize="16sp" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    &lt;!&ndash;横线&ndash;&gt;
-    <LinearLayout
+    <!--横线-->
+   <!-- <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:background="#dfdfdf"></LinearLayout>-->
