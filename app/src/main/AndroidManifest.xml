@@ -15,11 +15,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.LoginActivity" />
-        <activity android:name=".RegistActivity" />
-        <activity android:name=".InfoActivity" />
+        <activity android:name=".Activities.RegistActivity" />
+        <activity android:name=".Activities.InfoActivity" />
         <activity android:name=".Activities.MainActivity" />
         <activity android:name=".TestAnswerActivity" />
-        <activity android:name=".ClassActivtity"></activity>
-    </application>
+        <activity android:name=".ClassActivtity" />
+        <activity android:name=".Activities.ForgetKeyActivity"></activity>
 
+    </application>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 </manifest>

@@ -1,4 +1,4 @@
-package com.example.mercer.bluecareer;
+package com.example.mercer.bluecareer.Activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,12 +12,15 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.example.mercer.bluecareer.Activities.BActivity;
+import com.example.mercer.bluecareer.Utils;
+
 import java.io.File;
 
 /**
  * Created by 53017_000 on 2017/3/18.
  */
-public class ImageLoadActivity extends Activity {
+public abstract class ImageLoadActivity extends BActivity {
 
     protected static final int CHOOSE_PICTURE = 0;
     protected static final int TAKE_PICTURE = 1;
