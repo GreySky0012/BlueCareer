@@ -42,7 +42,6 @@ public class MyOccuFragment extends Fragment {
     public void loadOccuptionFromRemote(LinearLayout parentLayout){
         MyOccupation myOccupation = new MyOccupation("职业一", "幼儿教育","白丁",1,5,"教育");
 
-        parentLayout.addView(DividingLine.getDividingLine(getActivity()));
         parentLayout.addView(MyOccuptionTemplate.getOneMyOccuption(getActivity(), myOccupation));
         parentLayout.addView(DividingLine.getDividingLine(getActivity()));
         parentLayout.addView(MyOccuptionTemplate.getOneMyOccuption(getActivity(), myOccupation));
