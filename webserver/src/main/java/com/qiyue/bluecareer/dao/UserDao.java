@@ -26,6 +26,7 @@ public class UserDao {
     private static final String EMAIL_STR = "email";
     private static final String ACCESS_KEY_STR = "accessKey";
     private static final String PASSWORD_STR = "password";
+    private static final String IMAGE_PATH_STR = "imagePath";
 
     public List<UserEntity> getUserList(){
         Session session = sessionFactory.openSession();
@@ -183,6 +184,31 @@ public class UserDao {
         }
     }
 
+    /**
+     * 更新用户 头像地址
+     * @param id id
+     * @param imagePath 地址
+     * @throws HibernateException
+     */
+    public void updateImagePath(Integer id, String imagePath) throws HibernateException {
+        Session session = sessionFactory.openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createQuery(
+                    "UPDATE UserEntity SET imagePath = :imagePath WHERE id = :id");
+            query.setParameter(IMAGE_PATH_STR, imagePath);
+            query.setParameter(ID_STR, id);
+            query.executeUpdate();
+            session.getTransaction().commit();
+            logger.debug("update user imagePath . " + imagePath);
+        } catch (Exception e) {
+            logger.debug(e.getMessage());
+            session.getTransaction().rollback();
+            throw new HibernateException(e);
+        } finally {
+            session.close();
+        }
+    }
 
     /**
      * 验证邮箱是否已经存在

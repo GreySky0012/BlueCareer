@@ -87,6 +87,10 @@ public class UserService {
         return userDao.getUserImagePath(id);
     }
 
+    public void updateUserImagePath(Integer id, String imagePath) throws HibernateException {
+        userDao.updateImagePath(id, imagePath);
+    }
+
     /**
      * 返回对应用户的职业信息
      * @param id 用户id

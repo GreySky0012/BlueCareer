@@ -67,8 +67,7 @@ public class AccessKeyFilter implements Filter{
     private boolean verifyAccessKey(HttpServletRequest httpReq) {
         String accessKey = httpReq.getHeader("accessKey");
         String idStr = httpReq.getHeader("id");
-        Integer id = Integer.parseInt(idStr);
-        return accessKey != null && !accessKey.isEmpty() && id != 0 && userDao.verifyAccessKey(id, accessKey);
+        return accessKey != null && !accessKey.isEmpty() && idStr != null && !idStr.isEmpty() && userDao.verifyAccessKey(Integer.parseInt(idStr), accessKey);
     }
 
     private String updateAccessKey(HttpServletRequest httpReq) throws HibernateException {

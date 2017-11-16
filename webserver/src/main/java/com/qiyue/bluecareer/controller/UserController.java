@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -130,8 +132,55 @@ public class UserController {
         return new CommonResponse<>(careerMessage);
     }
 
-    @RequestMapping(value = "image_upload", method = RequestMethod.PUT, produces = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public CommonResponse uploadUserImage() {
-        return null;
+    @RequestMapping(value = "image_upload", method = RequestMethod.POST)
+    public CommonResponse uploadUserImage(@RequestParam("file") CommonsMultipartFile file,
+                                          HttpServletRequest request) {
+        if (file == null) {
+            return ErrorEnum.REQUEST_PARAMETER_ERROR.getResponse("file is null");
+        }
+
+        String fileName = file.getOriginalFilename();
+        String type = (fileName.contains(".")) ? fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length()) : null;
+        if (type == null) {
+            return ErrorEnum.REQUEST_PARAMETER_ERROR.getResponse("file type error");
+        }
+
+        String trueFileName  = request.getHeader("id");
+        String trueFile=String.format("/%s.%s", trueFileName, type);
+        String imageDir = "/image";
+        String realPath =request.getSession().getServletContext().getRealPath("");
+        String root = request.getContextPath();
+        File targetFile = new File(realPath + imageDir +trueFile);
+
+        //删除原文件
+        boolean res = true;
+        if(targetFile.exists()){
+            res = targetFile.delete();
+        }
+        if (!res) {
+            return ErrorEnum.SERVER_ERROR.getResponse();
+        }
+
+        //创建 image目录
+        if(!targetFile.getParentFile().exists()){
+            targetFile.getParentFile().mkdirs();
+        }
+
+        //保存
+        try {
+            file.transferTo(targetFile);
+        } catch (Exception e) {
+            return ErrorEnum.SERVER_ERROR.getResponse(e.getMessage());
+        }
+
+        String imagePath = root+imageDir+trueFile;
+        try {
+            userService.updateUserImagePath(Integer.valueOf(request.getHeader("id")), imagePath);
+        } catch (HibernateException e) {
+            logger.error(e.getMessage());
+            return ErrorEnum.HIBERNATE_ERROR.getResponse(e.getMessage());
+        }
+
+        return new CommonResponse<>(imagePath);
     }
 }
