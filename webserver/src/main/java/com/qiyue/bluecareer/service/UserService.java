@@ -80,10 +80,10 @@ public class UserService {
 
     /**
      * 返回对应用户的头像图片地址
-     * @param mail 用户邮箱
+     * @param id 用户id
      * @return 地址
      */
-    public String getUserImagePath(String mail) {
-        return userDao.getUserImagePath(mail);
+    public String getUserImagePath(Integer id) {
+        return userDao.getUserImagePath(id);
     }
 }

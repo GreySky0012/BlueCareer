@@ -110,12 +110,12 @@ public class UserController {
 
     /**
      * 获取邮箱对应用户头像图片地址
-     * @param email 用户邮箱
+     * @param id 用户id
      * @return CommonResponse data 字段为 头像图片地址
      */
     @RequestMapping(value = "/image_path", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public CommonResponse getUserImagePath(@RequestParam(value = "email") String email) {
-        String imagePath = userService.getUserImagePath(email);
+    public CommonResponse getUserImagePath(@RequestParam(value = "id") Integer id) {
+        String imagePath = userService.getUserImagePath(id);
         return new CommonResponse<>(imagePath);
     }
 

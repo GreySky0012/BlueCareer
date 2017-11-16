@@ -22,6 +22,7 @@ public class UserDao {
 
     private static Logger logger = Logger.getLogger(UserDao.class);
 
+    private static final String ID_STR = "id";
     private static final String EMAIL_STR = "email";
     private static final String ACCESS_KEY_STR = "accessKey";
     private static final String PASSWORD_STR = "password";
@@ -125,7 +126,7 @@ public class UserDao {
      * 验证登陆邮箱与密码
      * @param mail  邮箱
      * @param encryptPassword 加密后的密码
-     * @return 返回accessKey
+     * @return UserEntity 用户信息
      */
     public UserEntity verifyPassword(String mail, String encryptPassword) {
         Session session = sessionFactory.openSession();
@@ -144,14 +145,14 @@ public class UserDao {
 
     /**
      * 获取用户头像图片地址
-     * @param email 用户邮箱
+     * @param id 用户id
      * @return
      */
-    public String getUserImagePath(String email) {
+    public String getUserImagePath(Integer id) {
         Session session = sessionFactory.openSession();
         Query<String> query = session.createQuery(
-                "SELECT user.imagePath from UserEntity AS user where user.email = :email", String.class);
-        query.setParameter(EMAIL_STR, email);
+                "SELECT user.imagePath from UserEntity AS user where user.id = :id", String.class);
+        query.setParameter(ID_STR, id);
         List<String> resList =  query.list();
         session.close();
         if (resList.isEmpty()) {
@@ -162,15 +163,15 @@ public class UserDao {
 
     /**
      * 验证用户Key是否正缺
-     * @param email 用户邮箱
+     * @param id 用户id
      * @param accessKey Key
      * @return 符合返回true
      */
-    public boolean verifyAccessKey(String email, String accessKey) {
+    public boolean verifyAccessKey(Integer id, String accessKey) {
         Session session = sessionFactory.openSession();
         Query query = session.createQuery(
-                "from UserEntity AS user where user.email = :email AND user.accessKey = :accessKey");
-        query.setParameter(EMAIL_STR, email);
+                "from UserEntity AS user where user.id = :id AND user.accessKey = :accessKey");
+        query.setParameter(ID_STR, id);
         query.setParameter(ACCESS_KEY_STR, accessKey);
         List resList =  query.list();
         session.close();
@@ -179,20 +180,20 @@ public class UserDao {
 
     /**
      * 更新用户的key
-     * @param email  需要更新的用户
+     * @param id  需要更新的用户id
      * @return 更新后的key
      * @throws HibernateException
      */
-    public String updateAccessKey(String email) throws HibernateException {
+    public String updateAccessKey(Integer id) throws HibernateException {
         String newAccessKey = KeyUtil.getNewKey();
 //        newAccessKey = "abcdefg";
         Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
             Query query = session.createQuery(
-                    "UPDATE UserEntity SET accessKey = :accessKey WHERE email = :email");
+                    "UPDATE UserEntity SET accessKey = :accessKey WHERE id = :id");
             query.setParameter(ACCESS_KEY_STR, newAccessKey);
-            query.setParameter(EMAIL_STR, email);
+            query.setParameter(ID_STR, id);
             query.executeUpdate();
             session.getTransaction().commit();
             logger.debug("update user key . " + newAccessKey);
