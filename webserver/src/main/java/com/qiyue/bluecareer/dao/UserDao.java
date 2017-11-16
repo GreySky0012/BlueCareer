@@ -163,7 +163,7 @@ public class UserDao {
      */
     public String updateAccessKey(Integer id) throws HibernateException {
         String newAccessKey = KeyUtil.getNewKey();
-//        newAccessKey = "abcdefg";
+        newAccessKey = "abcdefg";
         Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
