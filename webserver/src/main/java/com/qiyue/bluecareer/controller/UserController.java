@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -63,10 +64,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "/modify", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public CommonResponse modify(@RequestBody UserEntity userEntity) {
-        if (userEntity.getEmail() == null) {
-            return ErrorEnum.REQUEST_PARAMETER_ERROR.getResponse(userEntity.toString());
-        }
+    public CommonResponse modify(HttpServletRequest httpReq, @RequestBody UserEntity userEntity) {
+        String idStr =  httpReq.getHeader("id");
+        Integer id = Integer.valueOf(idStr);
+        userEntity.setId(id);
         try {
             userService.modifyUser(userEntity);
             return new CommonResponse();
@@ -110,11 +111,13 @@ public class UserController {
 
     /**
      * 获取邮箱对应用户头像图片地址
-     * @param id 用户id
+     * @param httpReq header 携带 id
      * @return CommonResponse data 字段为 头像图片地址
      */
     @RequestMapping(value = "/image_path", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public CommonResponse getUserImagePath(@RequestParam(value = "id") Integer id) {
+    public CommonResponse getUserImagePath(HttpServletRequest httpReq) {
+        String idStr =  httpReq.getHeader("id");
+        Integer id = Integer.valueOf(idStr);
         String imagePath = userService.getUserImagePath(id);
         return new CommonResponse<>(imagePath);
     }

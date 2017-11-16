@@ -1,19 +1,4 @@
 package com.qiyue.bluecareer.model.view;
-/*
-* ------------------------------------------------------------------
-* Copyright © 2017 Hangzhou DtDream Technology Co.,Lt d. All rights reserved.
-* ------------------------------------------------------------------
-*       Product: net
-*   Module Name: GateWay
-*  Date Created: 2017/11/15
-*   Description:
-* ------------------------------------------------------------------
-* Modification History
-* DATE            Name           Description
-* ------------------------------------------------------------------
-* 2017/11/15     
-* ------------------------------------------------------------------
-*/
 
 import javax.persistence.*;
 
@@ -31,7 +16,7 @@ public class UserEntity {
     private String careerMessage;
 
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = false, updatable = false)
     public int getId() {
         return id;
     }
@@ -61,7 +46,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "password", nullable = false, length = 64)
+    @Column(name = "password", nullable = false, length = 64, updatable = false)
     public String getPassword() {
         return password;
     }
@@ -71,7 +56,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "email", nullable = false, length = 64)
+    @Column(name = "email", nullable = false, length = 64, updatable = false)
     public String getEmail() {
         return email;
     }
@@ -91,7 +76,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "access_key", nullable = true, length = 64)
+    @Column(name = "access_key", nullable = true, length = 64, updatable = false)
     public String getAccessKey() {
         return accessKey;
     }
@@ -101,7 +86,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "image_path", nullable = true, length = 64)
+    @Column(name = "image_path", nullable = true, length = 64, updatable = false)
     public String getImagePath() {
         return imagePath;
     }
