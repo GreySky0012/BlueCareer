@@ -120,6 +120,24 @@ public class UserDao {
     }
 
     /**
+     * 获取用户职业信息
+     * @param id 用户id
+     * @return
+     */
+    public String getUserCareerMessage(Integer id) {
+        Session session = sessionFactory.openSession();
+        Query<String> query = session.createQuery(
+                "SELECT user.careerMessage from UserEntity AS user where user.id = :id", String.class);
+        query.setParameter(ID_STR, id);
+        List<String> resList =  query.list();
+        session.close();
+        if (resList.isEmpty()) {
+            return null;
+        }
+        return resList.get(0);
+    }
+
+    /**
      * 验证用户Key是否正缺
      * @param id 用户id
      * @param accessKey Key

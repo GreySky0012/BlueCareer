@@ -86,4 +86,13 @@ public class UserService {
     public String getUserImagePath(Integer id) {
         return userDao.getUserImagePath(id);
     }
+
+    /**
+     * 返回对应用户的职业信息
+     * @param id 用户id
+     * @return
+     */
+    public String getUserCareerMessage(Integer id) {
+        return userDao.getUserCareerMessage(id);
+    }
 }

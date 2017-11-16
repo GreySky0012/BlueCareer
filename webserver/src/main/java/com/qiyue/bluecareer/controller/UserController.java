@@ -122,6 +122,14 @@ public class UserController {
         return new CommonResponse<>(imagePath);
     }
 
+    @RequestMapping(value = "/career_message", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getUserCareerMessage(HttpServletRequest httpReq) {
+        String idStr =  httpReq.getHeader("id");
+        Integer id = Integer.valueOf(idStr);
+        String careerMessage = userService.getUserCareerMessage(id);
+        return new CommonResponse<>(careerMessage);
+    }
+
     @RequestMapping(value = "image_upload", method = RequestMethod.PUT, produces = MediaType.MULTIPART_FORM_DATA_VALUE)
     public CommonResponse uploadUserImage() {
         return null;
