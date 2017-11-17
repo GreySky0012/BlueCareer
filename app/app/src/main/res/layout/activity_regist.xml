@@ -245,14 +245,29 @@
                 android:layout_marginRight="20dp"
                 android:src="@drawable/regist_job_image"/>
 
-            <Button
+            <LinearLayout
                 android:id="@+id/job"
-                android:background="@null"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:layout_marginRight="20dp"
-                android:text="行业选择"/>
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_marginRight="19dp"
+                    android:text="行业选择"/>
+
+                <TextView
+                    android:id="@+id/major"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:textSize="15sp"/>
+
+            </LinearLayout>
+
+
 
         </LinearLayout>
 

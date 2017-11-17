@@ -80,7 +80,7 @@ public class UserManager {
         ReturnCode result = ServerManager.GetInstance().RequestSync(ServerManager.Method.post,url,json);
         if (result.code!=0)
             return false;
-        SystemManager.getInstance().AccessKey = (String) result.data;
+        User.UserData userData = new Gson().fromJson((String) result.data, User.UserData.class);
         return true;
     }
 

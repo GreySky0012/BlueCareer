@@ -16,8 +16,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.mercer.bluecareer.Dialog.TopicDialog;
+import com.example.mercer.bluecareer.Manager.SystemManager;
 import com.example.mercer.bluecareer.R;
+import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
+import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +76,8 @@ public class MainFragment extends Fragment {
     private void setListContent(int index){
         if (index == 0){
             _topicList.clear();
-            _topicList.add(new Topic("B站哔哩哔哩2000万投资","《那年那兔那些事儿》创始人麻蛇向媒体公布，他们获得了哔哩哔哩弹幕网（以下简称B站）的2000万人民币投资。\n麻蛇，真名林超，如今是《那年那兔那些事儿》（简称《那兔》）动画出品方翼下之风动漫产品啪啦啪啦。。。。。"));
+            for(int i = 0;i<10;i++)
+                _topicList.add(new Topic("B站哔哩哔哩2000万投资","《那年那兔那些事儿》创始人麻蛇向媒体公布，他们获得了哔哩哔哩弹幕网（以下简称B站）的2000万人民币投资。\n麻蛇，真名林超，如今是《那年那兔那些事儿》（简称《那兔》）动画出品方翼下之风动漫产品啪啦啪啦。。。。。"));
         }
         if(index == 2){
             _topicList.clear();
@@ -170,6 +176,15 @@ public class MainFragment extends Fragment {
 
             holder._title.setText(_topicList.get(i)._title);
             holder._content.setText(_topicList.get(i)._content);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    SystemManager.getInstance().PrintLog("onclick");
+                    TopicViewHolder holder = (TopicViewHolder)view.getTag();
+                    new TopicDialog(getActivity(),holder._title.getText().toString(),holder._content.getText().toString());
+                }
+            });
 
             return view;
         }

@@ -64,4 +64,13 @@ public class User {
         header.put("accessKey","123456");
         return header;
     }
+
+    public class UserData{
+        String userName;
+        String realName;
+        String accessKey;
+        String imagePath;
+        String careerMessage;
+        String qq;
+    }
 }

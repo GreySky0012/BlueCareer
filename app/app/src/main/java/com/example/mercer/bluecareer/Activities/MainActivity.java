@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mercer.bluecareer.CircleImageView;
+import com.example.mercer.bluecareer.Dialog.TopicDialog;
 import com.example.mercer.bluecareer.Fragments.IntroduceFragment;
 import com.example.mercer.bluecareer.Fragments.LearnFragment;
 import com.example.mercer.bluecareer.Fragments.MainFragment;
