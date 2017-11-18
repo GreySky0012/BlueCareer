@@ -3,16 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:id="@+id/my_occu_layout">
-
-    <!--横线-->
-   <!-- <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="#dfdfdf"></LinearLayout>-->
+    android:id="@+id/my_occu_one">
 
     <!--第一个职业-->
-   <!-- <LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="@drawable/my_occuption_background"
@@ -24,12 +18,11 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/occuption"
+                android:id="@+id/occuption_num"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="8dp"
-                android:text="职业XML"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -39,32 +32,32 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/occupation_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="35dp"
                 android:layout_weight="4"
-                android:text="幼儿教育"
                 android:textSize="25sp" />
 
             <TextView
+                android:id="@+id/curr_level_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="7"
-                android:text="白丁"
                 android:textSize="20sp" />
 
             <TextView
+                android:id="@+id/curr_level_num"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="9"
-                android:text="1"
                 android:textSize="25sp" />
 
             <TextView
+                android:id="@+id/total_level_num"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="8"
-                android:text="/5"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -74,20 +67,20 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/occupation_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="70dp"
                 android:layout_marginTop="6dp"
                 android:layout_marginBottom="6dp"
-                android:text="教育"
                 android:textSize="16sp" />
         </LinearLayout>
 
-    </LinearLayout>-->
+    </LinearLayout>
 
     <!--横线-->
-   <!-- <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="#dfdfdf"></LinearLayout>-->
+    <!-- <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="5dp"
+         android:background="#dfdfdf"></LinearLayout>-->
 </LinearLayout>

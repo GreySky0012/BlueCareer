@@ -7,19 +7,29 @@ import com.example.mercer.bluecareer.MyApplication;
 /**
  * author: Husen
  * date: 2017.11.16
- * description：通用专用工具类
+ * description：单位转换工具类
  */
 
 public class ConversionTool {
     private static final float _dpScale = MyApplication.getContext().getResources().getDisplayMetrics().density;
     private static final float _scaledDensity = MyApplication.getContext().getResources().getDisplayMetrics().scaledDensity;
 
+    /**
+     * 根据sp获取px值
+     * @param spWantValue
+     * @return
+     */
     public static float getPxFromSpValue(int spWantValue){
         float spValue = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, spWantValue,MyApplication.getContext().getResources().getDisplayMetrics());
 
         return spValue;
     }
 
+    /**
+     * 根据dp获取px值
+     * @param dpWantValue
+     * @return
+     */
     public static int getPxFromDpValue(int dpWantValue){
         float dpValue = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpWantValue,MyApplication.getContext().getResources().getDisplayMetrics());
 
