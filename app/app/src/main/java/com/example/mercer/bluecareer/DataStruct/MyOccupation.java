@@ -11,32 +11,32 @@ import java.io.Serializable;
 public class MyOccupation implements Serializable{
     private String _occupationNum;
     private String _occupationName;
-    private String _occupationLevel;
-    private int _occupation1;
-    private int _occupation2;
+    private String _currLevelName;
+    private int _currLevelNum;
+    private int _totalLevelNum;
     private String _occupationType;
+
+    public MyOccupation(){}
+
+    public MyOccupation(String _occupationNum, String _occupationName, String _currLevelName, int _currLevelNum, int _totalLevelNum, String _occupationType) {
+        this._occupationNum = _occupationNum;
+        this._occupationName = _occupationName;
+        this._currLevelName = _currLevelName;
+        this._currLevelNum = _currLevelNum;
+        this._totalLevelNum = _totalLevelNum;
+        this._occupationType = _occupationType;
+    }
 
     @Override
     public String toString() {
         return "MyOccupation{" +
                 "_occupationNum='" + _occupationNum + '\'' +
                 ", _occupationName='" + _occupationName + '\'' +
-                ", _occupationLevel='" + _occupationLevel + '\'' +
-                ", _occupation1=" + _occupation1 +
-                ", _occupation2=" + _occupation2 +
+                ", _currLevelName='" + _currLevelName + '\'' +
+                ", _currLevelNum=" + _currLevelNum +
+                ", _totalLevelNum=" + _totalLevelNum +
                 ", _occupationType='" + _occupationType + '\'' +
                 '}';
-    }
-
-    public MyOccupation(){}
-
-    public MyOccupation(String occupationNum, String occupationName, String occupationLevel, int occupation1, int occupation2, String occupationType){
-        _occupationNum = occupationNum;
-        _occupationName = occupationName;
-        _occupationLevel = occupationLevel;
-        _occupation1 = occupation1;
-        _occupation2 = occupation2;
-        _occupationType = occupationType;
     }
 
     public String get_occupationNum() {
@@ -55,28 +55,28 @@ public class MyOccupation implements Serializable{
         this._occupationName = _occupationName;
     }
 
-    public String get_occupationLevel() {
-        return _occupationLevel;
+    public String get_currLevelName() {
+        return _currLevelName;
     }
 
-    public void set_occupationLevel(String _occupationLevel) {
-        this._occupationLevel = _occupationLevel;
+    public void set_currLevelName(String _currLevelName) {
+        this._currLevelName = _currLevelName;
     }
 
-    public int get_occupation1() {
-        return _occupation1;
+    public int get_currLevelNum() {
+        return _currLevelNum;
     }
 
-    public void set_occupation1(int _occupation1) {
-        this._occupation1 = _occupation1;
+    public void set_currLevelNum(int _currLevelNum) {
+        this._currLevelNum = _currLevelNum;
     }
 
-    public int get_occupation2() {
-        return _occupation2;
+    public int get_totalLevelNum() {
+        return _totalLevelNum;
     }
 
-    public void set_occupation2(int _occupation2) {
-        this._occupation2 = _occupation2;
+    public void set_totalLevelNum(int _totalLevelNum) {
+        this._totalLevelNum = _totalLevelNum;
     }
 
     public String get_occupationType() {

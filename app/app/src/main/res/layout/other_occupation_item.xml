@@ -9,7 +9,7 @@
         android:layout_height="70dp">
 
         <ImageView
-            android:id="@+id/imageview"
+            android:id="@+id/image_view"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerVertical="true"
@@ -22,11 +22,11 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/imageview"
-            android:text="这个是测试用条目" />
+            android:textSize="20sp"
+            android:layout_toRightOf="@id/image_view" />
 
         <ImageView
-            android:id="@+id/checkbox"
+            android:id="@+id/selector_img"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:layout_alignParentRight="true"
@@ -37,6 +37,15 @@
 
     </RelativeLayout>
 
-    <include layout="@layout/item_hide_layout" />
+    <LinearLayout
+        android:id="@+id/other_occu_detail_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <!--<include layout="@layout/other_occupation_detail_item"></include>
+        <include layout="@layout/other_occupation_detail_item"></include>-->
+    </LinearLayout>
 
 </LinearLayout>
