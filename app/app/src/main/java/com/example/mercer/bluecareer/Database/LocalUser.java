@@ -15,6 +15,7 @@ public class LocalUser {
     @Id(autoincrement = true)
     private Long id;
 
+
     @Index(unique = true)
     private String email;
 

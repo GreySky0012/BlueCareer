@@ -2,18 +2,23 @@ package com.example.mercer.bluecareer.Activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mercer.bluecareer.DataStruct.JsonStruct.UserUpdateData;
 import com.example.mercer.bluecareer.DataStruct.User;
+import com.example.mercer.bluecareer.Manager.SystemManager;
 import com.example.mercer.bluecareer.Manager.UserManager;
 import com.example.mercer.bluecareer.R;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,12 +35,12 @@ import java.util.Arrays;
  */
 public class InfoActivity extends ImageLoadActivity {
     //定义字段Etxt变量，头像变量在父类中定义
-    private TextView id;//账号
     private EditText userName;//昵称
     private EditText realName;
     private TextView email;
     private EditText qq;
     private TextView major;
+    private ImageButton _back;
     //更新按钮
     Button btnSubmit;
     // 多选提示框
@@ -67,12 +72,12 @@ public class InfoActivity extends ImageLoadActivity {
     protected void getView() {
         circle_image = (ImageView) findViewById(R.id.imageChoose);
 
-        id = (TextView) findViewById(R.id.id);
         userName = (EditText) findViewById(R.id.userName);
         realName = (EditText) findViewById(R.id.realName);
         email = (TextView) findViewById(R.id.email);
         qq = (EditText) findViewById(R.id.qq);
         major = (TextView) findViewById(R.id.major);
+        _back = findViewById(R.id.back);
 
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
     }
@@ -83,20 +88,16 @@ public class InfoActivity extends ImageLoadActivity {
     public void fillPersInfo() {
         //从服务端获取个人信息
         User user = UserManager.getInstance().getUserInsatance();
-        try {
-            user = UserManager.getInstance().getUserInfo();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        id.setText(user._id + "");
         userName.setText(user._username);
         realName.setText(user._name);
         email.setText(user._email);
         qq.setText(user._qq);
         //设置职业选择
         major.setText(user._major == null ? "算法工程师" : user._major);
-        //circle_image.setImageBitmap();
+        if (user._image!=null){
+            circle_image.setImageBitmap(user._image);
+        }
     }
 
     /**
@@ -127,6 +128,13 @@ public class InfoActivity extends ImageLoadActivity {
                 showMutilAlertDialog();
             }
         });
+
+        _back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     /**
@@ -136,22 +144,40 @@ public class InfoActivity extends ImageLoadActivity {
      */
     public void updateUserInfo() {
         int result = -1;
-        JSONObject userinfoJSON = new JSONObject();
+        String username = userName.getText().toString();
+        String realname = realName.getText().toString();
+        String jobs = major.getText().toString();
+        String q = qq.getText().toString();
         try {
-            userinfoJSON.put("userName", userName.getText());
-            userinfoJSON.put("realName", realName.getText());
-            userinfoJSON.put("qq", qq.getText());
-            userinfoJSON.put("major", major.getText());
 
-            result = UserManager.getInstance().updateUserinfo2Server(userinfoJSON);
-        } catch (JSONException e) {
-            e.printStackTrace();
+            UserUpdateData data = new UserUpdateData(username,realname,jobs,q);
+
+            result = UserManager.getInstance().updateUserinfo2Server(new Gson().toJson(data));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        Bitmap image = null;
+        if (selected){
+            circle_image.setDrawingCacheEnabled(true);
+            image = this.circle_image.getDrawingCache();
+            UserManager.getInstance()._currentUser._image = image;
+        }
+        try {
+            UserManager.getInstance().SetImage(this);
+        } catch (IOException e) {
+            showToast("提交头像失败");
+        }
+
         if(result == 0){
-            Toast.makeText(InfoActivity.this, "更新用户信息成功", Toast.LENGTH_SHORT).show();
+            showToast("更新用户信息成功");
+            UserManager.getInstance()._currentUser._username = username;
+            UserManager.getInstance()._currentUser._name = realname;
+            UserManager.getInstance()._currentUser._qq = q;
+            UserManager.getInstance()._currentUser._major = jobs;
+            if (image!=null)
+                UserManager.getInstance()._currentUser._image = image;
+            this.finish();
         }
     }
 
@@ -168,7 +194,7 @@ public class InfoActivity extends ImageLoadActivity {
         Arrays.fill(currChoosed, false);
         //按照逗号截取
         if (currMajor != null && currMajor.trim() != "") {
-            String[] currMajorArray = currMajor.split(",|，");
+            String[] currMajorArray = currMajor.split("\\|");
 
             for (int i = 0, j = 0; i < currMajorArray.length; i++, j++) {
                 if (currMajorArray[i].trim().equals(majorArray[j])) {
@@ -212,7 +238,7 @@ public class InfoActivity extends ImageLoadActivity {
                 String newMajor = "";
                 for (int i = 0; i < majorArray.length; i++) {
                     if (currChoosed[i]) {
-                        newMajor += majorArray[i] + ",";
+                        newMajor += majorArray[i] + "|";
                     }
                 }
                 //清除最后的逗号

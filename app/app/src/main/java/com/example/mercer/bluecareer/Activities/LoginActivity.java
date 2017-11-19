@@ -1,6 +1,5 @@
 package com.example.mercer.bluecareer.Activities;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -12,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.mercer.bluecareer.CircleImageView;
+import com.example.mercer.bluecareer.DataStruct.JsonStruct.LoginData;
 import com.example.mercer.bluecareer.Manager.SystemManager;
 import com.example.mercer.bluecareer.Manager.UserManager;
 import com.example.mercer.bluecareer.R;
@@ -44,27 +44,6 @@ public class LoginActivity extends BActivity {
         getView();
 
         setListener();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
-            case 1:
-                if (resultCode == RESULT_OK){
-                    if (data!=null){
-                        _username.setText(data.getStringExtra("email"));
-                        _key.setText(data.getStringExtra("key"));
-                        Bitmap image = UserManager.getInstance().GetImage(this,_username.getText().toString());
-                        if (image!=null){
-                            _image.setImageBitmap(image);
-                        }
-                    }else {
-                        SystemManager.getInstance().PrintLog("data is null");
-                    }
-                }
-                break;
-            default:
-        }
     }
 
     @Override
@@ -114,7 +93,7 @@ public class LoginActivity extends BActivity {
         _regist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SystemManager.getInstance().toActivityForResult(activity,RegistActivity.class,1);
+                SystemManager.getInstance().toActivity(activity,RegistActivity.class);
             }
         });
 
@@ -129,13 +108,14 @@ public class LoginActivity extends BActivity {
                     return;
                 }
                 try {
-                    if(!UserManager.getInstance().login(new LoginData(email,key))){
+                    if(!UserManager.getInstance().login(activity,new LoginData(email,key))){
                         showToast("邮箱或密码错误");
                         return;
                     }
                 }
                 catch (IOException e){
                     showToast("没有网络");
+                    SystemManager.getInstance().PrintLog(e.getMessage());
                 }
                 showToast("登录成功");
                 SystemManager.getInstance().toActivity(activity, MainActivity.class);
@@ -169,14 +149,5 @@ public class LoginActivity extends BActivity {
 
             }
         });
-    }
-
-    public class LoginData{
-        public String email;
-        public String password;
-        public LoginData(String e,String p){
-            email = e;
-            password = p;
-        }
     }
 }

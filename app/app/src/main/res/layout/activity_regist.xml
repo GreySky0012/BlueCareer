@@ -87,13 +87,13 @@
                 android:text="昵称"/>
 
             <EditText
-                style="?android:attr/textViewStyle"
                 android:id="@+id/id"
+                style="?android:attr/textViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:textSize="15sp"
-                android:text="GreySky0012" />
+                android:text="测试账户"
+                android:textSize="15sp" />
 
         </LinearLayout>
 
@@ -120,13 +120,13 @@
                 android:text="真实姓名"/>
 
             <EditText
-                style="?android:attr/textViewStyle"
                 android:id="@+id/name"
+                style="?android:attr/textViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:textSize="15sp"
-                android:text="胡皓然" />
+                android:text="真实姓名"
+                android:textSize="15sp" />
 
         </LinearLayout>
 
@@ -153,14 +153,14 @@
                 android:text="密码"/>
 
             <EditText
-                style="?android:attr/textViewStyle"
                 android:id="@+id/key"
+                style="?android:attr/textViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:inputType="textPassword"
-                android:textSize="15sp"
-                android:text="huhaoran0012" />
+                android:text="123456"
+                android:textSize="15sp" />
 
         </LinearLayout>
 
@@ -187,13 +187,13 @@
                 android:text="邮箱"/>
 
             <EditText
-                style="?android:attr/textViewStyle"
                 android:id="@+id/mail"
+                style="?android:attr/textViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:textSize="15sp"
-                android:text="956379493@qq.com" />
+                android:text="test1@mail.com"
+                android:textSize="15sp" />
 
         </LinearLayout>
 
@@ -220,13 +220,13 @@
                 android:text="qq"/>
 
             <EditText
-                style="?android:attr/textViewStyle"
                 android:id="@+id/qq"
+                style="?android:attr/textViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:textSize="15sp"
-                android:text="530171981" />
+                android:text="4432"
+                android:textSize="15sp" />
 
         </LinearLayout>
 

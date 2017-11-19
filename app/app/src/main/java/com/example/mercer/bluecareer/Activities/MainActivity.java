@@ -11,15 +11,12 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.mercer.bluecareer.CircleImageView;
-import com.example.mercer.bluecareer.Dialog.TopicDialog;
 import com.example.mercer.bluecareer.Fragments.IntroduceFragment;
 import com.example.mercer.bluecareer.Fragments.LearnFragment;
 import com.example.mercer.bluecareer.Fragments.MainFragment;
@@ -83,13 +80,7 @@ public class MainActivity extends BActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        /** 从服务器获取用户信息， */
-        try {
-            UserManager.getInstance().getUserInfo();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Bitmap image = UserManager.getInstance().GetImage(this, UserManager.getInstance()._currentUser._email);
+        Bitmap image = UserManager.getInstance()._currentUser._image;
         if (image == null) {
             image = BitmapFactory.decodeResource(this.getResources(), R.drawable.image_defult_navigation);
         }

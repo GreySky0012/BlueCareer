@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    compileSdkVersion 27
+    buildToolsVersion '27.0.0'
 
     defaultConfig {
         applicationId "com.example.mercer.bluecareer"
@@ -11,30 +11,51 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    signingConfigs {
+        debug {
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
+    }
     buildTypes {
+        debug{
+            signingConfig = signingConfigs.debug
+        }
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig = signingConfigs.debug
         }
     }
 }
 
 dependencies {
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:percent:23.0.1'
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
     compile 'com.google.code.gson:gson:2.8.2'
-    compile 'com.android.support:support-v4:25.3.1'
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    compile 'org.greenrobot:greendao:3.0.0'
+    compile 'org.greenrobot:greendao:3.2.0'
     compile project(':library')
+    implementation 'com.android.support:design:27.0.1'
+    implementation 'com.android.support:support-v4:27.0.1'
+    implementation 'com.android.support:appcompat-v7:27.0.1'
+    compile project(':refresh-footer')
+    compile project(':refresh-header')
+    compile project(':refresh-layout')
 }
 
 buildscript {
     repositories {
-        mavenCentral()
+        google()
+        jcenter()
+        maven {
+            url "https://maven.google.com"
+        }
     }
     dependencies {
         classpath 'org.greenrobot:greendao-gradle-plugin:3.0.0'
@@ -45,5 +66,6 @@ apply plugin: 'org.greenrobot.greendao'
 
 greendao {
     schemaVersion 1
+    daoPackage 'com.anye.greendao.gen'
     targetGenDir 'src/main/java'
 }

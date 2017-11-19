@@ -17,27 +17,29 @@ import java.util.HashMap;
  * Created by GreySky on 2017/9/9.
  */
 public class User {
-    public int _id;//id、账号
     public String _username;//昵称
     public String _name;//真实姓名
     public String _password;
-    public String _key;
     public String _email;
     public String _major;
     public Bitmap _image;
     public String _qq;
     private String _accessKey;
+    private int _id;
 
     public User(){};
 
-    public User(String email, String username, Bitmap image){
+    public User(String email, String username){
         _email = email;
         _username = username;
-        _image = image;
+        _image = null;
+        _accessKey = "123456";
+        _id = 0;
     }
 
-    public void SetKey(String key){
-        _accessKey = key;
+    public void SetHeader(int id,String key){
+        _id = id;
+        _accessKey = key!=null?key:"123456";
     }
 
     public String SaveImage(BActivity context) throws IOException {
@@ -58,10 +60,10 @@ public class User {
         return dir;
     }
 
-    public HashMap<String,String> GetKeyHeader(){
+    public HashMap<String,String> GetHeader(){
         HashMap<String,String> header = new HashMap<>();
-        //header.put("accessKey",_accessKey);
-        header.put("accessKey","123456");
+        header.put("id",_id+"");
+        header.put("accessKey",_accessKey);
         return header;
     }
 

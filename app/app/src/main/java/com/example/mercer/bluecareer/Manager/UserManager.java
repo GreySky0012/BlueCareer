@@ -1,26 +1,32 @@
 package com.example.mercer.bluecareer.Manager;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.example.mercer.bluecareer.Activities.BActivity;
-import com.example.mercer.bluecareer.Activities.LoginActivity;
 import com.example.mercer.bluecareer.Activities.RegistActivity;
+import com.example.mercer.bluecareer.DataStruct.JsonStruct.LoginData;
 import com.example.mercer.bluecareer.DataStruct.ReturnCode;
+import com.example.mercer.bluecareer.DataStruct.Url.ImageUrl;
+import com.example.mercer.bluecareer.DataStruct.Url.Url;
 import com.example.mercer.bluecareer.DataStruct.Url.UserUrl;
 import com.example.mercer.bluecareer.DataStruct.User;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.internal.LinkedTreeMap;
 
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * Created by GreySky on 2017/10/21.
@@ -73,20 +79,44 @@ public class UserManager {
         return localCheck(email, key);
     }
 
-    public boolean login(LoginActivity.LoginData data) throws IOException {
+    public boolean login(BActivity activity,LoginData data) throws IOException {
         //连接数据库查询用户名和密码是否正确
-        UserUrl url = new UserUrl("login");
+        UserUrl url = new UserUrl("/login");
         String json = new Gson().toJson(data);
         ReturnCode result = ServerManager.GetInstance().RequestSync(ServerManager.Method.post,url,json);
         if (result.code!=0)
             return false;
-        User.UserData userData = new Gson().fromJson((String) result.data, User.UserData.class);
+
+        LinkedTreeMap userData = (LinkedTreeMap)result.data;
+        int id = ((Double)userData.get("id")).intValue();
+        String userName = (String) userData.get("userName");
+        String realName = (String) userData.get("realName");
+        String accessKey = (String) userData.get("accessKey");
+        String imagePath = (String) userData.get("imagePath");
+        String careerMessage = (String) userData.get("careerMessage");
+        String qq = (String) userData.get("qq");
+
+        _currentUser = new User(data.email,userName);
+        _currentUser._name = realName;
+        _currentUser._major = careerMessage;
+        _currentUser._qq = qq;
+        _currentUser.SetHeader(id,accessKey);
+
+        _currentUser._image = null;
+        Bitmap image = GetImage(activity,data.email);
+        if (image != null)
+            _currentUser._image = image;
+
+        if (imagePath!=null){
+            _currentUser._image = GetImageOnline(imagePath);
+        }
+
         return true;
     }
 
     public boolean tryRegist(String email) throws IOException {
         //check username and email in database
-        UserUrl url = new UserUrl("email_exist?email="+email);
+        UserUrl url = new UserUrl("/email_exist?email="+email);
         ReturnCode result = ServerManager.GetInstance().RequestSync(ServerManager.Method.get,url);
 
         if ((boolean) result.data)
@@ -95,27 +125,52 @@ public class UserManager {
     }
 
     public boolean regist(RegistActivity.RegistUserData user) throws IOException {
-        UserUrl url = new UserUrl("add");
+        UserUrl url = new UserUrl("/add");
         String json = new Gson().toJson(user);
-        //ReturnCode result = ServerManager.GetInstance().RequestSync(ServerManager.Method.post,url,json);
-        //if (result.code == 0){
-            _currentUser = new User(user.email,user.userName,null);
+        ReturnCode result = ServerManager.GetInstance().RequestSync(ServerManager.Method.post,url,json);
+        if (result.code == 0){
             return true;
-        //}
-        //return false;
+        }
+        return false;
     }
 
-    public Bitmap GetOnlineImage() throws IOException {
-        UserUrl url = new UserUrl("image_path?email="+_currentUser._email);
-        ReturnCode result = ServerManager.GetInstance().RequestSync(ServerManager.Method.get,url,_currentUser.GetKeyHeader());
-        return null;
+    public Bitmap GetImageOnline() throws IOException{
+        String dir = GetImagePathOnline();
+        if (dir==null)
+            return null;
+        return GetImageOnline(dir);
     }
 
-    public void SetImage(BActivity activity,User user) throws IOException {
-        //UserUrl url = new UserUrl("");
-        //ReturnCode result = ServerManager.GetInstance().RequestSync(ServerManager.Method);
+    //获取用户头像的网络地址
+    private String GetImagePathOnline() throws IOException {
+        UserUrl url = new UserUrl("/image_path");
+        ReturnCode result = ServerManager.GetInstance().RequestSync(ServerManager.Method.get,url,_currentUser.GetHeader());
+        if (result.data == null)
+            return null;
+        return result.data.toString();
+    }
 
-        user.SaveImage(activity);
+    private Bitmap GetImageOnline(String path) throws IOException{
+        ImageUrl url = new ImageUrl(path);
+        return ServerManager.GetInstance().RequestFileSync(url,_currentUser.GetHeader());
+    }
+
+    public void SetImage(BActivity activity) throws IOException {
+        String dir = _currentUser.SaveImage(activity);
+        if (dir == null)
+            return;
+        UserUrl url = new UserUrl("/image_upload");
+        ServerManager.GetInstance().RequestAsync(ServerManager.Method.post, url, new File(dir),_currentUser.GetHeader(), new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                SystemManager.getInstance().PrintLog(e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                ReturnCode code = new Gson().fromJson(response.body().string(),ReturnCode.class);
+            }
+        });
     }
 
     public String GetImagePath(BActivity context,String email){
@@ -144,9 +199,9 @@ public class UserManager {
     /**
      * 获取用户信息
      */
-    public User getUserInfo() throws IOException {
+    /*public User getUserInfo() throws IOException {
         //请求url，测试使用，后期改为按照主键查询
-        UserUrl url = new UserUrl("list");
+        UserUrl url = new UserUrl("/list");
 
         //请求远程数据
         ReturnCode resultJson = ServerManager.GetInstance().RequestSync(ServerManager.Method.get, url);
@@ -161,7 +216,7 @@ public class UserManager {
         updateUserInstance(jsonObject);
 
         return _currentUser;
-    }
+    }*/
 
     /**
      * 更新用户单例信息
@@ -171,12 +226,16 @@ public class UserManager {
     public void updateUserInstance(JSONObject jsonObject) {
         Object object;
 
-        _currentUser._id = jsonObject.optInt("id") == 0 ? _currentUser._id : jsonObject.optInt("id");
+        int id;
+        String key;
+
+        id = ((Double)jsonObject.optDouble("id")).intValue();
         _currentUser._username = (object = jsonObject.optString("userName")) == "" ? _currentUser._username : (String) object;
         _currentUser._name = (object = jsonObject.optString("realName")) == "" ? _currentUser._name : (String) object;
         _currentUser._password = (object = jsonObject.optString("password")) == "" ? _currentUser._password : (String) object;
         _currentUser._email = (object = jsonObject.optString("email")) == "" ? _currentUser._email : (String) object;
-        _currentUser._key = (object = jsonObject.optString("accessKey")) == "" ? _currentUser._key : (String) object;
+        key = (object = jsonObject.optString("accessKey")) == "" ? null : (String) object;
+        _currentUser.SetHeader(id,key);
         //处理头像
         //jsonObject.optString("imagePath"));
         _currentUser._qq = (object = jsonObject.optString("qq")) == "" ? _currentUser._qq : (String) object;
@@ -186,13 +245,10 @@ public class UserManager {
     /**
      * 更新用户信息到服务器
      */
-    public int updateUserinfo2Server(JSONObject jsonObject) throws IOException {
+    public int updateUserinfo2Server(String json) throws IOException {
         //请求url，测试使用，后期改为按照主键查询
-        UserUrl url = new UserUrl("待更新");
-        Log.e("更新用户信息",  jsonObject.toString());
+        UserUrl url = new UserUrl("/modify");
+        ServerManager.GetInstance().RequestAsync(ServerManager.Method.put,url,json,_currentUser.GetHeader());
         return 0;
-        //RetureCode resultJson = ServerManager.GetInstance().RequestSync(ServerManager.Method.get, url, jsonObject.toString());
-
-        //return resultJson.code;
     }
 }

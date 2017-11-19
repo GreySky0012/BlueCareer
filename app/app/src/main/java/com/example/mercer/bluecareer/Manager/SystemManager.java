@@ -34,10 +34,6 @@ public class SystemManager {
     }
 
     public void returnActivity(BActivity activity,Intent intent){
-        if (intent!=null)
-            SystemManager.getInstance().PrintLog("111");
-        else
-            SystemManager.getInstance().PrintLog("000");
         activity.setResult(Activity.RESULT_OK,intent);
         activity.finish();
     }

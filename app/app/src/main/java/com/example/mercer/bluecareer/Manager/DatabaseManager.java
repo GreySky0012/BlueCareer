@@ -2,12 +2,10 @@ package com.example.mercer.bluecareer.Manager;
 
 import android.database.sqlite.SQLiteDatabase;
 
+import com.anye.greendao.gen.DaoMaster;
+import com.anye.greendao.gen.DaoSession;
 import com.example.mercer.bluecareer.Activities.BActivity;
-import com.example.mercer.bluecareer.Database.DaoMaster;
-import com.example.mercer.bluecareer.Database.DaoSession;
 
-import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.HashMap;
 
 /**

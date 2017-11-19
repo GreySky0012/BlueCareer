@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.mercer.bluecareer.DataStruct.JsonStruct.LoginData;
 import com.example.mercer.bluecareer.DataStruct.User;
 import com.example.mercer.bluecareer.ImageChooser;
 import com.example.mercer.bluecareer.Manager.SystemManager;
@@ -58,15 +59,15 @@ public class RegistActivity extends ImageLoadActivity {
     @Override
     protected void getView(){
         circle_image = (ImageChooser)findViewById(R.id.image);
-        _back = (Button)findViewById(R.id.back);
-        _regist = (Button)findViewById(R.id.regist);
-        _id = (EditText)findViewById(R.id.id);
-        _name = (EditText)findViewById(R.id.name);
-        _key = (EditText)findViewById(R.id.key);
-        _mail = (EditText)findViewById(R.id.mail);
-        _qq = (EditText)findViewById(R.id.qq);
+        _back = findViewById(R.id.back);
+        _regist = findViewById(R.id.regist);
+        _id = findViewById(R.id.id);
+        _name = findViewById(R.id.name);
+        _key = findViewById(R.id.key);
+        _mail = findViewById(R.id.mail);
+        _qq = findViewById(R.id.qq);
         _job = findViewById(R.id.job);
-        _major = (TextView)findViewById(R.id.major);
+        _major = findViewById(R.id.major);
     }
 
     @Override
@@ -76,7 +77,7 @@ public class RegistActivity extends ImageLoadActivity {
         _back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SystemManager.getInstance().returnActivity(activity,null);
+                SystemManager.getInstance().toActivity(activity,LoginActivity.class);
             }
         });
 
@@ -118,8 +119,8 @@ public class RegistActivity extends ImageLoadActivity {
                     return;
                 }
 
-                User user = new User(email,id,image);
-                user._key = key;
+                User user = new User(email,id);
+                user._password = key;
                 user._qq = qq;
                 user._name = name;
                 user._image = image;
@@ -131,7 +132,9 @@ public class RegistActivity extends ImageLoadActivity {
                         return;
                     }
                     if (UserManager.getInstance().regist(new RegistUserData(id,email,key,qq,name,major))) {
-                        UserManager.getInstance().SetImage(activity,user);
+                        UserManager.getInstance().login(activity,new LoginData(email,key));
+                        UserManager.getInstance()._currentUser._image = image;
+                        UserManager.getInstance().SetImage(activity);
                     }else{
                         showToast("未知错误");
                         return;
@@ -142,10 +145,7 @@ public class RegistActivity extends ImageLoadActivity {
                     return;
                 }
 
-                Intent intent = new Intent();
-                intent.putExtra("email",user._email);
-                intent.putExtra("key",user._key);
-                SystemManager.getInstance().returnActivity(activity,intent);
+                SystemManager.getInstance().toActivity(activity,MainActivity.class);
             }
         });
 
@@ -214,14 +214,13 @@ public class RegistActivity extends ImageLoadActivity {
                 String newMajor = "";
                 for (int i = 0; i < majorArray.length; i++) {
                     if (currChoosed[i]) {
-                        newMajor += majorArray[i] + ",";
+                        newMajor += majorArray[i] + "|";
                     }
                 }
                 //清除最后的逗号
                 newMajor = newMajor.substring(0, newMajor.length() - 1);
                 //将选择填充到界面
                 _major.setText(newMajor);
-                SystemManager.getInstance().PrintLog(newMajor);
 
                 // 关闭提示框
                 _majorChooseDialog.dismiss();

@@ -2,31 +2,25 @@ package com.example.mercer.bluecareer.Fragments;
 
 
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.mercer.bluecareer.Dialog.TopicDialog;
-import com.example.mercer.bluecareer.Manager.SystemManager;
+import com.example.mercer.bluecareer.Adapter.BaseRecyclerAdapter;
+import com.example.mercer.bluecareer.Adapter.SmartViewHolder;
 import com.example.mercer.bluecareer.R;
-import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
-import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.zip.Inflater;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,7 +31,9 @@ public class MainFragment extends Fragment {
     View _mView;
     ListView _list;
     List<Topic> _topicList;
-    TopicAdapter _adapter;
+    //TopicAdapter _adapter;
+    private BaseRecyclerAdapter<Topic> _adapter;
+    private RefreshLayout _refreshLayout;
 
     public MainFragment() {
         // Required empty public constructor
@@ -58,7 +54,13 @@ public class MainFragment extends Fragment {
 
     private void InitList(){
         _topicList = new ArrayList<>();
-        _adapter = new TopicAdapter();
+        _adapter = new BaseRecyclerAdapter<Topic>(R.layout.topic_item) {
+            @Override
+            protected void onBindViewHolder(SmartViewHolder holder, Topic model, int position) {
+                holder.text(R.id.topic_title,model._title);
+                holder.text(R.id.topic_content,model._content);
+            }
+        };
         _list.setAdapter(_adapter);
         _list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -87,6 +89,7 @@ public class MainFragment extends Fragment {
     }
 
     private void setView(){
+        _refreshLayout = (RefreshLayout)_mView.findViewById(R.id.refreshLayout);
         _nav = (RadioGroup) _mView.findViewById(R.id.main_nav);
         _list = (ListView)_mView.findViewById(R.id.topic_list);
         _selectImages = new ImageView[3];
@@ -97,6 +100,39 @@ public class MainFragment extends Fragment {
     }
 
     private void setListener(){
+        _refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(final RefreshLayout refreshlayout) {
+                refreshlayout.getLayout().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        _adapter.refresh(initData());
+                        refreshlayout.finishRefresh();
+                        refreshlayout.setLoadmoreFinished(false);
+                    }
+                }, 2000);
+            }
+        });
+        _refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(final RefreshLayout refreshlayout) {
+                refreshlayout.getLayout().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        _adapter.loadmore(initData());
+                        refreshlayout.finishLoadmore();
+                        if (_adapter.getItemCount() > 60) {
+                            //Toast.makeText(getApplication(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
+                            refreshlayout.setLoadmoreFinished(true);//将不会再次触发加载更多事件
+                        }
+                    }
+                }, 2000);
+            }
+        });
+
+        //触发自动刷新
+        _refreshLayout.autoRefresh();
+
         _nav.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -123,70 +159,21 @@ public class MainFragment extends Fragment {
         });
     }
 
-    private class Topic{
+    private void moreTopic(){
+        _topicList.add(new Topic("111111111","11111111111111"));
+    }
+
+    private Collection<Topic> initData() {
+        moreTopic();
+        return _topicList;
+    }
+
+    public class Topic{
         public String _title;
         public String _content;
         public Topic(String title,String content){
             _title = title;
             _content = content;
-        }
-    }
-
-    public final class TopicViewHolder{
-        public TextView _title;
-        public TextView _content;
-    }
-
-    public class TopicAdapter extends BaseAdapter{
-        private LayoutInflater _inflater;
-
-        public TopicAdapter(){
-            _inflater = LayoutInflater.from(getContext());
-        }
-
-        @Override
-        public int getCount() {
-            return _topicList.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            TopicViewHolder holder = null;
-            if (view == null){
-                holder = new TopicViewHolder();
-
-                view = _inflater.inflate(R.layout.topic_item,null);
-                holder._title = (TextView)view.findViewById(R.id.topic_title);
-                holder._content = (TextView)view.findViewById(R.id.topic_content);
-                view.setTag(holder);
-            }
-            else {
-                holder = (TopicViewHolder)view.getTag();
-            }
-
-            holder._title.setText(_topicList.get(i)._title);
-            holder._content.setText(_topicList.get(i)._content);
-
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    SystemManager.getInstance().PrintLog("onclick");
-                    TopicViewHolder holder = (TopicViewHolder)view.getTag();
-                    new TopicDialog(getActivity(),holder._title.getText().toString(),holder._content.getText().toString());
-                }
-            });
-
-            return view;
         }
     }
 }
