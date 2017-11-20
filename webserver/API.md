@@ -195,3 +195,111 @@ url: `/BlueCareer/api/v1/user/career_message`
 	    "message": "OK",  
 	    "data": "Software Engineer"  
 	}
+
+## 文章部分
+
+### 获取所有文章
+
+description：获取所有文章，后续会进行限流 - - 
+
+method： `GET`
+
+url: `/BlueCareer/api/v1/article/all`
+
+返回示例 ：
+
+	{
+    	"code": 0,
+    	"message": "OK",
+    	"data": [
+        	{
+        	    "id": 1001,
+        	    "title": "title",
+        	    "content": "content",
+        	    "viewCount": 300,
+        	    "jobName": "Software Engineer"
+        	},
+        	{
+        	    "id": 1002,
+        	    "title": "title2",
+        	    "content": "content2",
+        	    "viewCount": 302,
+        	    "jobName": "Software Engineer"
+        	}
+    	]
+	}
+
+
+### 获取所选职业信息的文章
+
+description：获取所选职业信息的文章，后续会进行限流 - - 
+
+method： `GET`
+
+url: `/BlueCareer/api/v1/article/list`
+
+- query：jobs
+
+注：query可传递数组，例：
+
+	/BlueCareer/api/v1/article/list?jobs=teacher&jobs=police
+
+返回示例 ：
+
+	{
+    	"code": 0,
+    	"message": "OK",
+    	"data": [
+        	{
+        	    "id": 1001,
+        	    "title": "title",
+        	    "content": "content",
+        	    "viewCount": 300,
+        	    "jobName": "Software Engineer"
+        	},
+        	{
+        	    "id": 1002,
+        	    "title": "title2",
+        	    "content": "content2",
+        	    "viewCount": 302,
+        	    "jobName": "Software Engineer"
+        	}
+    	]
+	}
+
+### 获取所选职业信息之外的文章
+
+description：获取所选职业信息之外的文章，后续会进行限流 - - 
+
+method： `GET`
+
+url: `/BlueCareer/api/v1/article/exclude`
+
+- query：jobs
+
+注：query可传递数组，例：
+
+	/BlueCareer/api/v1/article/exclude?jobs=teacher&jobs=police
+
+返回示例 ：
+
+	{
+    	"code": 0,
+    	"message": "OK",
+    	"data": [
+        	{
+        	    "id": 1001,
+        	    "title": "title",
+        	    "content": "content",
+        	    "viewCount": 300,
+        	    "jobName": "Software Engineer"
+        	},
+        	{
+        	    "id": 1002,
+        	    "title": "title2",
+        	    "content": "content2",
+        	    "viewCount": 302,
+        	    "jobName": "Software Engineer"
+        	}
+    	]
+	}

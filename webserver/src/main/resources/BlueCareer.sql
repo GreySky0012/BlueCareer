@@ -37,7 +37,8 @@ CREATE TABLE article
   job_name VARCHAR(64) NOT NULL
 ) ENGINE=InnoDB  auto_increment=1001  DEFAULT CHARSET=utf8;
 
-INSERT INTO article (id, title, content, view_count, job_name) VALUES ('1001', 'title', 'content', '300', 'Software Engineer ');
+INSERT INTO article (id, title, content, view_count, job_name) VALUES ('1001', 'title', 'content', '300', 'Software Engineer');
+INSERT INTO article (id, title, content, view_count, job_name) VALUES ('1002', 'title2', 'content2', '302', 'Software Engineer');
 
 -- CREATE TABLE for job
 SET NAMES utf8;
