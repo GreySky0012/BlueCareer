@@ -1,13 +1,15 @@
 package com.qiyue.bluecareer.controller;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.qiyue.bluecareer.model.CommonResponse;
 import com.qiyue.bluecareer.model.view.ArticleEntity;
 import com.qiyue.bluecareer.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
