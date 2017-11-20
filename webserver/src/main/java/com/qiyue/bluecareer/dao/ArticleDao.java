@@ -53,4 +53,23 @@ public class ArticleDao {
         query.setParameter("jobName", jobName);
         return query.list();
     }
+
+    /**
+     * 获取除列表中职业外的所有相关文章
+     * @param jobNames
+     * @return
+     */
+    public List<ArticleEntity> getArticleExcludeJobs(String[] jobNames) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("FROM ArticleEntity WHERE jobName <> :jobName0 ");
+        for (int i = 1 ; i < jobNames.length ; i++) {
+            sb.append(String.format("AND jobName <> :jobName%s", i));
+        }
+        Session session = sessionFactory.openSession();
+        Query<ArticleEntity> query = session.createQuery(sb.toString(), ArticleEntity.class);
+        for (int i = 0 ; i < jobNames.length ; i++) {
+            query.setParameter(String.format("jobName%s", i), jobNames[i]);
+        }
+        return query.list();
+    }
 }

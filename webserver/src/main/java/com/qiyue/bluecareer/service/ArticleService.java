@@ -29,4 +29,8 @@ public class ArticleService {
     public List<ArticleEntity> getArticleExcludeJob(String jobName) {
         return articleDao.getArticleExcludeJob(jobName);
     }
+
+    public List<ArticleEntity> getArticleExcludeJobs(String[] jobNames) {
+        return articleDao.getArticleExcludeJobs(jobNames);
+    }
 }
