@@ -61,17 +61,4 @@
             <column name="requirements" sql-type="text"/>
         </property>
     </class>
-    <class name="com.qiyue.bluecareer.model.view.SalaryEntity" table="salary" schema="bluecareer">
-        <composite-id mapped="true" class="com.qiyue.bluecareer.model.view.SalaryEntityPK">
-            <key-property name="jobName">
-                <column name="job_name" sql-type="varchar(64)" length="64"/>
-            </key-property>
-            <key-property name="workPlace">
-                <column name="work_place" sql-type="varchar(64)" length="64"/>
-            </key-property>
-        </composite-id>
-        <property name="salary">
-            <column name="salary" sql-type="double" precision="-1"/>
-        </property>
-    </class>
 </hibernate-mapping>
