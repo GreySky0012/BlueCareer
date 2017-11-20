@@ -102,12 +102,18 @@ public class UserController {
             return ErrorEnum.REQUEST_PARAMETER_ERROR.getResponse(userEntity.toString());
         }
 
-        UserEntity user = userService.userLogin(userEntity.getEmail(), userEntity.getPassword());
-        if (user != null) {
-            logger.debug("user login. " + userEntity.toString());
-            return new CommonResponse<>(user);
-        } else {
-            return ErrorEnum.LOGIN_ERROR.getResponse();
+        UserEntity user;
+        try {
+            user = userService.userLogin(userEntity.getEmail(), userEntity.getPassword());
+            if (user != null) {
+                logger.debug("user login. " + userEntity.toString());
+                return new CommonResponse<>(user);
+            } else {
+                return ErrorEnum.LOGIN_ERROR.getResponse();
+            }
+        } catch (HibernateException e) {
+            logger.error(e);
+            return ErrorEnum.HIBERNATE_ERROR.getResponse(e.getMessage());
         }
     }
 
