@@ -9,16 +9,16 @@ import java.util.ArrayList;
  * description：
  */
 
-public class Occupation implements Serializable{
+public class OccupationInfo implements Serializable{
     private String _jobName;
     private String _jobDuty;
     private String _jobRequire;
     private ArrayList<String> _workPlace;
     private ArrayList<Integer> _salary;
 
-    public Occupation(){};
+    public OccupationInfo(){};
 
-    public static Occupation getTestInstance(){
+    public static OccupationInfo getTestInstance(){
         ArrayList<String> arrayList1 = new ArrayList<>();
         ArrayList<Integer> arrayList2 = new ArrayList<>();
         arrayList1.add("南京");
@@ -30,17 +30,60 @@ public class Occupation implements Serializable{
         arrayList1.add("北京");
         arrayList2.add(13000);
 
-        Occupation occupation = new Occupation(
+        arrayList1.add("重庆");
+        arrayList2.add(8000);
+
+        arrayList1.add("四川");
+        arrayList2.add(9000);
+
+        arrayList1.add("广州");
+        arrayList2.add(13000);
+        arrayList1.add("南京");
+        arrayList2.add(10000);
+
+        arrayList1.add("上海");
+        arrayList2.add(12000);
+
+        arrayList1.add("北京");
+        arrayList2.add(13000);
+
+        arrayList1.add("重庆");
+        arrayList2.add(8000);
+
+        arrayList1.add("四川");
+        arrayList2.add(9000);
+
+        arrayList1.add("广州");
+        arrayList2.add(13000);
+        arrayList1.add("南京");
+        arrayList2.add(10000);
+
+        arrayList1.add("上海");
+        arrayList2.add(12000);
+
+        arrayList1.add("北京");
+        arrayList2.add(13000);
+
+        arrayList1.add("重庆");
+        arrayList2.add(8000);
+
+        arrayList1.add("四川");
+        arrayList2.add(9000);
+
+        arrayList1.add("广州");
+        arrayList2.add(13000);
+
+        OccupationInfo occupationInfo = new OccupationInfo(
                 "Java工程师",
                 "1、大专及以上学历学生（理工科背景，本科优先）；2、2016年或2017年毕业的应往届生；3、热爱计算机软件开发行业，善于学习和总结分析；4、有良好的工作态度和团队合作精神。",
                 "岗位职责:1、协助团队进行Java的应用设计及开发规划；2、协助团队撰写设计开发及实现文档、流程；3、协助主管处理开发过程中技术问题；4、能够快速融入团队，积极、有效地开展工作。",
                 arrayList1,
                 arrayList2);
 
-        return occupation;
+        return occupationInfo;
     }
 
-    public Occupation(String _jobName, String _jobDuty, String _jobRequire, ArrayList<String> _workPlace, ArrayList<Integer> _salary) {
+    public OccupationInfo(String _jobName, String _jobDuty, String _jobRequire, ArrayList<String> _workPlace, ArrayList<Integer> _salary) {
         this._jobName = _jobName;
         this._jobDuty = _jobDuty;
         this._jobRequire = _jobRequire;

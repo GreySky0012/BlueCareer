@@ -1,123 +1,131 @@
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:stretchColumns="2"
-    android:shrinkColumns="2"
-    android:orientation="vertical"
-    android:id="@+id/occ_info_show">
+    android:layout_height="match_parent">
 
-    <!--职业名称-->
-    <TableRow>
-        <TextView
-            android:id="@+id/jobName"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="10dp"
-            android:background="#cec9c9"
-            android:layout_span="2"
-            android:padding="3dip"
-            android:gravity="center"
-            android:text="职业名称" />
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/occ_info_show"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:shrinkColumns="2"
+        android:stretchColumns="2">
 
-        <TextView
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="30dp"
-            android:background="#f0f4f0"
-            android:gravity="center_horizontal"
-            android:padding="3dip"
-            android:layout_span="3"
-            android:text="软件工程师"></TextView>
-    </TableRow>
+        <!--职业名称-->
+        <TableRow>
+
+            <TextView
+                android:id="@+id/jobName"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_span="2"
+                android:background="#cec9c9"
+                android:gravity="center"
+                android:padding="3dip"
+                android:text="职业名称" />
+
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_span="3"
+                android:background="#f0f4f0"
+                android:gravity="center_horizontal"
+                android:padding="3dip"
+                android:text="软件工程师"></TextView>
+        </TableRow>
 
 
+        <!--岗位职责-->
+        <TableRow>
 
-    <!--岗位职责-->
-    <TableRow>
-        <TextView
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:background="#cec9c9"
-            android:padding="3dip"
-            android:gravity="center"
-            android:text="岗位职责" />
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="#cec9c9"
+                android:gravity="center"
+                android:padding="3dip"
+                android:text="岗位职责" />
 
-        <TextView
-            android:id="@+id/jobDuty"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="30dp"
-            android:background="#f0f4f0"
-            android:gravity="center_horizontal"
-            android:padding="3dip"
-            android:layout_span="2"
-            android:text="如上图所示，我将一个ImageView和一个TextView组合在一起作为一个自定义控件。然后将四个这样的自定义控件放在底部的一个RelativeLayout里，两边的view，即“消息”和“设置”可以通过设置RelativeLayout的左右padding来控制位置。但是第二个view和第三个View则需要自己来调整。
+            <TextView
+                android:id="@+id/jobDuty"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_span="2"
+                android:background="#f0f4f0"
+                android:gravity="center_horizontal"
+                android:padding="3dip"
+                android:text="如上图所示，我将一个ImageView和一个TextView组合在一起作为一个自定义控件。然后将四个这样的自定义控件放在底部的一个RelativeLayout里，两边的view，即“消息”和“设置”可以通过设置RelativeLayout的左右padding来控制位置。但是第二个view和第三个View则需要自己来调整。
 底部的这个RelativeLayout代码如下:"></TextView>
-    </TableRow>
+        </TableRow>
 
-    <!--岗位要求-->
-    <TableRow>
-        <TextView
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:background="#cec9c9"
-            android:padding="3dip"
-            android:gravity="center"
-            android:text="岗位要求" />
+        <!--岗位要求-->
+        <TableRow>
 
-        <TextView
-            android:id="@+id/jobRequire"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="10dp"
-            android:background="#f0f4f0"
-            android:gravity="center_horizontal"
-            android:padding="3dip"
-            android:layout_span="2"
-            android:text="如上图所示，我将一个ImageView和一个TextView组合在一起作为一个自定义控件。然后将四个这样的自定义控件放在底部的一个RelativeLayout里，两边的view，即“消息”和“设置”可以通过设置RelativeLayout的左右padding来控制位置。但是第二个view和第三个View则需要自己来调整。
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="#cec9c9"
+                android:gravity="center"
+                android:padding="3dip"
+                android:text="岗位要求" />
+
+            <TextView
+                android:id="@+id/jobRequire"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_span="2"
+                android:background="#f0f4f0"
+                android:gravity="center_horizontal"
+                android:padding="3dip"
+                android:text="如上图所示，我将一个ImageView和一个TextView组合在一起作为一个自定义控件。然后将四个这样的自定义控件放在底部的一个RelativeLayout里，两边的view，即“消息”和“设置”可以通过设置RelativeLayout的左右padding来控制位置。但是第二个view和第三个View则需要自己来调整。
 底部的这个RelativeLayout代码如下:"></TextView>
-    </TableRow>
+        </TableRow>
 
-    <TableRow>
-        <TextView
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="40dp"
-            android:background="#cec9c9"
-            android:padding="3dip"
-            android:gravity="right"
-            android:text="工作地点" />
+        <TableRow>
 
-        <TextView
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="40dp"
-            android:background="#cec9c9"
-            android:padding="3dip"
-            android:layout_span="2"
-            android:gravity="center"
-            android:text="月薪" />
+            <TextView
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="10dp"
+                android:background="#cec9c9"
+                android:gravity="right"
+                android:padding="3dip"
+                android:text="工作地点" />
+
+            <TextView
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_span="2"
+                android:background="#cec9c9"
+                android:gravity="center"
+                android:padding="3dip"
+                android:text="月薪" />
 
 
-    </TableRow>
+        </TableRow>
 
-   <!-- <TableRow>
+        <!-- <TableRow>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="40dp"
-            android:background="#f0f4f0"
-            android:padding="3dip"
-            android:gravity="center"
-            android:text="南京" />
+             <TextView
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:layout_marginLeft="40dp"
+                 android:background="#f0f4f0"
+                 android:padding="3dip"
+                 android:gravity="center"
+                 android:text="南京" />
 
-        <TextView
-            android:layout_marginRight="40dp"
-            android:background="#f0f4f0"
-            android:padding="3dip"
-            android:layout_span="2"
-            android:layout_column="1"
-            android:gravity="center"
-            android:text="10000" />
+             <TextView
+                 android:layout_marginRight="40dp"
+                 android:background="#f0f4f0"
+                 android:padding="3dip"
+                 android:layout_span="2"
+                 android:layout_column="1"
+                 android:gravity="center"
+                 android:text="10000" />
 
-    </TableRow>-->
-</TableLayout>
+         </TableRow>-->
+    </TableLayout>
+</ScrollView>

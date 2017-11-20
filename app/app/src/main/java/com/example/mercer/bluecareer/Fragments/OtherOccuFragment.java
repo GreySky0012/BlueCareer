@@ -18,9 +18,8 @@ import android.widget.TextView;
 
 import com.example.mercer.bluecareer.CommonUtils.ConversionTool;
 import com.example.mercer.bluecareer.CommonUtils.OccopationInfoTool;
-import com.example.mercer.bluecareer.DataStruct.Occupation;
+import com.example.mercer.bluecareer.DataStruct.OccupationInfo;
 import com.example.mercer.bluecareer.Dialog.OccupationDialog;
-import com.example.mercer.bluecareer.Dialog.TopicDialog;
 import com.example.mercer.bluecareer.R;
 
 import java.util.ArrayList;
@@ -209,19 +208,19 @@ public class OtherOccuFragment extends Fragment {
              */
             public void setOccupationInfo(View view){
                 // TODO 此处填充服务器内容
-                Occupation occupation = Occupation.getTestInstance();
+                OccupationInfo occupationInfo = OccupationInfo.getTestInstance();
 
-                ((TextView)view.findViewById(R.id.jobName)).setText(occupation.get_jobName());
-                ((TextView)view.findViewById(R.id.jobDuty)).setText(occupation.get_jobDuty());
-                ((TextView)view.findViewById(R.id.jobRequire)).setText(occupation.get_jobRequire());
+                ((TextView)view.findViewById(R.id.jobName)).setText(occupationInfo.get_jobName());
+                ((TextView)view.findViewById(R.id.jobDuty)).setText(occupationInfo.get_jobDuty());
+                ((TextView)view.findViewById(R.id.jobRequire)).setText(occupationInfo.get_jobRequire());
 
                 TableLayout tableLayout = view.findViewById(R.id.occ_info_show);
-                for(int i=0; i<occupation.get_workPlace().size(); i++){
+                for(int i = 0; i< occupationInfo.get_workPlace().size(); i++){
                     TextView tableHeader = OccopationInfoTool.tableHeadTextView(getContext());
                     TextView tableName = OccopationInfoTool.tableNameTextView(getContext());
 
-                    tableHeader.setText(occupation.get_workPlace().get(i));
-                    tableName.setText(occupation.get_salary().get(i) + "");
+                    tableHeader.setText(occupationInfo.get_workPlace().get(i));
+                    tableName.setText(occupationInfo.get_salary().get(i) + "");
 
                     TableRow tableRow = new TableRow(getContext());
                     tableRow.addView(tableHeader);
