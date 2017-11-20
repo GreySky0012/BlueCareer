@@ -1,19 +1,4 @@
 package com.qiyue.bluecareer.model.view;
-/*
-* ------------------------------------------------------------------
-* Copyright © 2017 Hangzhou DtDream Technology Co.,Lt d. All rights reserved.
-* ------------------------------------------------------------------
-*       Product: net
-*   Module Name: GateWay
-*  Date Created: 2017/11/20
-*   Description:
-* ------------------------------------------------------------------
-* Modification History
-* DATE            Name           Description
-* ------------------------------------------------------------------
-* 2017/11/20     
-* ------------------------------------------------------------------
-*/
 
 import javax.persistence.*;
 
