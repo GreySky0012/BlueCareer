@@ -12,9 +12,14 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.mercer.bluecareer.CommonUtils.ConversionTool;
+import com.example.mercer.bluecareer.CommonUtils.OccopationInfoTool;
+import com.example.mercer.bluecareer.DataStruct.Occupation;
+import com.example.mercer.bluecareer.Dialog.OccupationDialog;
 import com.example.mercer.bluecareer.Dialog.TopicDialog;
 import com.example.mercer.bluecareer.R;
 
@@ -150,13 +155,17 @@ public class OtherOccuFragment extends Fragment {
                         textView.setBackground(getResources().getDrawable(R.drawable.other_occu_detail_background));
                         // TODO-设置职业名称
                         textView.setText("软件工程" + (i * 3 + j));
-                        final String occuContent = "软件工程是一门研究用工程化方法构建和维护有效的、实用的和高质量的软件的学科。它涉及程序设计语言、数据库、软件开发工具、系统平台、标准、设计模式等方面。\n" +
-                                "在现代社会中，软件应用于多个方面。典型的软件有电子邮件、嵌入式系统、人机界面、办公套件、操作系统、编译器、数据库、游戏等。同时，各个行业几乎都有计算机软件的应用，如工业、农业、银行、航空、政府部门等。这些应用促进了经济和社会的发展，也提高了工作效率和生活效率 。";
 
                         textView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                new TopicDialog(getContext(), textView.getText().toString(), occuContent);
+                                View view = v.inflate(getActivity(), R.layout.dialog_occuaption, null);
+
+                                /** 填充职业信息 **/
+                                setOccupationInfo(view);
+
+                                /** 显示弹框 **/
+                                OccupationDialog.showCustomizeDialog(getContext(), view);
                             }
                         });
                         rowLine.addView(textView);
@@ -176,18 +185,50 @@ public class OtherOccuFragment extends Fragment {
                     textView.setBackground(getResources().getDrawable(R.drawable.other_occu_detail_background));
                     // TODO-设置职业名称
                     textView.setText("软件工程" + (row * 3 + j));
-                    final String occuContent = "软件工程是一门研究用工程化方法构建和维护有效的、实用的和高质量的软件的学科。它涉及程序设计语言、数据库、软件开发工具、系统平台、标准、设计模式等方面。\n" +
-                            "在现代社会中，软件应用于多个方面。典型的软件有电子邮件、嵌入式系统、人机界面、办公套件、操作系统、编译器、数据库、游戏等。同时，各个行业几乎都有计算机软件的应用，如工业、农业、银行、航空、政府部门等。这些应用促进了经济和社会的发展，也提高了工作效率和生活效率 。";
 
                     textView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            new TopicDialog(getContext(), textView.getText().toString(), occuContent);
+                            View view = v.inflate(getActivity(), R.layout.dialog_occuaption, null);
+
+                            /** 填充职业信息 **/
+                            setOccupationInfo(view);
+
+                            /** 显示弹框 **/
+                            OccupationDialog.showCustomizeDialog(getContext(), view);
                         }
                     });
                     rowLine.addView(textView);
                 }
                 _other_occu_detail_list.addView(rowLine);
+            }
+
+            /**
+             * 获取到弹框的View，并填充职业信息
+             * @param view
+             */
+            public void setOccupationInfo(View view){
+                // TODO 此处填充服务器内容
+                Occupation occupation = Occupation.getTestInstance();
+
+                ((TextView)view.findViewById(R.id.jobName)).setText(occupation.get_jobName());
+                ((TextView)view.findViewById(R.id.jobDuty)).setText(occupation.get_jobDuty());
+                ((TextView)view.findViewById(R.id.jobRequire)).setText(occupation.get_jobRequire());
+
+                TableLayout tableLayout = view.findViewById(R.id.occ_info_show);
+                for(int i=0; i<occupation.get_workPlace().size(); i++){
+                    TextView tableHeader = OccopationInfoTool.tableHeadTextView(getContext());
+                    TextView tableName = OccopationInfoTool.tableNameTextView(getContext());
+
+                    tableHeader.setText(occupation.get_workPlace().get(i));
+                    tableName.setText(occupation.get_salary().get(i) + "");
+
+                    TableRow tableRow = new TableRow(getContext());
+                    tableRow.addView(tableHeader);
+                    tableRow.addView(tableName);
+
+                    tableLayout.addView(tableRow);
+                }
             }
 
             /**

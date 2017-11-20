@@ -2,15 +2,21 @@ package com.example.mercer.bluecareer.Fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.mercer.bluecareer.CommonUtils.OccopationInfoTool;
 import com.example.mercer.bluecareer.DataStruct.MyOccupation;
-import com.example.mercer.bluecareer.Dialog.TopicDialog;
+import com.example.mercer.bluecareer.DataStruct.Occupation;
+import com.example.mercer.bluecareer.Dialog.OccupationDialog;
 import com.example.mercer.bluecareer.R;
 
 import java.util.ArrayList;
@@ -30,6 +36,7 @@ public class MyOccuFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         _mView = inflater.inflate(R.layout.fragment_my_occupation, container, false);
+
         //获取ListView
         _my_occu_list = (ListView) _mView.findViewById(R.id.my_occu_list);
 
@@ -96,13 +103,15 @@ public class MyOccuFragment extends Fragment {
                 occupation_type = (TextView) itemView.findViewById(R.id.occupation_type);
             }
 
-            /** 填充信息 **/
+            /**
+             * 填充信息
+             **/
             public void fillInContent(MyOccupation myOccupation) {
                 occupation_num.setText(myOccupation.get_occupationNum());
                 occupation_name.setText(myOccupation.get_occupationName());
                 curr_level_name.setText(myOccupation.get_currLevelName());
-                curr_level_num.setText(myOccupation.get_currLevelNum()+"");
-                total_level_num.setText("/"+myOccupation.get_totalLevelNum());
+                curr_level_num.setText(myOccupation.get_currLevelNum() + "");
+                total_level_num.setText("/" + myOccupation.get_totalLevelNum());
                 occupation_type.setText(myOccupation.get_occupationType());
 
                 setListener();
@@ -115,10 +124,43 @@ public class MyOccuFragment extends Fragment {
                 occupation_name.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String content = "幼儿教育也有广义和狭义之分，从广义上说，凡是能够影响幼儿身体成长和认知、情感、性格等方面发展的有目的的活动，如幼儿在成人的指导下看电视、做家务、参加社会活动，等等，都可说是幼儿教育。而狭义的幼儿教育则特指幼儿园和其他专门开设的幼儿教育机构的教育。幼儿园教育在中国属于学校教育系统，和学校教育一样，幼儿园教育也具有家庭教育和社会教育所没有的优点，如计划性、系统性等。幼儿园教育以幼儿园教师为主要对象，致力于宣传党和国家的幼儿教育政策，反映幼儿教育研究与改革成果，交流幼儿园、托儿所、家庭教育经验，介绍国内外幼儿教育信息，提供幼儿教育活动材料和教学参考资料。";
-                        new TopicDialog(getContext(), occupation_name.getText().toString(), content);
+                        View view = v.inflate(getActivity(), R.layout.dialog_occuaption, null);
+
+                        /** 填充职业信息 **/
+                        setOccupationInfo(view);
+
+                        /** 显示弹框 **/
+                        OccupationDialog.showCustomizeDialog(getContext(), view);
                     }
                 });
+            }
+
+            /**
+             * 获取到弹框的View，并填充职业信息
+             * @param view
+             */
+            public void setOccupationInfo(View view){
+                // TODO 此处填充服务器内容
+                Occupation occupation = Occupation.getTestInstance();
+
+                ((TextView)view.findViewById(R.id.jobName)).setText(occupation.get_jobName());
+                ((TextView)view.findViewById(R.id.jobDuty)).setText(occupation.get_jobDuty());
+                ((TextView)view.findViewById(R.id.jobRequire)).setText(occupation.get_jobRequire());
+
+                TableLayout tableLayout = view.findViewById(R.id.occ_info_show);
+                for(int i=0; i<occupation.get_workPlace().size(); i++){
+                    TextView tableHeader = OccopationInfoTool.tableHeadTextView(getContext());
+                    TextView tableName = OccopationInfoTool.tableNameTextView(getContext());
+
+                    tableHeader.setText(occupation.get_workPlace().get(i));
+                    tableName.setText(occupation.get_salary().get(i) + "");
+
+                    TableRow tableRow = new TableRow(getContext());
+                    tableRow.addView(tableHeader);
+                    tableRow.addView(tableName);
+
+                    tableLayout.addView(tableRow);
+                }
             }
         }
     }
