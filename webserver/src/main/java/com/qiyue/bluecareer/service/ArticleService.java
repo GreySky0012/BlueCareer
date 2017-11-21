@@ -18,19 +18,19 @@ public class ArticleService {
 
     private static Logger logger = Logger.getLogger(ArticleService.class);
 
-    public List<ArticleEntity> getAllArticle(){
-        return articleDao.getAllArticle();
+    public List<ArticleEntity> getAllArticle(Integer start){
+        return articleDao.getAllArticle(start);
     }
 
-    public List<ArticleEntity> getArticleByJob(String jobName) {
-        return articleDao.getArticleByJob(jobName);
+    public List<ArticleEntity> getArticleByJob(String jobName, Integer start) {
+        return articleDao.getArticleByJob(jobName, start);
     }
 
-    public List<ArticleEntity> getArticleExcludeJob(String jobName) {
-        return articleDao.getArticleExcludeJob(jobName);
+    public List<ArticleEntity> getArticleExcludeJob(String jobName, Integer start) {
+        return articleDao.getArticleExcludeJob(jobName, start);
     }
 
-    public List<ArticleEntity> getArticleExcludeJobs(String[] jobNames) {
-        return articleDao.getArticleExcludeJobs(jobNames);
+    public List<ArticleEntity> getArticleExcludeJobs(String[] jobNames, Integer start) {
+        return articleDao.getArticleExcludeJobs(jobNames, start);
     }
 }
