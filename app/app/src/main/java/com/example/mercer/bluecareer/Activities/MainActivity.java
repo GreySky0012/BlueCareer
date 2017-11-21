@@ -143,9 +143,9 @@ public class MainActivity extends BActivity {
                     case R.id.nav_brif:
                         id = 1;
                         break;
-                    case R.id.nav_study:
-                        id = 2;
-                        break;
+                    //case R.id.nav_study:
+                    //    id = 2;
+                    //    break;
                     default:
                         id = 0;
                 }

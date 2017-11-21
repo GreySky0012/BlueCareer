@@ -7,6 +7,7 @@ import com.anye.greendao.gen.DaoSession;
 import com.example.mercer.bluecareer.Activities.BActivity;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by GreySky on 2017/11/9.
@@ -26,9 +27,7 @@ public class DatabaseManager {
         _session = _master.newSession();
     }
 
-    public void Insert(Object entry){
-        _session.insert(entry);
-    }
+    public DaoSession GetSession(){return _session;}
 
     public static DatabaseManager GetInstance(BActivity activity,String dbname){
         if (_instance == null)

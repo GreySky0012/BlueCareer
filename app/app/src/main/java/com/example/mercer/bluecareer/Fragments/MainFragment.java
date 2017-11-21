@@ -3,6 +3,8 @@ package com.example.mercer.bluecareer.Fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,22 +12,35 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
+import com.example.mercer.bluecareer.Activities.BActivity;
 import com.example.mercer.bluecareer.Adapter.BaseRecyclerAdapter;
 import com.example.mercer.bluecareer.Adapter.SmartViewHolder;
+import com.example.mercer.bluecareer.DataStruct.JsonStruct.ReturnArticle;
+import com.example.mercer.bluecareer.DataStruct.JsonStruct.ReturnCode;
+import com.example.mercer.bluecareer.DataStruct.Url.ArticleUrl;
+import com.example.mercer.bluecareer.Dialog.TopicDialog;
+import com.example.mercer.bluecareer.Manager.ServerManager;
+import com.example.mercer.bluecareer.Manager.SystemManager;
+import com.example.mercer.bluecareer.Manager.UserManager;
 import com.example.mercer.bluecareer.R;
+import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.io.IOException;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements AdapterView.OnItemClickListener {
     ImageView[] _selectImages;
     RadioGroup _nav;
     View _mView;
@@ -34,6 +49,10 @@ public class MainFragment extends Fragment {
     //TopicAdapter _adapter;
     private BaseRecyclerAdapter<Topic> _adapter;
     private RefreshLayout _refreshLayout;
+    private int _groupIndex;
+    private Handler _handler;
+
+    private int _currentTopicNum;
 
     public MainFragment() {
         // Required empty public constructor
@@ -47,45 +66,101 @@ public class MainFragment extends Fragment {
             setListener();
             InitList();
         }
+        _groupIndex = 0;
 
         // Inflate the layout for this fragment
         return _mView;
     }
 
     private void InitList(){
-        _topicList = new ArrayList<>();
         _adapter = new BaseRecyclerAdapter<Topic>(R.layout.topic_item) {
             @Override
             protected void onBindViewHolder(SmartViewHolder holder, Topic model, int position) {
-                holder.text(R.id.topic_title,model._title);
-                holder.text(R.id.topic_content,model._content);
+                holder.text(R.id.topic_title,model.title);
+                holder.text(R.id.topic_content,model.content);
             }
         };
+        _adapter.setOnItemClickListener(this);
         _list.setAdapter(_adapter);
-        _list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                showTopic(i);
-            }
-        });
-        setListContent(0);
     }
 
-    private void showTopic(int index){
-        setListContent(index);
+    private void refresh(){
+        ArticleUrl url;
+        if (_groupIndex == 0){
+            url = new ArticleUrl("/list?"+getJobs()+"&start="+0);
+        }else if (_groupIndex == 1){
+            url = new ArticleUrl("/all?start=0");
+        }else {
+            url = new ArticleUrl("/exclude?"+getJobs());
+        }
+        try {
+            ServerManager.GetInstance().RequestAsync(ServerManager.Method.get, url, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    ((BActivity)getActivity()).showToast("刷新失败");
+                    _handler.sendEmptyMessage(-1);
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    Message msg = new Message();
+                    msg.obj = getTopics(response);
+                    msg.what = 0;
+                    _handler.sendMessage(msg);
+                }
+            });
+        } catch (IOException e) {
+            SystemManager.getInstance().PrintLog(e.getMessage());
+        }
     }
 
-    private void setListContent(int index){
+    private List<Topic> getTopics(Response response) throws IOException {
+        ReturnArticle returnArticle = new Gson().fromJson(response.body().string(),ReturnArticle.class);
+        if (returnArticle.code!=0)
+            return null;
+        return returnArticle.data;
+    }
+
+    private String getJobs(){
+        String[] jobs = UserManager.getInstance()._currentUser._major.split("\\|");
+        String result = "";
+        for (String job:jobs){
+            result+="jobs=";
+            result+=job;
+            result+="&";
+        }
+        result = result.substring(0,result.length()-1);
+        return result;
+    }
+
+    private void getMore(int index){
+        ArticleUrl url;
         if (index == 0){
-            _topicList.clear();
-            for(int i = 0;i<10;i++)
-                _topicList.add(new Topic("B站哔哩哔哩2000万投资","《那年那兔那些事儿》创始人麻蛇向媒体公布，他们获得了哔哩哔哩弹幕网（以下简称B站）的2000万人民币投资。\n麻蛇，真名林超，如今是《那年那兔那些事儿》（简称《那兔》）动画出品方翼下之风动漫产品啪啦啪啦。。。。。"));
+             url = new ArticleUrl("/list?"+getJobs()+"&start="+_currentTopicNum);
+        }else if (index == 1){
+            url = new ArticleUrl("/all?start="+_currentTopicNum);
+        }else {
+            url = new ArticleUrl("exclude?"+getJobs()+"start"+_currentTopicNum);
         }
-        if(index == 2){
-            _topicList.clear();
-            _topicList.add(new Topic("111111111","11111111111111"));
+        try {
+            ServerManager.GetInstance().RequestAsync(ServerManager.Method.get, url, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    ((BActivity)getActivity()).showToast("加载失败");
+                    _handler.sendEmptyMessage(-1);
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    Message msg = new Message();
+                    msg.obj = getTopics(response);
+                    msg.what = 1;
+                    _handler.sendMessage(msg);
+                }
+            });
+        } catch (IOException e) {
+            SystemManager.getInstance().PrintLog(e.getMessage());
         }
-        _adapter.notifyDataSetChanged();
     }
 
     private void setView(){
@@ -100,23 +175,43 @@ public class MainFragment extends Fragment {
     }
 
     private void setListener(){
+        _handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what) {
+                    case 0:
+                        _adapter.refresh((List<Topic>)msg.obj);
+                        _refreshLayout.finishRefresh();
+                        _refreshLayout.setLoadmoreFinished(false);
+                        _currentTopicNum = 10;
+                        break;
+                    case 1:
+                        List<Topic> topics = (List<Topic>)msg.obj;
+                        if (topics.isEmpty()){
+                            _refreshLayout.setLoadmoreFinished(true);//将不会再次触发加载更多事件
+                            break;
+                        }
+                        _adapter.loadmore(topics);
+                        _refreshLayout.finishLoadmore();
+                        _currentTopicNum+=topics.size();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
         _refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(final RefreshLayout refreshlayout) {
-                refreshlayout.getLayout().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        _adapter.refresh(initData());
-                        refreshlayout.finishRefresh();
-                        refreshlayout.setLoadmoreFinished(false);
-                    }
-                }, 2000);
+                refresh();
             }
         });
         _refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(final RefreshLayout refreshlayout) {
-                refreshlayout.getLayout().postDelayed(new Runnable() {
+                refresh();
+                /*refreshlayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         _adapter.loadmore(initData());
@@ -126,7 +221,7 @@ public class MainFragment extends Fragment {
                             refreshlayout.setLoadmoreFinished(true);//将不会再次触发加载更多事件
                         }
                     }
-                }, 2000);
+                }, 2000);*/
             }
         });
 
@@ -150,11 +245,11 @@ public class MainFragment extends Fragment {
                     default:
                         id = 0;
                 }
-                setListContent(id);
                 for(ImageView image : _selectImages){
                     image.setVisibility(View.INVISIBLE);
                 }
                 _selectImages[id].setVisibility(View.VISIBLE);
+                _groupIndex = id;
             }
         });
     }
@@ -163,17 +258,21 @@ public class MainFragment extends Fragment {
         _topicList.add(new Topic("111111111","11111111111111"));
     }
 
-    private Collection<Topic> initData() {
-        moreTopic();
-        return _topicList;
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        SystemManager.getInstance().PrintLog("OnTouch");
+        new TopicDialog(getActivity(),((TextView)view.findViewById(R.id.topic_title)).getText().toString(),((TextView)view.findViewById(R.id.topic_content)).getText().toString());
     }
 
     public class Topic{
-        public String _title;
-        public String _content;
+        private int id;
+        public String title;
+        public String content;
+        public int viewCount;
+        public String jobName;
         public Topic(String title,String content){
-            _title = title;
-            _content = content;
+            this.title = title;
+            this.content = content;
         }
     }
 }

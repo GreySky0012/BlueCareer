@@ -4,11 +4,14 @@ import android.content.res.Resources;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.scwang.refreshlayout.activity.using.BasicUsingActivity;
 
 public class SmartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -40,9 +43,9 @@ public class SmartViewHolder extends RecyclerView.ViewHolder implements View.OnC
     public void onClick(View v) {
         if (mListener != null) {
             int position = getAdapterPosition();
-            if(position >= 0){
+            //if(position >= 0){
                 mListener.onItemClick(null, v, position, getItemId());
-            }
+            //}
         }
     }
 

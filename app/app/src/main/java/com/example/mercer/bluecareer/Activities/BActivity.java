@@ -12,7 +12,7 @@ import com.example.mercer.bluecareer.R;
  */
 public abstract class BActivity extends Activity {
 
-    protected void showToast(String message){
+    public void showToast(String message){
         Toast.makeText(BActivity.this,message,Toast.LENGTH_SHORT).show();
     }
 

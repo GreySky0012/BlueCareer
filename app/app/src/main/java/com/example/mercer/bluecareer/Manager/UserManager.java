@@ -1,19 +1,18 @@
 package com.example.mercer.bluecareer.Manager;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.example.mercer.bluecareer.Activities.BActivity;
 import com.example.mercer.bluecareer.Activities.RegistActivity;
 import com.example.mercer.bluecareer.DataStruct.JsonStruct.LoginData;
-import com.example.mercer.bluecareer.DataStruct.ReturnCode;
+import com.example.mercer.bluecareer.DataStruct.JsonStruct.ReturnCode;
 import com.example.mercer.bluecareer.DataStruct.Url.ImageUrl;
-import com.example.mercer.bluecareer.DataStruct.Url.Url;
 import com.example.mercer.bluecareer.DataStruct.Url.UserUrl;
 import com.example.mercer.bluecareer.DataStruct.User;
+import com.example.mercer.bluecareer.Database.LocalUser;
+import com.example.mercer.bluecareer.Database.LocalUserStorer;
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 
@@ -21,8 +20,6 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -97,6 +94,7 @@ public class UserManager {
         String qq = (String) userData.get("qq");
 
         _currentUser = new User(data.email,userName);
+        _currentUser._password = data.password;
         _currentUser._name = realName;
         _currentUser._major = careerMessage;
         _currentUser._qq = qq;
@@ -110,6 +108,8 @@ public class UserManager {
         if (imagePath!=null){
             _currentUser._image = GetImageOnline(imagePath);
         }
+
+        LocalUserStorer.Store(activity,_currentUser._email,_currentUser._password);
 
         return true;
     }
@@ -168,6 +168,7 @@ public class UserManager {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                //SystemManager.getInstance().PrintLog(response.body().string());
                 ReturnCode code = new Gson().fromJson(response.body().string(),ReturnCode.class);
             }
         });

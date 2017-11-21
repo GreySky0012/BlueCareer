@@ -17,9 +17,9 @@ public class LocalUser {
 
 
     @Index(unique = true)
-    private String email;
+    public String email;
 
-    private String password;
+    public String password;
 
     public String getPassword() {
         return this.password;

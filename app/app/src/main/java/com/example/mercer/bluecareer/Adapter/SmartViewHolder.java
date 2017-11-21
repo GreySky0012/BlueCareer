@@ -10,6 +10,8 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.mercer.bluecareer.Manager.SystemManager;
+
 /**
  * Created by GreySky on 2017/11/18.
  */
@@ -44,9 +46,9 @@ public class SmartViewHolder extends RecyclerView.ViewHolder implements View.OnC
     public void onClick(View v) {
         if (mListener != null) {
             int position = getAdapterPosition();
-            if(position >= 0){
+            //if(position >= 0){
                 mListener.onItemClick(null, v, position, getItemId());
-            }
+            //}
         }
     }
 

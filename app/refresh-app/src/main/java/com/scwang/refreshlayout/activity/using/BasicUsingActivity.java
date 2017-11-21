@@ -1,9 +1,12 @@
 package com.scwang.refreshlayout.activity.using;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -23,12 +26,15 @@ import static android.R.layout.simple_list_item_2;
 /**
  * 基本的功能使用
  */
-public class BasicUsingActivity extends AppCompatActivity {
+public class BasicUsingActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+
+    public int id;
 
     private BaseRecyclerAdapter<Void> mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final Activity activity = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_using_basic);
 
@@ -41,14 +47,26 @@ public class BasicUsingActivity extends AppCompatActivity {
         });
 
         ListView listView = (ListView) findViewById(R.id.listview);
-        listView.setAdapter(mAdapter = new BaseRecyclerAdapter<Void>(simple_list_item_2) {
+        mAdapter = new BaseRecyclerAdapter<Void>(simple_list_item_2) {
             @Override
             protected void onBindViewHolder(SmartViewHolder holder, Void model, int position) {
                 holder.text(android.R.id.text1, String.format(Locale.CHINA, "第%02d条数据", position));
                 holder.text(android.R.id.text2, String.format(Locale.CHINA, "这是测试的第%02d条数据", position));
                 holder.textColorId(android.R.id.text2, R.color.colorTextAssistant);
             }
+        };
+        Toast.makeText(activity,"加载",Toast.LENGTH_LONG).show();
+        Log.d("BlueCareer","加载");
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d("BlueCareer","点击");
+                Toast.makeText(activity,"点击",Toast.LENGTH_SHORT).show();
+            }
         });
+        mAdapter.setOnItemClickListener(this);
+        listView.setAdapter(mAdapter);
+        listView.setItemsCanFocus(true);
 
         final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
         refreshLayout.setEnableAutoLoadmore(true);//开启自动加载功能（非必须）
@@ -62,7 +80,7 @@ public class BasicUsingActivity extends AppCompatActivity {
                         refreshlayout.finishRefresh();
                         refreshlayout.setLoadmoreFinished(false);
                     }
-                }, 2000);
+                }, 20);
             }
         });
         refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
@@ -78,7 +96,7 @@ public class BasicUsingActivity extends AppCompatActivity {
                             refreshlayout.setLoadmoreFinished(true);//将不会再次触发加载更多事件
                         }
                     }
-                }, 2000);
+                }, 20);
             }
         });
 
@@ -89,5 +107,10 @@ public class BasicUsingActivity extends AppCompatActivity {
 
     private Collection<Void> initData() {
         return Arrays.asList(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Log.d("BlueCareer","点击");
     }
 }

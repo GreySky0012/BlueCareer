@@ -93,7 +93,8 @@
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="90"
         app:srlEnableFooterFollowWhenLoadFinished="true">
         <ListView
             android:dividerHeight="10dp"

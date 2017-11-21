@@ -161,25 +161,11 @@ public class RegistActivity extends ImageLoadActivity {
      * 职业选择多选框
      */
     public void showMutilAlertDialog() {
-        //获取当前已选职业
-        String currMajor = _major.getText().toString();
         //所有职业
         final String majorArray[] = getResources().getStringArray(R.array.major_array);
         //当前已选职业bool数组，根据Strings.xml的顺序严格排列
         final boolean currChoosed[] = new boolean[majorArray.length];
         Arrays.fill(currChoosed, false);
-        //按照逗号截取
-        if (currMajor != null && currMajor.trim() != "") {
-            String[] currMajorArray = currMajor.split(",|，");
-
-            for (int i = 0, j = 0; i < currMajorArray.length; i++, j++) {
-                if (currMajorArray[i].trim().equals(majorArray[j])) {
-                    currChoosed[j] = true;
-                } else {
-                    i--;
-                }
-            }
-        }
 
         // 创建一个AlertDialog建造者
         AlertDialog.Builder majorChooseDialogBuilder = new AlertDialog.Builder(this);

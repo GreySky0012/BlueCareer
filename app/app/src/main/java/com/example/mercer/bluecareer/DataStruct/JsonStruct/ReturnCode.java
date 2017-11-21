@@ -1,4 +1,4 @@
-package com.example.mercer.bluecareer.DataStruct;
+package com.example.mercer.bluecareer.DataStruct.JsonStruct;
 
 import java.util.Objects;
 

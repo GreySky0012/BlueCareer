@@ -3,13 +3,12 @@ package com.example.mercer.bluecareer.Manager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.example.mercer.bluecareer.DataStruct.ReturnCode;
+import com.example.mercer.bluecareer.DataStruct.JsonStruct.ReturnCode;
 import com.example.mercer.bluecareer.DataStruct.Url.Url;
 import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +28,7 @@ import okhttp3.Response;
 public class ServerManager {
     private static ServerManager _instance;
 
-    enum Method{get,put,post};
+    public enum Method{get,put,post};
 
     private OkHttpClient client = new OkHttpClient();
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");

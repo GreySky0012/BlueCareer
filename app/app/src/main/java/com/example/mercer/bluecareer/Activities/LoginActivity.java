@@ -12,6 +12,8 @@ import android.widget.EditText;
 
 import com.example.mercer.bluecareer.CircleImageView;
 import com.example.mercer.bluecareer.DataStruct.JsonStruct.LoginData;
+import com.example.mercer.bluecareer.Database.LocalUser;
+import com.example.mercer.bluecareer.Database.LocalUserStorer;
 import com.example.mercer.bluecareer.Manager.SystemManager;
 import com.example.mercer.bluecareer.Manager.UserManager;
 import com.example.mercer.bluecareer.R;
@@ -57,6 +59,14 @@ public class LoginActivity extends BActivity {
         _regist = (Button)findViewById(R.id.button_regist);
         _forgetKey = (Button)findViewById(R.id.forgetKey);
         _image = (CircleImageView)findViewById(R.id.login_image);
+
+        LocalUser user = LocalUserStorer.Get(this);
+        if (user!=null){
+            _username.setText(user.email);
+            _key.setText(user.password);
+            Bitmap image = UserManager.getInstance().GetImage(this,_username.getText().toString());
+            setImage(image);
+        }
     }
 
     private void setImage(Bitmap image){
@@ -114,10 +124,9 @@ public class LoginActivity extends BActivity {
                     }
                 }
                 catch (IOException e){
-                    showToast("没有网络");
                     SystemManager.getInstance().PrintLog(e.getMessage());
+                    showToast("没有网络");
                 }
-                showToast("登录成功");
                 SystemManager.getInstance().toActivity(activity, MainActivity.class);
             }
         });
