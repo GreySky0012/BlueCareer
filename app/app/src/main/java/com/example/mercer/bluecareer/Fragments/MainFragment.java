@@ -133,11 +133,11 @@ public class MainFragment extends Fragment implements AdapterView.OnItemClickLis
         return result;
     }
 
-    private void getMore(int index){
+    private void getMore(){
         ArticleUrl url;
-        if (index == 0){
+        if (_groupIndex == 0){
              url = new ArticleUrl("/list?"+getJobs()+"&start="+_currentTopicNum);
-        }else if (index == 1){
+        }else if (_groupIndex == 1){
             url = new ArticleUrl("/all?start="+_currentTopicNum);
         }else {
             url = new ArticleUrl("exclude?"+getJobs()+"start"+_currentTopicNum);
@@ -210,7 +210,7 @@ public class MainFragment extends Fragment implements AdapterView.OnItemClickLis
         _refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(final RefreshLayout refreshlayout) {
-                refresh();
+                getMore();
                 /*refreshlayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -250,6 +250,7 @@ public class MainFragment extends Fragment implements AdapterView.OnItemClickLis
                 }
                 _selectImages[id].setVisibility(View.VISIBLE);
                 _groupIndex = id;
+                refresh();
             }
         });
     }

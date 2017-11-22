@@ -3,14 +3,22 @@
     <string name="username_hint">邮箱</string>
     <string name="key_hint">密码</string>
     <string-array name="major_array">
-        <item>Java开发工程师</item>
-        <item>Android开发工程师</item>
-        <item>Web 前端开端工程师</item>
-        <item>算法工程师</item>
-        <item>C++/C 开发工程师</item>
-        <item>大数据开发工程师</item>
-        <item>测试工程师</item>
+        <item>互联网软件工程师</item>
         <item>产品经理</item>
+        <item>初级软件工程师</item>
+        <item>技术总监</item>
+        <item>数据库工程师</item>
+        <item>游戏界面设计</item>
+        <item>游戏策划</item>
+        <item>用户体验设计</item>
+        <item>用户界面设计</item>
+        <item>系统架构师</item>
+        <item>网络系信息安全工程师</item>
+        <item>网页设计</item>
+        <item>软件测试</item>
+        <item>需求工程师</item>
+        <item>项目经理</item>
+        <item>高级软件工程师</item>
     </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
