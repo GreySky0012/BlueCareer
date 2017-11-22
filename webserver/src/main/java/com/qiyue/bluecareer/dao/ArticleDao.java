@@ -29,7 +29,7 @@ public class ArticleDao {
         Session session = sessionFactory.openSession();
         Query<ArticleEntity> query = session.createQuery("FROM ArticleEntity ORDER BY id DESC", ArticleEntity.class);
         query.setFirstResult(start);
-        query.setMaxResults(GET_ARTICLE_ONE_TIME + start);
+        query.setMaxResults(GET_ARTICLE_ONE_TIME);
         return query.list();
     }
 
@@ -57,7 +57,7 @@ public class ArticleDao {
         Query<ArticleEntity> query = session.createQuery("FROM ArticleEntity WHERE jobName <> :jobName ORDER BY id DESC", ArticleEntity.class);
         query.setParameter("jobName", jobName);
         query.setFirstResult(start);
-        query.setMaxResults(GET_ARTICLE_ONE_TIME + start);
+        query.setMaxResults(GET_ARTICLE_ONE_TIME);
         return query.list();
     }
 
@@ -79,7 +79,7 @@ public class ArticleDao {
             query.setParameter(String.format("jobName%s", i), jobNames[i]);
         }
         query.setFirstResult(start);
-        query.setMaxResults(GET_ARTICLE_ONE_TIME + start);
+        query.setMaxResults(GET_ARTICLE_ONE_TIME);
         return query.list();
     }
 
@@ -87,7 +87,7 @@ public class ArticleDao {
         Session session = sessionFactory.openSession();
         Query<ArticleEntity> query = session.createQuery("FROM ArticleEntity ORDER BY viewCount", ArticleEntity.class);
         query.setFirstResult(start);
-        query.setMaxResults(GET_ARTICLE_ONE_TIME + start);
+        query.setMaxResults(GET_ARTICLE_ONE_TIME);
         return query.list();
     }
 }
