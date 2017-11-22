@@ -9,10 +9,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,8 +30,8 @@ public class JobController {
 
     private static Logger logger = Logger.getLogger(JobController.class);
 
-    @RequestMapping(value = "/{jobName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public CommonResponse getJobInfo(@PathVariable(value = "jobName") String jobName) {
+    @RequestMapping(value = "/info", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse getJobInfo(@RequestParam(value = "job", name = "job") String jobName) {
         JobEntity jobInfo = jobService.getJobInfo(jobName);
         List<AreaPaysEntity> jobPays =  salaryService.getAreaPaysByJob(jobName);
         Map<String, Object> respData = new HashMap<>(2);

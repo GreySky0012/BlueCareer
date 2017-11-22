@@ -22,7 +22,7 @@ public class SalaryDao {
 
     public List<AreaPaysEntity> getAreaSalaryByJob(String jobName) {
         Session session = sessionFactory.openSession();
-        Query<AreaPaysEntity> query = session.createQuery("SELECT new AreaPaysEntity(workPlace, salary) FROM JobAreaPaysEntity WHERE jobName = :jobName", AreaPaysEntity.class);
+        Query<AreaPaysEntity> query = session.createQuery("SELECT new AreaPaysEntity(workPlace, minAveSalary, maxAveSalary) FROM JobAreaPaysEntity WHERE jobName = :jobName", AreaPaysEntity.class);
         query.setParameter("jobName", jobName);
         return query.list();
     }

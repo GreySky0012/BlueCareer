@@ -71,8 +71,11 @@
         <property name="workPlace">
             <column name="work_place" sql-type="varchar(50)" length="50"/>
         </property>
-        <property name="salary">
-            <column name="salary" sql-type="int(11)" not-null="true"/>
+        <property name="minAveSalary">
+            <column name="min_ave_salary" sql-type="double" precision="-1" not-null="true"/>
+        </property>
+        <property name="maxAveSalary">
+            <column name="max_ave_salary" sql-type="double" precision="-1" not-null="true"/>
         </property>
     </class>
     <class name="com.qiyue.bluecareer.model.view.AreaPaysEntity" table="job_area_pays" schema="bluecareer">
@@ -80,8 +83,11 @@
         <property name="workPlace">
             <column name="work_place" sql-type="varchar(50)" length="50"/>
         </property>
-        <property name="salary">
-            <column name="salary" sql-type="int(11)" not-null="true"/>
+        <property name="minAveSalary">
+            <column name="min_ave_salary" sql-type="double" precision="-1" not-null="true"/>
+        </property>
+        <property name="maxAveSalary">
+            <column name="max_ave_salary" sql-type="double" precision="-1" not-null="true"/>
         </property>
     </class>
 </hibernate-mapping>

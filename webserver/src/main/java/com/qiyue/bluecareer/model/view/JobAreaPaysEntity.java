@@ -1,4 +1,20 @@
 package com.qiyue.bluecareer.model.view;
+/*
+* ------------------------------------------------------------------
+* Copyright © 2017 Hangzhou DtDream Technology Co.,Lt d. All rights reserved.
+* ------------------------------------------------------------------
+*       Product: net
+*   Module Name: GateWay
+*  Date Created: 2017/11/22
+*   Description:
+* ------------------------------------------------------------------
+* Modification History
+* DATE            Name           Description
+* ------------------------------------------------------------------
+* 2017/11/22     
+* ------------------------------------------------------------------
+*/
+
 import javax.persistence.*;
 
 @Entity
@@ -7,7 +23,8 @@ public class JobAreaPaysEntity {
     private int id;
     private String jobName;
     private String workPlace;
-    private Integer salary;
+    private Double minAveSalary;
+    private Double maxAveSalary;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -40,13 +57,23 @@ public class JobAreaPaysEntity {
     }
 
     @Basic
-    @Column(name = "salary", nullable = true)
-    public Integer getSalary() {
-        return salary;
+    @Column(name = "min_ave_salary", nullable = true, precision = 0)
+    public Double getMinAveSalary() {
+        return minAveSalary;
     }
 
-    public void setSalary(Integer salary) {
-        this.salary = salary;
+    public void setMinAveSalary(Double minAveSalary) {
+        this.minAveSalary = minAveSalary;
+    }
+
+    @Basic
+    @Column(name = "max_ave_salary", nullable = true, precision = 0)
+    public Double getMaxAveSalary() {
+        return maxAveSalary;
+    }
+
+    public void setMaxAveSalary(Double maxAveSalary) {
+        this.maxAveSalary = maxAveSalary;
     }
 
     @Override
@@ -59,7 +86,8 @@ public class JobAreaPaysEntity {
         if (id != that.id) return false;
         if (jobName != null ? !jobName.equals(that.jobName) : that.jobName != null) return false;
         if (workPlace != null ? !workPlace.equals(that.workPlace) : that.workPlace != null) return false;
-        if (salary != null ? !salary.equals(that.salary) : that.salary != null) return false;
+        if (minAveSalary != null ? !minAveSalary.equals(that.minAveSalary) : that.minAveSalary != null) return false;
+        if (maxAveSalary != null ? !maxAveSalary.equals(that.maxAveSalary) : that.maxAveSalary != null) return false;
 
         return true;
     }
@@ -69,7 +97,8 @@ public class JobAreaPaysEntity {
         int result = id;
         result = 31 * result + (jobName != null ? jobName.hashCode() : 0);
         result = 31 * result + (workPlace != null ? workPlace.hashCode() : 0);
-        result = 31 * result + (salary != null ? salary.hashCode() : 0);
+        result = 31 * result + (minAveSalary != null ? minAveSalary.hashCode() : 0);
+        result = 31 * result + (maxAveSalary != null ? maxAveSalary.hashCode() : 0);
         return result;
     }
 }
