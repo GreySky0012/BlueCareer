@@ -82,4 +82,12 @@ public class ArticleDao {
         query.setMaxResults(GET_ARTICLE_ONE_TIME + start);
         return query.list();
     }
+
+    public List<ArticleEntity> getArticleOrderByViewCount(Integer start) {
+        Session session = sessionFactory.openSession();
+        Query<ArticleEntity> query = session.createQuery("FROM ArticleEntity ORDER BY viewCount", ArticleEntity.class);
+        query.setFirstResult(start);
+        query.setMaxResults(GET_ARTICLE_ONE_TIME + start);
+        return query.list();
+    }
 }

@@ -45,4 +45,9 @@ public class ArticleController {
                                                                     @RequestParam(value = "start", name = "start") Integer start) {
         return new CommonResponse<>(articleService.getArticleExcludeJobs(jobs, start));
     }
+
+    @RequestMapping(value = "/order_by_view_count", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonResponse<List<ArticleEntity>> getArticleOrderByViewCount(@RequestParam(value = "start", name = "start") Integer start) {
+        return new CommonResponse<>(articleService.getArticleOrderByViewCount(start));
+    }
 }

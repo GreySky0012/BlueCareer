@@ -33,4 +33,8 @@ public class ArticleService {
     public List<ArticleEntity> getArticleExcludeJobs(String[] jobNames, Integer start) {
         return articleDao.getArticleExcludeJobs(jobNames, start);
     }
+
+    public List<ArticleEntity> getArticleOrderByViewCount(Integer start) {
+        return articleDao.getArticleOrderByViewCount(start);
+    }
 }
