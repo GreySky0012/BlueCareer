@@ -61,4 +61,27 @@
             <column name="requirements" sql-type="text"/>
         </property>
     </class>
+    <class name="com.qiyue.bluecareer.model.view.JobAreaPaysEntity" table="job_area_pays" schema="bluecareer">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="jobName">
+            <column name="job_name" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="workPlace">
+            <column name="work_place" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="salary">
+            <column name="salary" sql-type="int(11)" not-null="true"/>
+        </property>
+    </class>
+    <class name="com.qiyue.bluecareer.model.view.AreaPaysEntity" table="job_area_pays" schema="bluecareer">
+        <id name="id"/>
+        <property name="workPlace">
+            <column name="work_place" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="salary">
+            <column name="salary" sql-type="int(11)" not-null="true"/>
+        </property>
+    </class>
 </hibernate-mapping>
