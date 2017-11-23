@@ -67,11 +67,15 @@ public class UserService {
      * @param password 用户密码
      * @return access_key
      */
-    public UserEntity userLogin(String mail, String password) {
+    public UserEntity userLogin(String mail, String password) throws HibernateException {
         //todo 用户密码加密
         UserEntity userEntity = userDao.verifyPassword(mail, password);
-        userEntity.setEmail(null);
-        userEntity.setPassword(null);
+        if (userEntity != null) {
+            userEntity.setEmail(null);
+            userEntity.setPassword(null);
+            String newKey = userDao.updateAccessKey(userEntity.getId());
+            userEntity.setAccessKey(newKey);
+        }
         return userEntity;
     }
 

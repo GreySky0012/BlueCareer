@@ -9,28 +9,85 @@
             <column name="id" sql-type="int(11)"/>
         </id>
         <property name="userName">
-            <column name="username" sql-type="varchar(64)" length="64"/>
+            <column name="username" sql-type="varchar(64)" length="64" not-null="true"/>
         </property>
         <property name="realName">
-            <column name="realname" sql-type="varchar(64)" length="64" not-null="true"/>
+            <column name="realname" sql-type="varchar(64)" length="64"/>
         </property>
         <property name="password" update="false">
-            <column name="password" sql-type="varchar(64)" length="64"/>
+            <column name="password" sql-type="varchar(64)" length="64" not-null="true"/>
         </property>
         <property name="email" update="false">
-            <column name="email" sql-type="varchar(64)" length="64"/>
+            <column name="email" sql-type="varchar(64)" length="64" not-null="true"/>
         </property>
         <property name="QQ">
-            <column name="qq" sql-type="varchar(64)" length="64" not-null="true"/>
+            <column name="qq" sql-type="varchar(64)" length="64"/>
         </property>
         <property name="accessKey" update="false">
-            <column name="access_key" sql-type="varchar(64)" length="64" not-null="true"/>
+            <column name="access_key" sql-type="varchar(64)" length="64"/>
         </property>
         <property name="imagePath" update="false">
-            <column name="image_path" sql-type="varchar(64)" length="64" not-null="true"/>
+            <column name="image_path" sql-type="varchar(64)" length="64"/>
         </property>
         <property name="careerMessage">
-            <column name="career_message" sql-type="varchar(1024)" length="1024" not-null="true"/>
+            <column name="career_message" sql-type="varchar(1024)" length="1024"/>
+        </property>
+    </class>
+    <class name="com.qiyue.bluecareer.model.view.ArticleEntity" table="article" schema="bluecareer">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="title">
+            <column name="title" sql-type="varchar(64)" length="64"/>
+        </property>
+        <property name="content">
+            <column name="content" sql-type="longtext"/>
+        </property>
+        <property name="viewCount">
+            <column name="view_count" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="jobName">
+            <column name="job_name" sql-type="varchar(64)" length="64"/>
+        </property>
+    </class>
+    <class name="com.qiyue.bluecareer.model.view.JobEntity" table="job" schema="bluecareer">
+        <id name="jobName">
+            <column name="job_name" sql-type="varchar(64)" length="64"/>
+        </id>
+        <property name="duty">
+            <column name="duty" sql-type="text"/>
+        </property>
+        <property name="requirements">
+            <column name="requirements" sql-type="text"/>
+        </property>
+    </class>
+    <class name="com.qiyue.bluecareer.model.view.JobAreaPaysEntity" table="job_area_pays" schema="bluecareer">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="jobName">
+            <column name="job_name" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="workPlace">
+            <column name="work_place" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="minAveSalary">
+            <column name="min_ave_salary" sql-type="double" precision="-1" not-null="true"/>
+        </property>
+        <property name="maxAveSalary">
+            <column name="max_ave_salary" sql-type="double" precision="-1" not-null="true"/>
+        </property>
+    </class>
+    <class name="com.qiyue.bluecareer.model.view.AreaPaysEntity" table="job_area_pays" schema="bluecareer">
+        <id name="id"/>
+        <property name="workPlace">
+            <column name="work_place" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="minAveSalary">
+            <column name="min_ave_salary" sql-type="double" precision="-1" not-null="true"/>
+        </property>
+        <property name="maxAveSalary">
+            <column name="max_ave_salary" sql-type="double" precision="-1" not-null="true"/>
         </property>
     </class>
 </hibernate-mapping>
