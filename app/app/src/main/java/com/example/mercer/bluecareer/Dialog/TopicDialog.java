@@ -27,7 +27,7 @@ public class TopicDialog {
                 .withDialogColor("#D3D3D3")                               //def  | withDialogColor(int resid)                               //def
                 //.withIcon(getResources().getDrawable(R.drawable.icon))
                 .isCancelableOnTouchOutside(false)                           //def    | isCancelable(true)
-                .withDuration(700)                                          //def
+                .withDuration(300)                                          //def
                 .withEffect(Effectstype.SlideBottom)                                         //def Effectstype.Slidetop
                 .withButton1Text("关闭")
                 .setButton1Click(new View.OnClickListener() {

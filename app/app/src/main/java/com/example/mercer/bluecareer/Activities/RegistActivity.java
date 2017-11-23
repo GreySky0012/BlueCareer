@@ -57,6 +57,12 @@ public class RegistActivity extends ImageLoadActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        SystemManager.getInstance().toActivity(this,LoginActivity.class);
+    }
+
+    @Override
     protected void getView(){
         circle_image = (ImageChooser)findViewById(R.id.image);
         _back = findViewById(R.id.back);

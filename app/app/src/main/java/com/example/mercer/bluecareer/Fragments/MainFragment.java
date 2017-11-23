@@ -91,7 +91,7 @@ public class MainFragment extends Fragment implements AdapterView.OnItemClickLis
         }else if (_groupIndex == 1){
             url = new ArticleUrl("/all?start=0");
         }else {
-            url = new ArticleUrl("/exclude?"+getJobs());
+            url = new ArticleUrl("/exclude?"+getJobs()+"&start="+0);
         }
         try {
             ServerManager.GetInstance().RequestAsync(ServerManager.Method.get, url, new Callback() {
@@ -181,20 +181,22 @@ public class MainFragment extends Fragment implements AdapterView.OnItemClickLis
                 super.handleMessage(msg);
                 switch (msg.what) {
                     case 0:
-                        _adapter.refresh((List<Topic>)msg.obj);
+                        List<Topic> topics0 = (List<Topic>)msg.obj;
+                        _adapter.refresh(topics0);
                         _refreshLayout.finishRefresh();
-                        _refreshLayout.setLoadmoreFinished(false);
-                        _currentTopicNum = 10;
+                        //_refreshLayout.setLoadmoreFinished(false);
+                        _currentTopicNum = topics0.size();
                         break;
                     case 1:
-                        List<Topic> topics = (List<Topic>)msg.obj;
-                        if (topics.isEmpty()){
-                            _refreshLayout.setLoadmoreFinished(true);//将不会再次触发加载更多事件
+                        List<Topic> topics1 = (List<Topic>)msg.obj;
+                        if (topics1.isEmpty()){
+                            //_refreshLayout.setLoadmoreFinished(true);//将不会再次触发加载更多事件
+                            _refreshLayout.finishLoadmore();
                             break;
                         }
-                        _adapter.loadmore(topics);
+                        _adapter.loadmore(topics1);
                         _refreshLayout.finishLoadmore();
-                        _currentTopicNum+=topics.size();
+                        _currentTopicNum+=topics1.size();
                         break;
                     default:
                         break;
@@ -211,22 +213,11 @@ public class MainFragment extends Fragment implements AdapterView.OnItemClickLis
             @Override
             public void onLoadmore(final RefreshLayout refreshlayout) {
                 getMore();
-                /*refreshlayout.getLayout().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        _adapter.loadmore(initData());
-                        refreshlayout.finishLoadmore();
-                        if (_adapter.getItemCount() > 60) {
-                            //Toast.makeText(getApplication(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
-                            refreshlayout.setLoadmoreFinished(true);//将不会再次触发加载更多事件
-                        }
-                    }
-                }, 2000);*/
             }
         });
 
         //触发自动刷新
-        _refreshLayout.autoRefresh();
+        //_refreshLayout.autoRefresh();
 
         _nav.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -253,10 +244,7 @@ public class MainFragment extends Fragment implements AdapterView.OnItemClickLis
                 refresh();
             }
         });
-    }
-
-    private void moreTopic(){
-        _topicList.add(new Topic("111111111","11111111111111"));
+        refresh();
     }
 
     @Override

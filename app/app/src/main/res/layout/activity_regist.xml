@@ -92,7 +92,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:text="测试账户"
                 android:textSize="15sp" />
 
         </LinearLayout>
@@ -125,7 +124,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:text="真实姓名"
                 android:textSize="15sp" />
 
         </LinearLayout>
@@ -159,7 +157,6 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:inputType="textPassword"
-                android:text="123456"
                 android:textSize="15sp" />
 
         </LinearLayout>
@@ -192,7 +189,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:text="test1@mail.com"
                 android:textSize="15sp" />
 
         </LinearLayout>
@@ -225,7 +221,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:text="4432"
                 android:textSize="15sp" />
 
         </LinearLayout>

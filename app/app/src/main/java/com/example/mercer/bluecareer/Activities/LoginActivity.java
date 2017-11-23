@@ -26,11 +26,11 @@ public class LoginActivity extends BActivity {
     EditText _username;
     EditText _key;
     Button _login;
-    Button _qq;
-    Button _weixin;
-    Button _weibo;
+    //Button _qq;
+    //Button _weixin;
+    //Button _weibo;
     Button _regist;
-    Button _forgetKey;
+    //Button _forgetKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +53,11 @@ public class LoginActivity extends BActivity {
         _username = (EditText)findViewById(R.id.username_edit);
         _key = (EditText)findViewById(R.id.key_edit);
         _login = (Button)findViewById(R.id.button_login);
-        _qq = (Button)findViewById(R.id.logo_qq);
-        _weixin = (Button)findViewById(R.id.logo_weixin);
-        _weibo = (Button)findViewById(R.id.logo_weibo);
+        //_qq = (Button)findViewById(R.id.logo_qq);
+        //_weixin = (Button)findViewById(R.id.logo_weixin);
+        //_weibo = (Button)findViewById(R.id.logo_weibo);
         _regist = (Button)findViewById(R.id.button_regist);
-        _forgetKey = (Button)findViewById(R.id.forgetKey);
+        //_forgetKey = (Button)findViewById(R.id.forgetKey);
         _image = (CircleImageView)findViewById(R.id.login_image);
 
         LocalUser user = LocalUserStorer.Get(this);
@@ -131,7 +131,7 @@ public class LoginActivity extends BActivity {
             }
         });
 
-        _forgetKey.setOnClickListener(new View.OnClickListener() {
+        /*_forgetKey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SystemManager.getInstance().toActivityWithNoFinish(activity,ForgetKeyActivity.class);
@@ -157,6 +157,6 @@ public class LoginActivity extends BActivity {
             public void onClick(View v) {
 
             }
-        });
+        });*/
     }
 }
